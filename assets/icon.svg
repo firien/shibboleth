@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height='114' viewBox='0 0 114 114' width='114' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <script type="text/javascript">
+    <![CDATA[
+      //initial scale determined by height and width of svg element
+      var scaleFactor = 1;
+      var scaleLimit = 6;
+      var baseWidth;
+      var baseHeight;
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var _svg = document.querySelector("svg");
+        baseWidth = _svg.viewBox.baseVal.width;
+        baseHeight = _svg.viewBox.baseVal.height;
+
+        document.addEventListener('keydown', function(e) {
+          var _svg = document.querySelector("svg");
+          if (e.keyCode == 38) {//up arrow
+            scaleFactor++;
+            if (scaleFactor > scaleLimit) scaleFactor = 1;
+          }
+          if (e.keyCode == 40) {//down arrow
+            scaleFactor--;
+            if (scaleFactor < 1) scaleFactor = scaleLimit;
+          }
+          if ((e.keyCode == 38) || (e.keyCode == 40)) {
+            _svg.setAttribute("height", baseWidth * Math.pow(2, scaleFactor - 1));
+            _svg.setAttribute("width", baseHeight * Math.pow(2, scaleFactor - 1));
+          }
+        }, true);
+      }, true);
+    ]]>
+  </script>
+  <style type="text/css">
+    <![CDATA[
+      path#key {
+        fill:#FFD700;/*#C0C0C0;*/
+        stroke:black;
+        stroke-width:1px;
+      }
+      rect {fill:black;}
+      rect.bg {
+        fill:#600000;
+        fill:url(#radial);
+      }
+    ]]>
+  </style>
+  <defs>
+    <path id="key-path" d="M 0, 57
+             l 10, 10
+             l 4, -4
+             l 4, 4
+             l 6, -6
+             h 5
+             l 7, 7
+             l 5, -5
+             h 2
+             l 4, 4
+             l 5, -5
+             h 3
+             l 6, 6
+             h 9
+             a 24, 24 0 1 0 -2.7665, -19.8623
+             h -60 z
+             M 100, 54 a 5, 5 0 1 0 10, 0 a 5, 5 0 1 0 -10, 0 z
+             "/>
+    <filter id="shadow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+    </filter>
+    <radialGradient id="radial" cx="50%" cy="50%" r="100%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(190,30,30);
+      stop-opacity:1" />
+      <stop offset="90%" style="stop-color:rgb(40,0,0);stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="notch" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(180,180,180);stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="groove" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgb(180,180,180);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(180,180,180);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect class="bg" x="0" y="0" width="114" height="114"/>
+  <g transform="rotate(-45, 57, 57)">
+    <use xlink:href="#key-path" fill-rule="evenodd" style="filter:url(#shadow);fill:#000;stroke:#000;stroke-width:1px;"/>
+    <use xlink:href="#key-path" fill-rule="evenodd" style="fill:#c0c0c0;stroke:black;stroke-width:1px;"/>
+    <path d="M 1 58
+             h 70
+             c -6 -6 -12 -6 -18 -6
+             h -49
+             L 0 57z
+             " style="fill:url(#notch);stroke:#333;"/>
+    <rect x="79" y="40" width="4" height="30" style="fill:url(#groove);"/>
+    <rect x="85" y="37" width="4" height="36" style="fill:url(#groove);"/>
+  </g>
+</svg>
