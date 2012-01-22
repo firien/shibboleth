@@ -17,46 +17,21 @@
         / border:1px solid red;
       }
       .step {
-        width:400px;
-        width:50%;
-        height:400px;
-        background-color:green;
-      }
-      .h {
-        float:left;
-        background-color:aqua;
-      }
-      #canvas {
-        width:410px;
-        width:200%;
-        /height:200px;
-        -webkit-transition:-webkit-transform 0.3s ease-in-out;
-      }
-      /#canvas:hover {
-      /  -webkit-transform:translate3d(0,-400px,0);
-      /}
-      .frame {
-        width:400px;
-        width:66%;
-        height:400px;
-        overflow:hidden;
-        / display:inline-block;
-        /border-radius:0 2em 2em 0;
+        margin-left:35%;
+        padding:2em;
       }
       .left {
-        float:left;
+        padding:0.5em;
+        position:absolute;
         / display:inline-block;
-        width:34%;
-        background-color:grey;
-      }
-      #master {
-        border-radius:2em;
-        box-shadow:inset 0 0 5px #888;
-        margin:2em;
-        overflow:hidden;
-        background-clip: content-box;
+        width:35%;
+        background-color:#d5d5d5;
+        top:0;
+        bottom:0;
+        -webkit-box-shadow: -5px 0px 5px -2px #888 inset;
       }
       a.internal {
+        display:inline-block;
         padding: 0.5em 1em;
         background-color: #ddd;
         border-radius: 3px;
@@ -66,34 +41,18 @@
         white-space: nowrap;
       }
       a.internal:hover {
-        color: #66c;
+        color: blue;
         background-color: #ccc;
       }
-    :javascript
-      // alert(window.navigator.standalone)
-      document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-          //document.querySelector('#canvas').style.webkitTransform = 'translate3d(0,-400px,0)';
-          //document.querySelector('#canvas').style.webkitTransform = 'rotate(40deg)';
-          //document.querySelector('#canvas').scrollTop = "45px";
-        }, 2000);
-      }, true)
   %body
-    #master
-      .left
-        %h2 Shibboleth
-        %p SHIBBOLETH is a password generator that allows you to remember just one (1) master password.
-      .frame
-        #canvas
-          .step
-            -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: ''}
-            -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet,beautify: false))
-            %a.internal{title: 'shibboleth.js', href: bookmarklet} Bookmarklet
-            -app = haml 'shibboleth.html'.to_sym
-            %a.internal{title: 'shibboleth.app', href: 'data:text/html;base64,'+[app].pack('m0')} Web App
-          .step.h make salt
-          .step.h new links
-          %br{style: 'clear:both'}
-    %label{for: :salt} Include a Salt?
-    %input#salt{type: 'checkbox'}
-    Q. What is a Salt?
+    %a{href: 'https://github.com/firien/shibboleth'}
+      %img{style: 'position: absolute; top: 0; right: 0; border: 0', src: 'https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67', alt: 'Fork me on GitHub'}
+    .left
+      %h2 Shibboleth
+      %p SHIBBOLETH is a password generator that allows you to remember just one (1) master password.
+    .step
+      -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: ''}
+      -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet,beautify: false))
+      %a.internal{title: 'shibboleth.js', href: bookmarklet} Bookmarklet
+      -app = haml 'shibboleth.html'.to_sym
+      %a.internal{title: 'shibboleth.app', href: 'data:text/html;base64,'+[app].pack('m0')} Web App
