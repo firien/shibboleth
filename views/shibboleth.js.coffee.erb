@@ -111,7 +111,7 @@ return if tld == ''
 input = $ "input[type=password]"
 unless input?
   alert "could not find password input"
-  return null
+  return
 password = input.value
 return if password == ''
 #limiter?
