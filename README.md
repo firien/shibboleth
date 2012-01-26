@@ -1,5 +1,5 @@
 #Shibboleth
-Sick of juggling passwords in your head? Making each one different enough so to not expose yourself to risk? Shibboleth lets you remember one single master password - and uses this to *generate* a unique password per website.
+Sick of juggling passwords in your head? Making each one different enough so to not expose yourself to risk? Shibboleth lets you remember one single master password - and uses it to *generate* a unique password per website.
 ###How does it work?
 Suppose you are logging into Gmail; the URL would look something like this:
 

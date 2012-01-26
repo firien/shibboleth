@@ -2,36 +2,50 @@
 %html
   %head
     %meta{name: 'viewport', content: 'initial-scale=1.0'}
-    %meta{name: 'apple-mobile-web-app-capable', content: 'yes'}
+    %meta{:'http-equiv' => 'content-type', :content => 'text/html;charset=UTF-8'}
+    %title Shibboleth
     :css
       body {
         margin:0;
         font-family:Helvetica;
+        background-color:#456;
       }
-      h2 {
+      h1 {
         text-shadow:#ddd 0px 2px 0px;
+        margin-top:0;
       }
       p:first-letter {
-        float:left;
-        font-size:2em;
+        /float:left;
+        /font-size:2em;
         / border:1px solid red;
       }
-      .step {
-        margin-left:35%;
-        padding:2em;
+      .bar {
+        float:left;
+        / margin-left:65%;
+        padding:3em 1em;
+        text-align:center;
       }
-      .left {
-        padding:0.5em;
-        position:absolute;
+      .bar div {
+        position:fixed;
+      }
+      .article {
+        float:left;
+        padding:1em;
+        / text-align:justify;
+        / position:absolute;
         / display:inline-block;
-        width:35%;
-        background-color:#d5d5d5;
-        top:0;
-        bottom:0;
+        width:65%;
+        background-color:#dadada;
+        / top:0;
+        / bottom:0;
         -webkit-box-shadow: -5px 0px 5px -2px #888 inset;
+        text-shadow:#fff 0px 1px 0px;
+      }
+      ::selection {
+        background-color:#ff8;
       }
       a.internal {
-        display:inline-block;
+        display:block;
         padding: 0.5em 1em;
         background-color: #ddd;
         border-radius: 3px;
@@ -39,20 +53,145 @@
         font-weight: bold;
         color: #222;
         white-space: nowrap;
+        background-image: -moz-linear-gradient(top, #ddd, #bbb);
+        background-image: -webkit-linear-gradient(top, #ddd, #bbb);
+        background-image: -o-linear-gradient(top, #ddd, #bbb);
+        background-repeat: no-repeat;
+        box-shadow: 0 0.1em 0.3em  #000;
+        width: 100%;
+        text-align:center;
+        margin:0.5em;
+      }
+      a.internal:active, input[type=button]:active {
+        box-shadow: 0 0.1em 0.3em #000 inset;
       }
       a.internal:hover {
         color: blue;
         background-color: #ccc;
+        background-image: -moz-linear-gradient(top, #eee, #ccc);
+        background-image: -webkit-linear-gradient(top, #eee, #ccc);
+        background-image: -o-linear-gradient(top, #eee, #ccc);
+        background-repeat: no-repeat;
       }
+      span.salted {
+        background-image:url('/images/salt.png');
+        background-repeat: no-repeat;
+        padding-left:24px;
+      }
+      input[type=text] {
+        font-weight:bold;
+        font-size:1em;
+      }
+      input[type=button] {
+        font-size:0.75em;
+        margin:0;
+        border: 1px solid #294d6b;
+        padding: 0.5em 1em;
+        background-color: #ddd;
+        border-radius: 3px;
+        font-weight: bold;
+        color: #222;
+        white-space: nowrap;
+        background-image: -moz-linear-gradient(top, #ddd, #bbb);
+        background-image: -webkit-linear-gradient(top, #ddd, #bbb);
+        background-image: -o-linear-gradient(top, #ddd, #bbb);
+        background-repeat: no-repeat;
+        box-shadow: 0 0.1em 0.3em  #000;
+        text-align:center;
+      }
+      code {
+        border-radius:3px;
+        / border:1px solid black;
+        background-color:white;
+      }
+      pre code {
+        background-color:transparent;
+        border-radius:none;
+      }
+      @media screen and (max-width:500px) {
+        .article {
+          float:none;
+          width:auto;
+          padding:1em;
+          background-color:#d5d5d5;
+          -webkit-box-shadow: 0px 5px 5px -2px #222;
+        }
+        .bar {
+          float:none;
+          margin-right:auto;
+          margin-left:auto;
+        }
+        .bar div {
+          position:static;
+          width:100%;
+        }
+        a.internal {
+          width:auto;
+        }
+        pre {
+          overflow-x:scroll;
+          overflow-y:hidden;
+          background-color:white;
+          padding:1em;
+        }
+      }
+    :javascript
+      function $(selector) { return document.querySelector(selector); }
+      document.addEventListener('DOMContentLoaded', function() {
+        $('#sprinkle').addEventListener('click', function() {
+          var actions = [{url: '/bookmarklet.js', eid: 'salt-js'}, {url: '/app', eid: 'salt-app'}];
+          for (var i=0;i<actions.length;i++) {
+            (function(){
+              var x = i;//scope it
+              var xhr = new XMLHttpRequest();
+              xhr.open("GET", actions[x].url + "?salt=" + $('#salt').value);
+              xhr.onreadystatechange = function(){
+              	if (xhr.readyState == 4 && xhr.status == 200) {
+              		$('#' + actions[x].eid).setAttribute('href', xhr.responseText);
+              		$('#' + actions[x].eid + ' span').setAttribute('class', 'salted');
+              	}
+              }
+              xhr.send(null);
+            }).call(this);
+          }
+        }, true)
+      }, true)
   %body
+    .article
+      :markdown
+        #Shibboleth
+        Sick of juggling passwords in your head? Making each one different enough so to not expose yourself to risk? Shibboleth lets you remember one single master password - and uses it to *generate* a unique password per website.
+        ###How does it work?
+        Suppose you are logging into Gmail; the URL would look something like this:
+
+            https://accounts.google.com/ServiceLogin?service=mail…
+        Shibboleth will mash your master password with the [top-level Domain](http://en.wikipedia.org/wiki/Top-level_domain) (TLD), in this case `google.com`, and create a password unique to `google.com`. To do this it runs your master password and current TLD through a cryptographic hash function.
+        ###How do i use it?
+        There are two ways to use Shibboleth, one is a javascript bookmarklet. This is a little snippet of javascript that is saved as a bookmark in your browser. When you need to log into a website you fill in your username and (master) password, then click on the Shibboleth bookmarklet and it will replace your master password with your unique password for that particular website.
+
+        The second way to use Shibboleth is through the standalone web page. Sometimes, specifically on mobile devices, you will be logging into sites through native applications and the first method described above is not an option. So the standalone web page allows you to manually set the TLD, generate your unique password, copy to the clipboard, & paste it in the native application.
+
+        The standalone web page is encoded into a data uri, so no internet access is required to use it.
+
+        ###Site \*\*\*.com limits my password to 10 characters
+        No problem, append ':xxx' to your master password to truncate it. For example 'master:16' will generate a password only 16 characters long.
+
+        ###Salting
+        You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (and complexity). It makes the javascript unique to you.
+      %input#salt{type: 'text', name: 'salt', placeholder: 'Salt'}
+      %input#sprinkle{type: 'button', value: 'Generate with a sprinkle of Salt'}
+      /%a.internal#salt-js{title: 'shibboleth.js'}
+      /  %span Bookmarklet
+      /%a.internal#salt-app{title: 'shibboleth.app'}
+      /  %span Web App
+    .bar
+      %div
+        -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: ''}
+        -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet,beautify: false))
+        %a.internal#salt-js{title: 'shibboleth.js', href: bookmarklet}
+          %span Bookmarklet
+        -app = haml 'shibboleth.html'.to_sym
+        %a.internal#salt-app{title: 'shibboleth.app', href: 'data:text/html;base64,'+[app].pack('m0')}
+          %span Web App
     %a{href: 'https://github.com/firien/shibboleth'}
       %img{style: 'position: absolute; top: 0; right: 0; border: 0', src: 'https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67', alt: 'Fork me on GitHub'}
-    .left
-      %h2 Shibboleth
-      %p SHIBBOLETH is a password generator that allows you to remember just one (1) master password.
-    .step
-      -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: ''}
-      -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet,beautify: false))
-      %a.internal{title: 'shibboleth.js', href: bookmarklet} Bookmarklet
-      -app = haml 'shibboleth.html'.to_sym
-      %a.internal{title: 'shibboleth.app', href: 'data:text/html;base64,'+[app].pack('m0')} Web App
