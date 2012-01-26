@@ -19,6 +19,7 @@ end
 
 get '/bookmarklet.js' do
   content_type 'text/plain', charset: 'utf-8'
+  response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.com'
   bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: salt}
   URI.encode('javascript:' + Uglifier.compile(bookmarklet, beautify: false))
 end
@@ -30,6 +31,7 @@ end
 
 get '/app' do
   content_type 'text/plain', charset: 'utf-8'
+  response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.com'
   'data:text/html;base64,'+[haml('shibboleth.html'.to_sym, locals: {salt: salt})].pack('m0')
 end
 
