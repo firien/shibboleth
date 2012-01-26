@@ -4,5 +4,3 @@
 .sass-cache/
 #logging
 log/
-#ruby
-Gemfile.lock
