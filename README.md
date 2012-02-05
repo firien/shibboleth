@@ -17,7 +17,7 @@ Nope. The bookmarklet and standalone web page are both stored on your computer a
 No problem, append ':xxx' to your master password to truncate it. For example 'master:16' will create a password only 16 characters long.
 
 ###Salting
-You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (and complexity). It makes the javascript unique to you.
+You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (& complexity). It makes the javascript unique to you.
 
 ####Why is it named Shibboleth?
 

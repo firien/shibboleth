@@ -144,7 +144,7 @@
             (function(){
               var x = i;//scope it
               var xhr = new XMLHttpRequest();
-              xhr.open("GET", 'http://stormy-night-7144.herokuapp.com' + actions[x].url + "?salt=" + $('#salt').value);
+              xhr.open("GET", 'https://stormy-night-7144.herokuapp.com' + actions[x].url + "?salt=" + $('#salt').value);
               xhr.onreadystatechange = function(){
               	if (xhr.readyState == 4 && xhr.status == 200) {
               		$('#' + actions[x].eid).setAttribute('href', xhr.responseText);
