@@ -14,14 +14,10 @@
         text-shadow:#ddd 0px 2px 0px;
         margin-top:0;
       }
-      p:first-letter {
-        /float:left;
-        /font-size:2em;
-        / border:1px solid red;
-      }
       .bar {
+        margin-top:20%;
         float:left;
-        / margin-left:65%;
+        /margin-left:65%;
         padding:3em 1em;
         text-align:center;
       }
@@ -58,7 +54,6 @@
         background-image: -o-linear-gradient(top, #ddd, #bbb);
         background-repeat: no-repeat;
         box-shadow: 0 0.1em 0.3em  #000;
-        width: 100%;
         text-align:center;
         margin:0.5em;
       }
@@ -73,6 +68,11 @@
         background-image: -o-linear-gradient(top, #eee, #ccc);
         background-repeat: no-repeat;
       }
+      a.internal span {
+        /*background-image:url('images/l.gif');*/
+        background-repeat: no-repeat;
+        / padding-left:24px;
+      }
       span.salted {
         background-image:url('images/salt.png');
         background-repeat: no-repeat;
@@ -83,7 +83,7 @@
         font-size:1em;
       }
       input[type=button] {
-        font-size:0.75em;
+        font-size:1em;
         margin:0;
         border: 1px solid #294d6b;
         padding: 0.5em 1em;
@@ -153,6 +153,9 @@
               }
               xhr.send(null);
             }).call(this);
+            //switch widget url
+        		$('#widget').setAttribute('href', 'https://stormy-night-7144.herokuapp.com/widget.zip?salt=' + $('#salt').value);
+        		$('#widget span').setAttribute('class', 'salted');
           }
         }, true)
       }, true)
@@ -172,28 +175,25 @@
         The second way to use Shibboleth is through the standalone web page. Sometimes, specifically on mobile devices, you will be logging into sites through native applications and the first method described above is not an option. So the standalone web page allows you to manually set the TLD, generate your unique password, copy to the clipboard, & paste it in the native application.
 
         The standalone web page is encoded into a data uri, so no internet access is required to use it.
-
         ###Is my password stored anywhere?
         Nope. The bookmarklet and standalone web page are both stored on your computer and do not communicate with any server. Check out the source code at [github](https://github.com/firien/shibboleth).
         ###Site \*\*\*.com limits my password to 10 characters
         No problem, append ':xxx' to your master password to truncate it. For example 'master:16' will generate a password only 16 characters long.
-
         ###Salting
-        You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (and complexity). It makes the javascript unique to you.
-      %input#salt{type: 'text', name: 'salt', placeholder: 'Salt'}
-      %input#sprinkle{type: 'button', value: 'Generate with a sprinkle of Salt'}
-      /%a.internal#salt-js{title: 'shibboleth.js'}
-      /  %span Bookmarklet
-      /%a.internal#salt-app{title: 'shibboleth.app'}
-      /  %span Web App
+        You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. You must use the same Salt to regenerate 
     .bar
-      %div
-        -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: ''}
-        -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet,beautify: false))
-        %a.internal#salt-js{title: 'shibboleth.js', href: bookmarklet}
-          %span Bookmarklet
-        -app = haml 'shibboleth.html'.to_sym
-        %a.internal#salt-app{title: 'shibboleth.app', href: 'data:text/html;base64,'+[app].pack('m0')}
-          %span Web App
+      -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: '', widget: false}
+      -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet,beautify: false))
+      %a.internal#salt-js{title: 'shibboleth.js', href: bookmarklet}
+        %span Bookmarklet
+      -app = haml 'shibboleth.html'.to_sym, locals: {widget: false}
+      %a.internal#salt-app{title: 'shibboleth.app', href: 'data:text/html;base64,'+[app].pack('m0')}
+        /=haml 'loading.svg'.to_sym, locals: {angle: 0}
+        %span Web App
+      %a.internal#widget{title: 'widget', href: 'widget.zip'}
+        %span OS X Widget
+      %input#salt{type: 'text', name: 'salt', placeholder: 'Salt'}
+      %br
+      %input#sprinkle{type: 'button', value: 'Regenerate with Salt'}
     %a{href: 'https://github.com/firien/shibboleth'}
       %img{style: 'position: absolute; top: 0; right: 0; border: 0', src: 'https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67', alt: 'Fork me on GitHub'}

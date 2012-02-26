@@ -24,6 +24,6 @@ You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptogr
 ##Developers
 The website is not finished and a complete mess. I hope to finish it soon and have it running on Heroku.
 
-Run with sinatra `rackup config.ru` => localhost:9292
+Run with sinatra `bundle exec rackup config.ru` => localhost:9292
 
 ###*Requires Ruby 1.9*
