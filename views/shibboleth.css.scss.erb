@@ -2,7 +2,11 @@ body {
   text-align:center;
   font-family:Helvetica;
   margin:10px;
+<% if widget %>
+  background-color:transparent;
+<% else %>
   background-color:rgb(220,223,229);
+<% end %>
 }
 input, output {
   -webkit-appearance: none;
@@ -119,6 +123,9 @@ form {
     position:relative;
     top:-1px;
     border-top:1px solid rgb(171,171,171);
+<% if widget %>
+    border-radius: 0px 0px 10px 10px;
+<% end %>
   }
   output {
     padding-right:10px;
@@ -144,8 +151,13 @@ form {
     background-color:rgb(109,132,162);
     background-image: -webkit-linear-gradient(top, rgb(176,188,205), rgb(136,155,179) 50%, rgb(129,149,175) 50%, rgb(109,132,162));
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(176,188,205)), to(rgb(109,132,162)), color-stop(0.5, rgb(136,155,179)), color-stop(0.5, rgb(129,149,175)));
+<% if widget %>
+    border-radius: 10px 10px 0 0;
+    margin: 0;
+<% else %>
     border-radius:0;
     margin:-10px -10px 10px -10px;
+<% end %>
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -162,7 +174,22 @@ form {
   label {
     display:none;
   }
+<% if widget %>
+  #wrapper {
+    border-radius: 10px;
+    box-shadow: black 0 2px 10px;
+    -webkit-box-shadow: black 0 2px 10px;
+  }
+
+  div.bg {
+    border-radius: 0 0 10px 10px;
+    padding:10px;
+    padding-bottom:40px;
+    background-image: url('images/pattern.svg');
+  }
+<% else %>
   body {
     background-image:url("data:image/svg+xml;base64,<%=[haml('pattern.svg'.to_sym)].pack('m0')%>");
   }
+<% end %>
 }

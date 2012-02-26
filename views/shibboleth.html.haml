@@ -13,42 +13,26 @@
     /%link{rel: 'apple-touch-startup-image', sizes: "1024x748", href: 'http://firien.github.com/shibboleth/images/startup-ipad@landscape.png'}
     /%link{rel: 'stylesheet', href: '/assets/shibboleth.css', type: 'text/css', media: 'screen'}
     :css
-      #{scss erb('shibboleth.css.scss'.to_sym)}
-    -js = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: false, salt: salt}
-    :javascript
-      function shibboleth() {
-        //just use coffeescripts anonymous executed function
-        #{Uglifier.compile(js, beautify: false)}
-      }
-      function $(selector) { return document.querySelector(selector); }
-      document.addEventListener('DOMContentLoaded', function() {
-        if (("standalone" in window.navigator) && (!window.navigator.standalone)) {
-          $(".title").style.display = 'none';
+      #{scss erb('shibboleth.css.scss'.to_sym, locals: {widget: widget})}
+    - if widget
+      %script{type: 'text/javascript', src: 'main.js', charset: 'utf-8'}
+    - else
+      -js = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: false, salt: salt, widget: widget}
+      :javascript
+        function shibboleth() {
+          //just use coffeescripts anonymous executed function
+          #{Uglifier.compile(js, beautify: false)}
         }
-        var f = $("form");
-        f.addEventListener('submit', function(e) {
-          e.preventDefault();
-          $("input[type=password]").blur();
-          return false;
-        }, true);
-        var t = $("input[type=password]");
-        t.addEventListener('blur', function(e) {
-          shibboleth();
-        })
-        t.addEventListener('keyup', function(e) {
-          if (e.keyCode == 13) {
-            setTimeout(function() {
-              $("input[type=password]").blur();
-            }, 100);
-          }
-        })
-      })
+        #{coffee erb 'dom.js.coffee'.to_sym, locals: {widget: widget}}
   %body
-    .title Shibboleth
-    %form
-      %input{type: 'url', placeholder: 'www.host.com', autocapitalize: 'off', autofocus: true}
-      %label{for: 'host'} TLD
-      %input{type: 'password', placeholder: 'password'}
-      %label{for: 'password'} Password
-      %output
-    %a{href: 'https://github.com/firien/shibboleth'} https://github.com/firien/shibboleth
+    #wrapper
+      .title Shibboleth
+      .bg
+        %form
+          %input{type: 'url', placeholder: 'www.host.com', autocapitalize: 'off', autofocus: true}
+          %label{for: 'host'} TLD
+          %input{type: 'password', placeholder: 'password'}
+          %label{for: 'password'} Password
+          - unless widget
+            %output
+        %a{href: 'https://github.com/firien/shibboleth'} https://github.com/firien/shibboleth

@@ -1,0 +1,34 @@
+$ = (selector) ->
+  document.querySelector selector
+window.$ = $
+
+document.addEventListener('DOMContentLoaded', ->
+<% if widget %>
+  if window.widget
+    #map hyperlinks to widget.openURL
+    links = document.querySelectorAll('a')
+    for link in links
+      link.addEventListener('click', (e) ->
+        e.preventDefault()
+        widget.openURL(e.target.getAttribute('href'))
+        return
+      , false)
+<% else %>
+  if (("standalone" in window.navigator) && (!window.navigator.standalone))
+    $(".title").style.display = 'none'
+<% end %>
+  f = $("form")
+  f.addEventListener('submit', (e) ->
+    e.preventDefault()
+    $("input[type=password]").blur()
+    return false
+  , true)
+  t = $("input[type=password]")
+  t.addEventListener 'blur', (e) ->
+    shibboleth()
+  t.addEventListener 'keyup', (e) ->
+    if (e.keyCode == 13)
+      setTimeout( ->
+        $("input[type=password]").blur()
+      , 100)
+)
