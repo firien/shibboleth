@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', ->
         return
       , false)
 <% else %>
-  if (("standalone" in window.navigator) && (!window.navigator.standalone))
+  if ((`"standalone" in window.navigator`) && (!window.navigator.standalone))
     $(".title").style.display = 'none'
 <% end %>
   f = $("form")
