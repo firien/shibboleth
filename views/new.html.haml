@@ -17,9 +17,7 @@
       .bar {
         margin-top:20%;
         float:left;
-        /margin-left:65%;
         padding:3em 1em;
-        text-align:center;
       }
       .bar div {
         position:fixed;
@@ -30,7 +28,9 @@
         / text-align:justify;
         / position:absolute;
         / display:inline-block;
-        width:65%;
+        width:60%;
+        min-width:380px;
+        max-width:600px;
         background-color:#dadada;
         / top:0;
         / bottom:0;
@@ -45,7 +45,6 @@
         padding: 0.5em 1em;
         background-color: #ddd;
         border-radius: 3px;
-        text-decoration: none;
         font-weight: bold;
         color: #222;
         white-space: nowrap;
@@ -53,11 +52,11 @@
         background-image: -webkit-linear-gradient(top, #ddd, #bbb);
         background-image: -o-linear-gradient(top, #ddd, #bbb);
         background-repeat: no-repeat;
-        box-shadow: 0 0.1em 0.3em  #000;
-        text-align:center;
+        box-shadow: 0 0.1em 0.3em #000;
         margin:0.5em;
+        text-decoration: none;
       }
-      a.internal:active, input[type=button]:active {
+      a.internal:active {
         box-shadow: 0 0.1em 0.3em #000 inset;
       }
       a.internal:hover {
@@ -82,23 +81,6 @@
         font-weight:bold;
         font-size:1em;
       }
-      input[type=button] {
-        font-size:1em;
-        margin:0.5em;
-        border: 1px solid #294d6b;
-        padding: 0.5em 1em;
-        background-color: #ddd;
-        border-radius: 3px;
-        font-weight: bold;
-        color: #222;
-        white-space: nowrap;
-        background-image: -moz-linear-gradient(top, #ddd, #bbb);
-        background-image: -webkit-linear-gradient(top, #ddd, #bbb);
-        background-image: -o-linear-gradient(top, #ddd, #bbb);
-        background-repeat: no-repeat;
-        box-shadow: 0 0.1em 0.3em  #000;
-        text-align:center;
-      }
       code {
         border-radius:3px;
         / border:1px solid black;
@@ -108,37 +90,39 @@
         background-color:transparent;
         border-radius:none;
       }
-      @media screen and (max-width:500px) {
+      pre {
+        overflow-x:scroll;
+        overflow-y:hidden;
+        background-color:white;
+        padding:1em;
+      }
+      hr {
+        margin-top:2em;
+        margin-bottom:2em;
+      }
+      @media screen and (max-width:650px) {
         .article {
           float:none;
           width:auto;
+          max-width:none;
           padding:1em;
           background-color:#d5d5d5;
           -webkit-box-shadow: 0px 5px 5px -2px #222;
         }
         .bar {
-          float:none;
+          float: none;
+          padding-top:0.25em;
+          margin-top:0.25em;
           margin-right:auto;
           margin-left:auto;
-        }
-        .bar div {
-          position:static;
-          width:100%;
-        }
-        a.internal {
           width:auto;
-        }
-        pre {
-          overflow-x:scroll;
-          overflow-y:hidden;
-          background-color:white;
-          padding:1em;
         }
       }
     :javascript
       function $(selector) { return document.querySelector(selector); }
       document.addEventListener('DOMContentLoaded', function() {
-        $('#sprinkle').addEventListener('click', function() {
+        $('#sprinkle').addEventListener('click', function(e) {
+          e.preventDefault();
           var actions = [{url: '/bookmarklet.js', eid: 'salt-js'}, {url: '/app', eid: 'salt-app'}];
           for (var i=0;i<actions.length;i++) {
             (function(){
@@ -157,6 +141,7 @@
             $('#widget').setAttribute('href', 'https://stormy-night-7144.herokuapp.com/widget.zip?salt=' + $('#salt').value);
             $('#widget span').setAttribute('class', 'salted');
           }
+          return false
         }, true)
       }, true)
   %body
@@ -182,7 +167,7 @@
         ###Is my password stored anywhere?
         Nope. The bookmarklet and standalone web page are both stored on your computer and do not communicate with any server. Check out the source code at [github](https://github.com/firien/shibboleth).
         ###Site \*\*\*.com limits my password to 10 characters
-        No problem, append ':xxx' to your master password to truncate it. For example 'master:16' will generate a password only 16 characters long.
+        No problem, append ':xxx' to your master password to truncate it. For example `master:16` will create a password only 16 characters long.
         ###Salting
         You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. You must use the same Salt to regenerate 
     .bar
@@ -196,8 +181,10 @@
         %span Web App
       %a.internal#widget{title: 'widget', href: 'https://stormy-night-7144.herokuapp.com/widget.zip'}
         %span OS X Widget
+      %hr
+      %a.internal#sprinkle{href: '#'}
+        %span Regenerate w/Salt
       %input#salt{type: 'text', name: 'salt', placeholder: 'Salt'}
       %br
-      %input#sprinkle{type: 'button', value: 'Regenerate with Salt'}
     %a{href: 'https://github.com/firien/shibboleth'}
       %img{style: 'position: absolute; top: 0; right: 0; border: 0', src: 'https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67', alt: 'Fork me on GitHub'}
