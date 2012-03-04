@@ -2,8 +2,12 @@
 %html
   %head
     %meta{name: 'viewport', content: 'initial-scale=1.0'}
-    %meta{:'http-equiv' => 'content-type', :content => 'text/html;charset=UTF-8'}
+    %meta{:'http-equiv' => 'content-type', :content => 'text/html;charset=utf-8'}
     %title Shibboleth
+    %link{rel: 'stylesheet', href: '/assets/modal.css', type: 'text/css', media: 'screen'}
+    %script{type: 'text/javascript', src: '/assets/pico.js'}
+    %script{type: 'text/javascript', src: '/assets/modal.js'}
+    %script{type: 'text/javascript', src: '/assets/pencil.js'}
     :css
       body {
         margin:0;
@@ -120,9 +124,23 @@
         }
       }
     :javascript
-      function $(selector) { return document.querySelector(selector); }
       document.addEventListener('DOMContentLoaded', function() {
-        $('#sprinkle').addEventListener('click', function(e) {
+        $('#sprinkle')[0].addEventListener('click', function(e) {
+          var hud = modal.presentModalView();
+          var canvas = document.createElement('canvas');
+          canvas.attr('id', 'imageView');
+          hud.appendChild(canvas);
+          canvas.width = hud.clientWidth;
+          canvas.height = hud.clientHeight;
+          var p = document.createElement('p');
+          if ('ontouchstart' in document.documentElement)
+            p.appendChild(document.createTextNode('Drag Finger'))
+          else
+            p.appendChild(document.createTextNode('Hold Down Mouse & Drag'))
+          hud.appendChild(p)
+          window.initializeCanvas();
+          e.preventDefault();
+          return false;
           e.preventDefault();
           var actions = [{url: '/bookmarklet.js', eid: 'salt-js'}, {url: '/app', eid: 'salt-app'}];
           for (var i=0;i<actions.length;i++) {
@@ -147,8 +165,10 @@
       }, true)
   %body
     .article
+      %h1<
+        Shibboleth
+        %sup> (ß)
       :markdown
-        #Shibboleth
         Sick of juggling passwords in your head? Making each one different enough so to not expose yourself to risk? Shibboleth lets you remember one single master password - and uses it to *generate* a unique password per website.
         ###How does it work?
         Suppose you are logging into Gmail; the URL would look something like this:

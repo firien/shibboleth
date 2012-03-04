@@ -95,6 +95,26 @@ class App < Sinatra::Base
     end
     send_file zip_file.path, filename: 'Shibboleth.zip', type: 'application/octet-stream'
   end
+
+  get '/assets/pico.js' do
+    content_type 'text/javascript', charset: 'utf-8'
+    coffee 'pico.js'.to_sym
+  end
+
+  get '/assets/modal.js' do
+    content_type 'text/javascript', charset: 'utf-8'
+    coffee 'modal.js'.to_sym
+  end
+
+  get '/assets/pencil.js' do
+    content_type 'text/javascript', charset: 'utf-8'
+    coffee 'pencil.js'.to_sym
+  end
+
+  get '/assets/modal.css' do
+    content_type 'text/css', charset: 'utf-8'
+    scss 'modal.css'.to_sym
+  end
 end
 
 class Numeric
