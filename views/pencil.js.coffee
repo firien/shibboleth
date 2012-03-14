@@ -28,7 +28,7 @@ class Pencil
     if @started
       current_point = new CPoint(ev._x, ev._y)
       random_spread = 20 + Math.random() * 60
-      if window.prng.all((index,item) -> item.distance(current_point) > random_spread)
+      if window.prng.all(-> this.distance(current_point) > random_spread)
         window.prng.push current_point
         @context.save()
         @context.beginPath()
@@ -56,27 +56,37 @@ class Pencil
         @context.fillRect(0,0,@context.canvas.width,@context.canvas.height)
         @context.fillStyle = '#eee'
         that = this
-        window.prng.each (index,item) ->
+        window.prng.each ->
           that.context.beginPath()
-          that.context.arc(item.x,item.y,3,0,Math.PI*2,true)
+          that.context.arc(this.x,this.y,3,0,Math.PI*2,true)
           that.context.closePath()
           that.context.fill()
-        console.log(window.prng.each((i,e) -> e.toString()).join(''))
+        #calc PRN from points
+        prn = window.prng.slice(0,9).map(-> this.toString()).join('')
+        console.log prn
+        salt_shaker prn
+        window.modal.current.dismissModalView()
+        if `'ontouchstart' in document.documentElement`
+          $('body')[0].removeEventListener('touchstart', window.disabler, false)
         #for quatto
-        window.prng = []
-        setTimeout((-> that.context.clearRect(0,0,that.context.canvas.width,that.context.canvas.height)), 2000)
+        #window.prng = []
+        #setTimeout((-> that.context.clearRect(0,0,that.context.canvas.width,that.context.canvas.height)), 2000)
       else
         window.prng = []
         alert "Not enough points retry"
 window.Pencil = Pencil
 
+disabler = (e) ->
+  e.preventDefault()
+  return false
+
+window.disabler = disabler
+
 initializeCanvas = ->
+  disabler
   #disable scrolling on touch devices
   if `'ontouchstart' in document.documentElement`
-    $('body')[0].addEventListener('touchstart', (e) ->
-      e.preventDefault()
-      return false;
-    , false)
+    $('body')[0].addEventListener('touchstart', window.disabler, false)
   window.prng = []
 
   canvas = document.querySelector '#imageView'

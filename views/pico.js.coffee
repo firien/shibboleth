@@ -1,13 +1,17 @@
-$ = (selector) -> document.querySelectorAll selector
+$ = (selector) ->
+  Array::slice.call document.querySelectorAll selector
 window.$ = $
 
-Array::each = NodeList::each = (fn) ->
-  fn index, item for item, index in this
+Array::each = (fn) ->
+  fn.call item for item in this
+  return
 
-Array::all = NodeList::each = (fn) ->
+Array::map = (fn) -> fn.call item for item in this
+
+Array::all = (fn) ->
   all = true
-  for item, index in this
-    if not fn index, item
+  for item in this
+    if not fn.call item
       all = false
       break
   return all
@@ -24,10 +28,10 @@ Element::empty = ->
 Element::remove = ->
   @parentNode.removeChild this
 
-NodeList::css = (name, value) ->
-  @each (index, item) ->
-    item.css name, value
+Array::css = (name, value) ->
+  @each ->
+    this.css name, value
 
-NodeList::attr = (name, value) ->
-  @each (index, item) ->
-    item.attr name, value
+Array::attr = (name, value) ->
+  @each ->
+    this.attr name, value

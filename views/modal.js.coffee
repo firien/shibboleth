@@ -54,7 +54,7 @@ class modal
       container.empty()
       setTimeout(( -> $('#modal')[0].remove()), 300)
       container.css 'backgroundColor', 'rgba(0,0,0,0)'
-      $('body').css 'overflow', 'auto'
+      $('body')[0].removeAttribute 'style'
     container = null
     return
   @presentModalView = (fn, dismissCallback) ->

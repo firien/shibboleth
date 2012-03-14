@@ -76,11 +76,18 @@
         background-repeat: no-repeat;
         / padding-left:24px;
       }
-      span.salted {
-        background-image:url('images/salt.png');
-        background-repeat: no-repeat;
-        padding-left:24px;
+      a.internal span.salted::after {
+        content:'salt';
+        font-weight:normal;
+        text-transform:uppercase;
+        font-size:0.5em;
+        vertical-align: super
       }
+      /span.salted {
+      /  background-image:url('images/salt.png');
+      /  background-repeat: no-repeat;
+      /  padding-left:24px;
+      /}
       input[type=text] {
         font-weight:bold;
         font-size:1em;
@@ -104,6 +111,11 @@
         margin-top:2em;
         margin-bottom:2em;
       }
+      a sup {
+        font-weight:normal;
+        text-transform:uppercase;
+        font-size:0.1em;
+      }
       @media screen and (max-width:650px) {
         .article {
           float:none;
@@ -124,6 +136,32 @@
         }
       }
     :javascript
+      var salt_shaker = function(salt) {
+        var actions = [{url: '/bookmarklet.js', eid: 'salt-js'}, {url: '/app', eid: 'salt-app'}];
+        for (var i=0;i<actions.length;i++) {
+          (function(){
+            var x = i;//scope it
+            $('#' + actions[x].eid + ' svg').css('display', '');
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", 'https://stormy-night-7144.herokuapp.com' + actions[x].url + "?salt=" + salt);
+            xhr.onreadystatechange = function(){
+              if (xhr.readyState == 4 && xhr.status == 200) {
+                $('#' + actions[x].eid + ' svg').css('display', 'none');
+                $('#' + actions[x].eid).attr('href', xhr.responseText);
+                $('#' + actions[x].eid + ' span').attr('class', 'salted');
+              }
+             if ($('#salt')[0].textContent == '') {
+               //$('#salt')[0].textContent = salt
+             }
+            }
+            xhr.send(null);
+          }).call(this);
+        }
+        //switch widget url
+        $('#widget').attr('href', 'https://stormy-night-7144.herokuapp.com/widget.zip?salt=' + salt);
+        $('#widget span').attr('class', 'salted');
+      }
+      window.salt_shaker = salt_shaker;
       document.addEventListener('DOMContentLoaded', function() {
         $('#sprinkle')[0].addEventListener('click', function(e) {
           var hud = modal.presentModalView();
@@ -141,26 +179,6 @@
           window.initializeCanvas();
           e.preventDefault();
           return false;
-          e.preventDefault();
-          var actions = [{url: '/bookmarklet.js', eid: 'salt-js'}, {url: '/app', eid: 'salt-app'}];
-          for (var i=0;i<actions.length;i++) {
-            (function(){
-              var x = i;//scope it
-              var xhr = new XMLHttpRequest();
-              xhr.open("GET", 'https://stormy-night-7144.herokuapp.com' + actions[x].url + "?salt=" + $('#salt').value);
-              xhr.onreadystatechange = function(){
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                  $('#' + actions[x].eid).setAttribute('href', xhr.responseText);
-                  $('#' + actions[x].eid + ' span').setAttribute('class', 'salted');
-                }
-              }
-              xhr.send(null);
-            }).call(this);
-            //switch widget url
-            $('#widget').setAttribute('href', 'https://stormy-night-7144.herokuapp.com/widget.zip?salt=' + $('#salt').value);
-            $('#widget span').setAttribute('class', 'salted');
-          }
-          return false
         }, true)
       }, true)
   %body
@@ -195,17 +213,19 @@
       -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: '', widget: false}
       -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet,beautify: false))
       %a.internal#salt-js{title: 'shibboleth.js', href: bookmarklet}
+        =haml 'loading.svg'.to_sym, locals: {angle: 0}
         %span Bookmarklet
       -app = haml 'shibboleth.html'.to_sym, locals: {widget: false}
       %a.internal#salt-app{title: 'shibboleth.app', href: 'data:text/html;base64,'+[app].pack('m0')}
-        /=haml 'loading.svg'.to_sym, locals: {angle: 0}
+        =haml 'loading.svg'.to_sym, locals: {angle: 0}
         %span Web App
       %a.internal#widget{title: 'widget', href: 'https://stormy-night-7144.herokuapp.com/widget.zip'}
         %span OS X Widget
       %hr
       %a.internal#sprinkle{href: '#'}
         %span Regenerate w/Salt
-      %input#salt{type: 'text', name: 'salt', placeholder: 'Salt'}
+      %p#salt
+      /%input#salt{type: 'text', name: 'salt', placeholder: 'Salt'}
       %br
     %a{href: 'https://github.com/firien/shibboleth'}
       %img{style: 'position: absolute; top: 0; right: 0; border: 0', src: 'https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67', alt: 'Fork me on GitHub'}
