@@ -61,6 +61,9 @@ class Pencil
           that.context.arc(this.x,this.y,3,0,Math.PI*2,true)
           that.context.closePath()
           that.context.fill()
+        #fill in with opacity
+        @context.fillStyle = 'rgba(123,163,200,0.8)'
+        @context.fillRect(0,0,@context.canvas.width,@context.canvas.height)
         #calc PRN from points
         prn = window.prng.slice(0,9).map(-> this.toString()).join('')
         #console.log prn
