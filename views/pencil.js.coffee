@@ -43,7 +43,7 @@ class Pencil
       @context.stroke()
 
   # This is called when you release the mouse button.
-  Pencil::mouseup = Pencil::touchend = (ev) ->
+  Pencil::mouseup = Pencil::touchend = Pencil::touchcancel = (ev) ->
     if @started
       # @mousemove ev
       @context.closePath()
@@ -65,7 +65,17 @@ class Pencil
         prn = window.prng.slice(0,9).map(-> this.toString()).join('')
         console.log prn
         salt_shaker prn
-        window.modal.current.dismissModalView()
+        #window.modal.current.dismissModalView()
+        
+        
+        p = document.createElement 'div'
+        p.attr 'id', 'salt-hud'
+        p.css 'height', $('.hud canvas')[0].height + 'px'
+        p.css 'lineHeight', $('.hud canvas')[0].height + 'px'
+        p.appendChild document.createTextNode prn
+        $('.hud')[0].appendChild p
+        
+        
         if `'ontouchstart' in document.documentElement`
           $('body')[0].removeEventListener('touchstart', window.disabler, false)
         #for quatto

@@ -19,19 +19,19 @@ div#modal {
 
 div.hud {
   font-size: 0.8em;
-  background-color: white;
+  background-color: #999;
   margin: 10% auto 0 auto;
   border: 10px solid rgba(255, 255, 255, 0.6);
   height: auto;
   width: 410px;
   background-clip: padding-box;
   border-radius: 10px;
+  position:relative;
 }
 
 @media screen and (max-width:650px) {
   div.hud {
     font-size: 0.8em;
-    background-color: white;
     margin: 1em;
     border: 0.5em solid rgba(255, 255, 255, 0.6);
     height: auto;
