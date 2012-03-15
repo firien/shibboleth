@@ -52,9 +52,9 @@ class Pencil
       #are there enough points?
       if window.prng.length > 10
         #clear rect and redraw all points
-        @context.fillStyle = '#444'
+        @context.fillStyle = '#eee'#'#444'
         @context.fillRect(0,0,@context.canvas.width,@context.canvas.height)
-        @context.fillStyle = '#eee'
+        @context.fillStyle = '#000'
         that = this
         window.prng.each ->
           that.context.beginPath()
@@ -63,18 +63,19 @@ class Pencil
           that.context.fill()
         #calc PRN from points
         prn = window.prng.slice(0,9).map(-> this.toString()).join('')
-        console.log prn
+        #console.log prn
         salt_shaker prn
         #window.modal.current.dismissModalView()
         
-        
+        canvas = $('.hud canvas')[0]
         p = document.createElement 'div'
         p.attr 'id', 'salt-hud'
-        p.css 'height', $('.hud canvas')[0].height + 'px'
-        p.css 'lineHeight', $('.hud canvas')[0].height + 'px'
+        p.css 'height', canvas.height + 'px'
+        p.css 'width', canvas.width + 'px'
+        p.css 'lineHeight', canvas.height + 'px'
         p.appendChild document.createTextNode prn
-        $('.hud')[0].appendChild p
-        
+        p.css 'backgroundImage', "url(#{canvas.toDataURL('image/png')})"
+        $('.hud')[0].replaceChild p, canvas
         
         if `'ontouchstart' in document.documentElement`
           $('body')[0].removeEventListener('touchstart', window.disabler, false)
