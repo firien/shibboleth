@@ -120,12 +120,12 @@ initializeCanvas = ->
         ev._x = ev.touches[0].clientX - canvas.offsetLeft
         ev._y = ev.touches[0].clientY - canvas.offsetTop
     else
-      if (ev.layerX || ev.layerX == 0)# Firefox
-        ev._x = ev.layerX
-        ev._y = ev.layerY - window.pageYOffset
-      else if (ev.offsetX || ev.offsetX == 0)# Opera
+      if (ev.offsetX || ev.offsetX == 0)# Opera
         ev._x = ev.offsetX
         ev._y = ev.offsetY - window.pageYOffset
+      else if (ev.layerX || ev.layerX == 0)# Firefox
+        ev._x = ev.clientX - canvas.offsetLeft
+        ev._y = ev.clientY - canvas.offsetTop
 
     # Call the event handler of the tool.
     func = tool[ev.type]
