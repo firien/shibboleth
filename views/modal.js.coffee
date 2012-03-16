@@ -37,6 +37,11 @@ class modal
     , 20)
     hud = document.createElement 'div'
     hud.attr 'class', 'hud'
+    #check for ios 4 (no fixed position)
+    if navigator.userAgent.match /OS 4_/
+      container.css 'position', 'absolute'
+      container.css 'top', window.pageYOffset + 'px'
+      container.css 'height', '480px'
     container.appendChild hud
     window.modal.current = this
     container.addEventListener 'click', @dismiss

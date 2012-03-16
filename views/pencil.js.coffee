@@ -117,8 +117,12 @@ initializeCanvas = ->
     ev.preventDefault() if ev.type == 'touchstart'
     if `'touches' in ev`
       if ev.touches.length > 0
-        ev._x = ev.touches[0].clientX - canvas.offsetLeft
-        ev._y = ev.touches[0].clientY - canvas.offsetTop
+        if navigator.userAgent.match /OS 4_/
+          ev._x = ev.touches[0].clientX - window.pageXOffset - canvas.offsetLeft
+          ev._y = ev.touches[0].clientY - window.pageYOffset - canvas.offsetTop
+        else
+          ev._x = ev.touches[0].clientX - canvas.offsetLeft
+          ev._y = ev.touches[0].clientY - canvas.offsetTop
     else
       if (ev.offsetX || ev.offsetX == 0)# Opera
         ev._x = ev.offsetX
