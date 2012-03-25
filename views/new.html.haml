@@ -19,25 +19,18 @@
         margin-top:0;
       }
       .bar {
-        margin-top:20%;
+        margin-top:15%;
         float:left;
         padding:3em 1em;
-      }
-      .bar div {
-        position:fixed;
+        width:250px;
       }
       .article {
         float:left;
         padding:1em;
-        / text-align:justify;
-        / position:absolute;
-        / display:inline-block;
         width:60%;
         min-width:380px;
         max-width:600px;
         background-color:#dadada;
-        / top:0;
-        / bottom:0;
         -webkit-box-shadow: -5px 0px 5px -2px #888 inset;
         text-shadow:#fff 0px 1px 0px;
       }
@@ -46,7 +39,7 @@
       }
       a.internal {
         display:block;
-        padding: 0.5em 1em;
+        padding: 0.5em 0.5em 0.5em 1em;
         background-color: #ddd;
         border-radius: 3px;
         font-weight: bold;
@@ -64,17 +57,12 @@
         box-shadow: 0 0.1em 0.3em #000 inset;
       }
       a.internal:hover {
-        color: blue;
+        color: white;
         background-color: #ccc;
-        background-image: -moz-linear-gradient(top, #eee, #ccc);
-        background-image: -webkit-linear-gradient(top, #eee, #ccc);
-        background-image: -o-linear-gradient(top, #eee, #ccc);
+        background-image: -moz-linear-gradient(top, #48c, #37b);
+        background-image: -webkit-linear-gradient(top, #48c, #37b);
+        background-image: -o-linear-gradient(top, #48c, #37b);
         background-repeat: no-repeat;
-      }
-      a.internal span {
-        /*background-image:url('images/l.gif');*/
-        background-repeat: no-repeat;
-        / padding-left:24px;
       }
       a.internal span.salted::after {
         content:' salt';
@@ -83,18 +71,12 @@
         font-size:0.5em;
         vertical-align: super
       }
-      /span.salted {
-      /  background-image:url('images/salt.png');
-      /  background-repeat: no-repeat;
-      /  padding-left:24px;
-      /}
       input[type=text] {
         font-weight:bold;
         font-size:1em;
       }
       code {
         border-radius:3px;
-        / border:1px solid black;
         background-color:white;
       }
       pre code {
@@ -132,6 +114,33 @@
         text-shadow:#ddd 0px 1px 0px;
         margin: 0.2em 0;
       }
+      .drop {
+        display:inline-block;
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        background-image:url('assets/drop.svg'), -webkit-linear-gradient(top, #ddd, #bbb);
+        background-position:center center;
+        background-repeat: no-repeat;
+        padding: 1em;
+        margin: 0;
+        border-radius: 0 3px 3px 0;
+        border-left:1px solid black;
+      }
+      .drop:hover {
+        background-image: url('assets/drop.svg?invert=true'), -webkit-linear-gradient(top, #159, #048);
+      }
+      .drop:active {
+        box-shadow: 0 0.1em 0.3em #000 inset;
+      }
+      .bar p {
+        margin:0.5em;
+        padding-left:0.5em;
+        margin-bottom:2em;
+        color:#ccc;
+        text-shadow:#000 0px 1px 0px;
+      }
       @media screen and (max-width:650px) {
         .article {
           float:none;
@@ -166,9 +175,6 @@
                 $('#' + actions[x].eid).attr('href', xhr.responseText);
                 $('#' + actions[x].eid + ' span').attr('class', 'salted');
               }
-             if ($('#salt')[0].textContent == '') {
-               //$('#salt')[0].textContent = salt
-             }
             }
             xhr.send(null);
           }).call(this);
@@ -196,6 +202,20 @@
           p.appendChild(document.createTextNode('To Generate Salt'))
           hud.appendChild(p)
           window.initializeCanvas();
+          e.preventDefault();
+          return false;
+        }, false)
+        $('#known-salt')[0].addEventListener('click', function(e) {
+          var s = prompt('Salt');
+          window.salt_shaker(s);
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }, true)
+        $('#show-source')[0].addEventListener('click', function(e) {
+          var hud = modal.presentModalView();
+          hud.appendChild(document.createTextNode($('#salt-js')[0].attr('href')));
+          e.stopPropagation();
           e.preventDefault();
           return false;
         }, true)
@@ -231,20 +251,24 @@
     .bar
       -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: '', widget: false}
       -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet,beautify: false))
-      %a.internal#salt-js{title: 'shibboleth.js', href: bookmarklet}
+      %a.internal#salt-js{title: 'shibboleth.js', href: bookmarklet, style: 'position:relative;'}
         =haml 'loading.svg'.to_sym, locals: {angle: 0}
         %span Bookmarklet
+        #show-source.drop{title: 'View Source'}
+      %p Drag this link your Bookmarks Bar
       -app = haml 'shibboleth.html'.to_sym, locals: {widget: false}
       %a.internal#salt-app{title: 'shibboleth.app', href: 'data:text/html;base64,'+[app].pack('m0')}
         =haml 'loading.svg'.to_sym, locals: {angle: 0}
         %span Web App
+      %p Click on this link and then bookmark
       %a.internal#widget{title: 'widget', href: 'https://stormy-night-7144.herokuapp.com/widget.zip'}
         %span OS X Widget
+      %p Download & Install
       %hr
-      %a.internal#sprinkle{href: '#'}
-        %span Regenerate w/Salt
-      %p#salt
-      /%input#salt{type: 'text', name: 'salt', placeholder: 'Salt'}
+      %a.internal#sprinkle{href: '#', style: 'position:relative;'}
+        %span Salt
+        #known-salt.drop{title: 'Use Known Salt'}
+      %p Click to Generate Salt.
       %br
     %a{href: 'https://github.com/firien/shibboleth'}
       %img{style: 'position: absolute; top: 0; right: 0; border: 0', src: 'https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67', alt: 'Fork me on GitHub'}

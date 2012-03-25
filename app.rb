@@ -27,6 +27,12 @@ class App < Sinatra::Base
     haml 'pattern.svg'.to_sym
   end
 
+  get('/assets/drop.svg') do
+    invert = !!params[:invert]
+    content_type 'image/svg+xml', charset: 'utf-8'
+    haml 'drop.svg'.to_sym, locals: {invert: invert}
+  end
+
   get('/assets/loading.svg') do
     content_type 'image/svg+xml', charset: 'utf-8'
     haml 'loading.svg'.to_sym, locals: {angle: params[:angle].to_i}

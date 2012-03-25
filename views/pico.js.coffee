@@ -1,4 +1,5 @@
 $ = (selector) ->
+  #convert NodeList to Array
   Array::slice.call document.querySelectorAll selector
 window.$ = $
 
@@ -29,9 +30,7 @@ Element::remove = ->
   @parentNode.removeChild this
 
 Array::css = (name, value) ->
-  @each ->
-    this.css name, value
+  @each -> this.css name, value
 
 Array::attr = (name, value) ->
-  @each ->
-    this.attr name, value
+  @each -> this.attr name, value
