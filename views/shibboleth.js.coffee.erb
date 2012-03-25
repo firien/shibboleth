@@ -131,13 +131,15 @@ s = Utf8Encode password + tld + salt
 input = $ "output"
 $('form').reset()
 <% end %>
+#unique password
+sbl = binb2hex(core_sha256(str2binb(s), s.length * chrsz)).substring(0,limit)
+#convert first letter to uppercase (to satisfy certain websites)
+sbl = sbl.replace /[a-z]/, (letter) -> letter.toUpperCase()
 <% if widget %>
 if window.widget
-  widget.system('/bin/echo -n "' + binb2hex(core_sha256(str2binb(s), s.length * chrsz)).substring(0, limit) + '" | /usr/bin/pbcopy', null)
+  widget.system('/bin/echo -n "' + sbl + '" | /usr/bin/pbcopy', null)
+<% elsif bookmarklet %>
+input.value = sbl
 <% else %>
-<% if bookmarklet %>
-input.value = binb2hex(core_sha256(str2binb(s), s.length * chrsz)).substring(0,limit)
-<% else %>
-input.textContent = binb2hex(core_sha256(str2binb(s), s.length * chrsz)).substring(0,limit)
-<% end %>
+input.textContent = sbl
 <% end %>
