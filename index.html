@@ -172,7 +172,7 @@
               var x = i;//scope it
               $('#' + actions[x].eid + ' svg').css('display', '');
               var xhr = new XMLHttpRequest();
-              xhr.open("GET", actions[x].url + "?salt=" + salt);
+              xhr.open("GET", 'https://stormy-night-7144.herokuapp.com' + actions[x].url + "?salt=" + salt);
               xhr.onreadystatechange = function(){
                 if (xhr.readyState == 4 && xhr.status == 200) {
                   $('#' + actions[x].eid + ' svg').css('display', 'none');
