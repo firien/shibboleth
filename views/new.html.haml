@@ -207,14 +207,28 @@
         }, false)
         $('#known-salt')[0].addEventListener('click', function(e) {
           var s = prompt('Salt');
-          window.salt_shaker(s);
+          if (s != "" && s !== null) {
+            window.salt_shaker(s);
+          }
           e.stopPropagation();
           e.preventDefault();
           return false;
         }, true)
         $('#show-source')[0].addEventListener('click', function(e) {
           var hud = modal.presentModalView();
-          hud.appendChild(document.createTextNode($('#salt-js')[0].attr('href')));
+          var list = document.createElement('ul');
+          var list_item = document.createElement('li');
+          var anchor = document.createElement('a');
+          anchor.setAttribute('href', '#removethis_' + $('#salt-js')[0].attr('href'));
+          anchor.appendChild(document.createTextNode('Click on this link'));
+          list_item.appendChild(anchor);
+          list.appendChild(list_item);
+          ['Bookmark', 'Edit Bookmark', 'Remove everyhing preceding `javascript:…`'].each(function() {
+            list_item = document.createElement('li');
+            list_item.appendChild(document.createTextNode(this));
+            list.appendChild(list_item);
+          })
+          hud.appendChild(list);
           e.stopPropagation();
           e.preventDefault();
           return false;
