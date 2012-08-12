@@ -1,14 +1,15 @@
 (function() {
-  var $;
-  $ = function(selector) {
+  window.query = function(selector) {
+    return document.querySelector(selector);
+  };
+  window.queryAll = function(selector) {
     return Array.prototype.slice.call(document.querySelectorAll(selector));
   };
-  window.$ = $;
   Array.prototype.each = function(fn) {
-    var item, _i, _len;
-    for (_i = 0, _len = this.length; _i < _len; _i++) {
-      item = this[_i];
-      fn.call(item);
+    var index, item, _len;
+    for (index = 0, _len = this.length; index < _len; index++) {
+      item = this[index];
+      fn.call(item, index);
     }
   };
   Array.prototype.map = function(fn) {

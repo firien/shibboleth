@@ -11,7 +11,7 @@
     bottom: 0;
     z-index: 2;
   }
-  
+
   div.hud {
     font-size: 0.8em;
     background-color: white;
@@ -22,7 +22,7 @@
     background-clip: padding-box;
     border-radius: 10px;
   }
-  
+
   */
   var modal;
   modal = (function() {
@@ -31,10 +31,10 @@
       this.dismissCallback = dismissCallback != null ? dismissCallback : null;
       container = document.createElement('div');
       container.attr('id', 'modal');
-      $('body').css('overflow', 'hidden');
-      $('body')[0].appendChild(container);
+      query('body').css('overflow', 'hidden');
+      query('body').appendChild(container);
       setTimeout(function() {
-        $('#modal').css('backgroundColor', 'rgba(0,0,0,0.65)');
+        query('#modal').css('backgroundColor', 'rgba(0,0,0,0.65)');
       }, 20);
       hud = document.createElement('div');
       hud.attr('class', 'hud');
@@ -50,6 +50,8 @@
     }
     modal.prototype.dismiss = function(e) {
       if ((e.currentTarget === e.srcElement) || (e.currentTarget === e.target)) {
+        e.stopPropagation();
+        e.preventDefault();
         window.modal.current.dismissModalView();
       }
     };
@@ -59,15 +61,16 @@
         this.dismissCallback();
       }
       window.modal.current = null;
-      container = $('#modal')[0];
+      container = query('#modal');
       container.removeEventListener('click', this.dismiss);
       if (container != null) {
         container.empty();
-        setTimeout((function() {
-          return $('#modal')[0].remove();
-        }), 300);
         container.css('backgroundColor', 'rgba(0,0,0,0)');
-        $('body')[0].removeAttribute('style');
+        setTimeout(function() {
+          document.body.setAttribute('style', "");
+          document.body.removeAttribute('style');
+          query('#modal').remove();
+        }, 300);
       }
       container = null;
     };

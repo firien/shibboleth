@@ -74,7 +74,7 @@
             return this.toString();
           }).join('');
           salt_shaker(prn);
-          canvas = $('.hud canvas')[0];
+          canvas = query('.hud canvas');
           p = document.createElement('div');
           p.attr('id', 'salt-hud');
           p.css('height', canvas.height + 'px');
@@ -82,9 +82,9 @@
           p.css('lineHeight', canvas.height + 'px');
           p.appendChild(document.createTextNode(prn));
           p.css('backgroundImage', "url(" + (canvas.toDataURL('image/png')) + ")");
-          $('.hud')[0].replaceChild(p, canvas);
+          query('.hud').replaceChild(p, canvas);
           if ('ontouchstart' in document.documentElement) {
-            return $('body')[0].removeEventListener('touchstart', window.disabler, false);
+            return query('body').removeEventListener('touchstart', window.disabler, false);
           }
         } else {
           window.prng = [];
@@ -101,10 +101,9 @@
   };
   window.disabler = disabler;
   initializeCanvas = function() {
-    disabler;
-    var canvas, context, ev_canvas, tool;
+    disabler;  var canvas, context, ev_canvas, tool;
     if ('ontouchstart' in document.documentElement) {
-      $('body')[0].addEventListener('touchstart', window.disabler, false);
+      query('body').addEventListener('touchstart', window.disabler, false);
     }
     window.prng = [];
     canvas = document.querySelector('#imageView');
