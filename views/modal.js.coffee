@@ -28,11 +28,11 @@ class modal
     #TODO: check if #modal already present
     container = document.createElement 'div'
     container.attr 'id', 'modal'
-    $('body').css 'overflow', 'hidden'
+    query('body').css 'overflow', 'hidden'
     # container.css 'top', window.pageYOffset + 'px'
-    $('body')[0].appendChild container
+    query('body').appendChild container
     setTimeout( ->
-      $('#modal').css 'backgroundColor', 'rgba(0,0,0,0.65)'
+      query('#modal').css 'backgroundColor', 'rgba(0,0,0,0.65)'
       return
     , 20)
     hud = document.createElement 'div'
@@ -48,18 +48,24 @@ class modal
     return hud
   dismiss: (e) ->
     if (e.currentTarget == e.srcElement) || (e.currentTarget == e.target)
+      e.stopPropagation()
+      e.preventDefault()
       window.modal.current.dismissModalView()
-      return
+    return
   dismissModalView: ->
     @dismissCallback() if @dismissCallback?
     window.modal.current = null
-    container = $('#modal')[0]
+    container = query '#modal'
     container.removeEventListener 'click', @dismiss
     if container?
       container.empty()
-      setTimeout(( -> $('#modal')[0].remove()), 300)
       container.css 'backgroundColor', 'rgba(0,0,0,0)'
-      $('body')[0].removeAttribute 'style'
+      setTimeout ->
+        document.body.setAttribute 'style', ""
+        document.body.removeAttribute 'style'
+        query('#modal').remove()
+        return
+      , 300
     container = null
     return
   @presentModalView = (fn, dismissCallback) ->

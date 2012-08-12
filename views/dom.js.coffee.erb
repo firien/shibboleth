@@ -1,6 +1,5 @@
-$ = (selector) ->
+window.query = (selector) ->
   document.querySelector selector
-window.$ = $
 
 document.addEventListener('DOMContentLoaded', ->
 <% if widget %>
@@ -15,20 +14,20 @@ document.addEventListener('DOMContentLoaded', ->
       , false)
 <% else %>
   if ((`"standalone" in window.navigator`) && (!window.navigator.standalone))
-    $(".title").style.display = 'none'
+    query(".title").style.display = 'none'
 <% end %>
-  f = $("form")
+  f = query "form"
   f.addEventListener('submit', (e) ->
     e.preventDefault()
-    $("input[type=password]").blur()
+    query("input[type=password]").blur()
     return false
   , true)
-  t = $("input[type=password]")
+  t = query("input[type=password]")
   t.addEventListener 'blur', (e) ->
     shibboleth()
   t.addEventListener 'keyup', (e) ->
     if (e.keyCode == 13)
       setTimeout( ->
-        $("input[type=password]").blur()
+        query("input[type=password]").blur()
       , 100)
 )

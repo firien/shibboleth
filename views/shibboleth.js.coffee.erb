@@ -5,7 +5,7 @@
 chrsz   = 8
 hexcase = 0
 
-$ = (id) -> document.querySelector id
+query = (id) -> document.querySelector id
 
 safe_add = (x, y) ->
   lsw = (x & 0xFFFF) + (y & 0xFFFF)
@@ -103,12 +103,12 @@ salt = '<%= salt %>'
 <% if bookmarklet %>
 tld = window.location.hostname
 <% else %>
-tld = $("input[type=url]").value
+tld = query("input[type=url]").value
 return if tld == ''
 <% end %>
 #should select :focus
 #document.activeElement
-input = $ "input[type=password]"
+input = query "input[type=password]"
 unless input?
   alert "could not find password input"
   return
@@ -128,8 +128,8 @@ tld = match[1] if match
 
 s = Utf8Encode password + tld + salt
 <% unless bookmarklet %>
-input = $ "output"
-$('form').reset()
+input = query "output"
+query('form').reset()
 <% end %>
 #unique password
 sbl = binb2hex(core_sha256(str2binb(s), s.length * chrsz)).substring(0,limit)

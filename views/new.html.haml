@@ -166,26 +166,26 @@
         for (var i=0;i<actions.length;i++) {
           (function(){
             var x = i;//scope it
-            $('#' + actions[x].eid + ' svg').css('display', '');
+            queryAll('#' + actions[x].eid + ' svg').css('display', '');
             var xhr = new XMLHttpRequest();
             xhr.open("GET", 'https://stormy-night-7144.herokuapp.com' + actions[x].url + "?salt=" + salt);
             xhr.onreadystatechange = function(){
               if (xhr.readyState == 4 && xhr.status == 200) {
-                $('#' + actions[x].eid + ' svg').css('display', 'none');
-                $('#' + actions[x].eid).attr('href', xhr.responseText);
-                $('#' + actions[x].eid + ' span').attr('class', 'salted');
+                queryAll('#' + actions[x].eid + ' svg').css('display', 'none');
+                queryAll('#' + actions[x].eid).attr('href', xhr.responseText);
+                queryAll('#' + actions[x].eid + ' span').attr('class', 'salted');
               }
             }
             xhr.send(null);
           }).call(this);
         }
         //switch widget url
-        $('#widget').attr('href', 'https://stormy-night-7144.herokuapp.com/widget.zip?salt=' + salt);
-        $('#widget span').attr('class', 'salted');
+        queryAll('#widget').attr('href', 'https://stormy-night-7144.herokuapp.com/widget.zip?salt=' + salt);
+        queryAll('#widget span').attr('class', 'salted');
       }
       window.salt_shaker = salt_shaker;
       document.addEventListener('DOMContentLoaded', function() {
-        $('#sprinkle')[0].addEventListener('click', function(e) {
+        query('#sprinkle').addEventListener('click', function(e) {
           var hud = modal.presentModalView();
           var canvas = document.createElement('canvas');
           canvas.attr('id', 'imageView');
@@ -205,7 +205,7 @@
           e.preventDefault();
           return false;
         }, false)
-        $('#known-salt')[0].addEventListener('click', function(e) {
+        query('#known-salt').addEventListener('click', function(e) {
           var s = prompt('Salt');
           if (s != "" && s !== null) {
             window.salt_shaker(s);
@@ -214,12 +214,12 @@
           e.preventDefault();
           return false;
         }, true)
-        $('#show-source')[0].addEventListener('click', function(e) {
+        query('#show-source').addEventListener('click', function(e) {
           var hud = modal.presentModalView();
           var list = document.createElement('ul');
           var list_item = document.createElement('li');
           var anchor = document.createElement('a');
-          anchor.setAttribute('href', '#removethis_' + $('#salt-js')[0].attr('href'));
+          anchor.setAttribute('href', '#removethis_' + query('#salt-js').attr('href'));
           anchor.appendChild(document.createTextNode('Click on this link'));
           list_item.appendChild(anchor);
           list.appendChild(list_item);

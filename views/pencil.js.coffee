@@ -70,7 +70,7 @@ class Pencil
         salt_shaker prn
         #window.modal.current.dismissModalView()
         
-        canvas = $('.hud canvas')[0]
+        canvas = query '.hud canvas'
         p = document.createElement 'div'
         p.attr 'id', 'salt-hud'
         p.css 'height', canvas.height + 'px'
@@ -78,13 +78,10 @@ class Pencil
         p.css 'lineHeight', canvas.height + 'px'
         p.appendChild document.createTextNode prn
         p.css 'backgroundImage', "url(#{canvas.toDataURL('image/png')})"
-        $('.hud')[0].replaceChild p, canvas
+        query('.hud').replaceChild p, canvas
         
         if `'ontouchstart' in document.documentElement`
-          $('body')[0].removeEventListener('touchstart', window.disabler, false)
-        #for quatto
-        #window.prng = []
-        #setTimeout((-> that.context.clearRect(0,0,that.context.canvas.width,that.context.canvas.height)), 2000)
+          query('body').removeEventListener('touchstart', window.disabler, false)
       else
         window.prng = []
         alert "Not enough points retry"
@@ -100,7 +97,7 @@ initializeCanvas = ->
   disabler
   #disable scrolling on touch devices
   if `'ontouchstart' in document.documentElement`
-    $('body')[0].addEventListener('touchstart', window.disabler, false)
+    query('body').addEventListener('touchstart', window.disabler, false)
   window.prng = []
 
   canvas = document.querySelector '#imageView'
@@ -111,7 +108,7 @@ initializeCanvas = ->
 
   tool = new Pencil(context)
 
-  # The general-purpose event handler. This function just determines the mouse 
+  # The general-purpose event handler. This function just determines the mouse
   # position relative to the canvas element.
   ev_canvas = (ev) ->
     ev.preventDefault() if ev.type == 'touchstart'
