@@ -8,11 +8,13 @@
     %link{rel: 'apple-touch-icon-precomposed', sizes: "114x114", href: 'http://firien.github.com/shibboleth/images/icon-iphone@2x.png'}
     %link{rel: 'apple-touch-icon-precomposed', sizes: "72x72", href: 'http://firien.github.com/shibboleth/images/icon-ipad.png'}
     %link{rel: 'apple-touch-icon-precomposed', sizes: "144x144", href: 'http://firien.github.com/shibboleth/images/icon-ipad@2x.png'}
+    %link{rel: 'apple-touch-startup-image', media: "(device-width: 320px)", href: 'http://firien.github.com/shibboleth/images/startup-iphone.png'}
     %link{rel: 'apple-touch-startup-image', media: "(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)", href: 'http://firien.github.com/shibboleth/images/startup-iphone.png'}
     %link{rel: 'apple-touch-startup-image', media: "(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)", href: 'http://firien.github.com/shibboleth/images/startup-iphone@2x.png'}
-    /%link{rel: 'apple-touch-startup-image', sizes: "768x1004", href: 'http://firien.github.com/shibboleth/images/startup-ipad.png'}
-    /%link{rel: 'apple-touch-startup-image', sizes: "1024x748", href: 'http://firien.github.com/shibboleth/images/startup-ipad@landscape.png'}
-    /%link{rel: 'stylesheet', href: '/assets/shibboleth.css', type: 'text/css', media: 'screen'}
+    %link{rel: 'apple-touch-startup-image', media: "(device-width: 768px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)", href: 'http://firien.github.com/shibboleth/images/apple-touch-startup-image-768x1004.png'}
+    %link{rel: 'apple-touch-startup-image', media: "(device-width: 768px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)", href: 'http://firien.github.com/shibboleth/images/apple-touch-startup-image-1536x2008.png'}
+    %link{rel: 'apple-touch-startup-image', media: "(device-width: 768px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)", href: 'http://firien.github.com/shibboleth/images/apple-touch-startup-image-748x1024.png'}
+    %link{rel: 'apple-touch-startup-image', media: "(device-width: 768px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)", href: 'http://firien.github.com/shibboleth/images/apple-touch-startup-image-1496x2048.png'}
     :css
       #{scss erb('shibboleth.css.scss'.to_sym, locals: {widget: widget})}
     - if widget
@@ -21,7 +23,7 @@
       -js = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: false, salt: salt, widget: widget}
       :javascript
         function shibboleth() {
-          //just use coffeescripts anonymous executed function
+          =#just use coffeescripts anonymous executed function
           #{Uglifier.compile(js, beautify: false)}
         }
         #{coffee erb 'dom.js.coffee'.to_sym, locals: {widget: widget}}
