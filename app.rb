@@ -52,6 +52,33 @@ class App < Sinatra::Base
     scss erb('shibboleth.css.scss'.to_sym, locals: {widget: false})#, style: :expanded
   end
 
+  get '/assets/splash.svg' do
+    content_type 'image/svg+xml', charset: 'utf-8'
+    scale = params['retina'] ? 2 : 1
+    ipad = 1
+    landscape = false
+    case params['device']
+      when 'iphone5'
+        width = 320
+        height = 568
+        scale = 2
+      when 'ipad'
+        ipad = 2
+        if params['landscape']
+          landscape = true
+          height = 748
+          width = 1024
+        else
+          width = 768
+          height = 1004
+        end
+      else#iphone
+        width = 320
+        height = 460
+    end
+    haml('splash.svg'.to_sym, locals: {width: width, height: height, scale: scale, ipad: ipad, landscape: landscape})
+  end
+
   get '/bookmarklet.js' do
     content_type 'text/plain', charset: 'utf-8'
     response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.com'
