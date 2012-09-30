@@ -60,7 +60,7 @@ class App < Sinatra::Base
     case params['device']
       when 'iphone5'
         width = 320
-        height = 568
+        height = 548
         scale = 2
       when 'ipad'
         ipad = 2
