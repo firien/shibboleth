@@ -24,7 +24,7 @@
       -js = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: false, salt: salt, widget: widget}
       :javascript
         function shibboleth() {
-          =#just use coffeescripts anonymous executed function
+          /just use coffeescripts anonymous executed function
           #{Uglifier.compile(js, beautify: false)}
         }
         #{coffee erb 'dom.js.coffee'.to_sym, locals: {widget: widget}}
