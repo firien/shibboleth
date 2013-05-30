@@ -92,7 +92,6 @@ class App < Sinatra::Base
   end
 
   get '/app' do
-    request.logger.info salt.inspect
     content_type 'text/plain', charset: 'utf-8'
     response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.io'
     'data:text/html;base64,'+[haml('shibboleth.html'.to_sym, locals: {salt: salt, widget: false})].pack('m0')
