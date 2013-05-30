@@ -81,7 +81,7 @@ class App < Sinatra::Base
 
   get '/bookmarklet.js' do
     content_type 'text/plain', charset: 'utf-8'
-    response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.com'
+    response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.io'
     bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: salt, widget: false}
     URI.encode('javascript:' + Uglifier.compile(bookmarklet, beautify: false))
   end
@@ -92,8 +92,9 @@ class App < Sinatra::Base
   end
 
   get '/app' do
+    request.logger.info salt.inspect
     content_type 'text/plain', charset: 'utf-8'
-    response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.com'
+    response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.io'
     'data:text/html;base64,'+[haml('shibboleth.html'.to_sym, locals: {salt: salt, widget: false})].pack('m0')
   end
 
