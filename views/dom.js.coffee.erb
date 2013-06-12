@@ -30,4 +30,7 @@ document.addEventListener('DOMContentLoaded', ->
       setTimeout( ->
         query("input[type=password]").blur()
       , 100)
+  document.addEventListener('copy', ->
+    setTimeout(-> window.getSelection().empty())
+  )
 )
