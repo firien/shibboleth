@@ -4,12 +4,9 @@ window.queryAll = (selector) ->
   #convert NodeList to Array
   Array::slice.call document.querySelectorAll selector
 
-
 Array::each = (fn) ->
   fn.call item, index for item, index in this
   return
-
-Array::map = (fn) -> fn.call item for item in this
 
 Array::all = (fn) ->
   all = true
