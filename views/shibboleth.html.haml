@@ -22,7 +22,7 @@
       %script{type: 'text/javascript', src: 'main.js', charset: 'utf-8'}
     - else
       -js = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: false, salt: salt, widget: widget}
-      =#just wrap coffeescripts anonymous executed function
+      -#just wrap coffeescripts anonymous executed function
       :javascript
         function shibboleth() {
           #{Uglifier.compile(js, beautify: false)}
