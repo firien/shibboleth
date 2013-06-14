@@ -33,4 +33,22 @@ document.addEventListener('DOMContentLoaded', ->
   document.addEventListener('copy', ->
     setTimeout(-> window.getSelection().empty())
   )
+  #show password
+  output = query 'output'
+  if output
+    output.addEventListener('mouseover', ->
+      output.setAttribute 'class', 'show-me'
+    , true)
+    output.addEventListener('mouseout', ->
+      output.removeAttribute 'class'
+    , true)
+    output.addEventListener('touchstart', ->
+      output.setAttribute 'class', 'show-me'
+    , true)
+    output.addEventListener('touchend', ->
+      output.removeAttribute 'class'
+    , true)
+    output.addEventListener('touchcancel', ->
+      output.removeAttribute 'class'
+    , true)
 )

@@ -41,10 +41,6 @@ output {
   border-top:none;
   padding: 0 0.5em 0 0.5em;
   margin:0 1em 0 1em;
-  &:hover, &:empty {
-    color:black;
-    background-color:white;
-  }
   &:not(:hover) {
     -webkit-user-select: none;
     user-select: none;
@@ -53,9 +49,17 @@ output {
       color:#ddd;
     }
   }
+  &:empty {
+    color:black;
+    background-color:white;
+  }
   /*  box-sizing: border-box;*/
   /*  -webkit-appearance: textfield;*/
 /*  margin:2px 0;*/
+}
+output.show-me {
+  color:black;
+  background-color:white;
 }
 label {
   font-size:1.2em;
@@ -164,7 +168,7 @@ form {
         color:#CBD2D8;
       }
     }
-    &:hover, &:empty {
+    &:empty {
       color:black;
       background-color:white;
     }
