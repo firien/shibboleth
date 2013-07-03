@@ -65,7 +65,7 @@ class Pencil
         @context.fillStyle = 'rgba(123,163,200,0.8)'
         @context.fillRect(0,0,@context.canvas.width,@context.canvas.height)
         #calc PRN from points
-        prn = window.prng.slice(0,9).map(-> this.toString()).join('')
+        prn = window.prng.slice(0,9).map((i)-> i.toString()).join('')
         #console.log prn
         salt_shaker prn
         #window.modal.current.dismissModalView()
