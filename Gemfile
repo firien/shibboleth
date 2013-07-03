@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'sinatra'
 gem 'uglifier'
@@ -7,4 +7,4 @@ gem 'sass'
 gem 'haml'
 gem 'rdiscount'
 gem 'thin'
-gem 'rubyzip', require: 'zip/zip'
+gem 'rubyzip', :require => 'zip/zip'

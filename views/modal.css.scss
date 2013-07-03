@@ -19,7 +19,7 @@ div#modal {
 
 div.hud {
   font-size: 0.8em;
-  background-color: #999;
+  background-color: #F5F5F5;
   margin: 10% auto 0 auto;
   border: 10px solid rgba(255, 255, 255, 0.6);
   height: auto;
@@ -34,8 +34,7 @@ div.hud {
     margin: 1em;
     border: 0.5em solid rgba(255, 255, 255, 0.6);
     height: auto;
-    width:auto;
-    background-clip: padding-box;
+    width: auto;
     border-radius: 0.5em;
   }
 }

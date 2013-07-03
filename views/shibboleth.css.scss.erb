@@ -53,10 +53,14 @@ output {
     color:black;
     background-color:white;
   }
-  /*  box-sizing: border-box;*/
-  /*  -webkit-appearance: textfield;*/
-/*  margin:2px 0;*/
-}
+/*  &:not(:empty):after {
+    content:"\2191  Touch/Hover to see password  \2191";
+    display:block;
+    font-size:0.7em;
+    color:rgb(76,86,108);
+    text-shadow:white 0px 1px 0px;
+  }
+*/}
 output.show-me {
   color:black;
   background-color:white;
@@ -106,6 +110,8 @@ input:focus {
   background-color:#eee;
 }
 a {
+  display:block;
+  margin-top:2em;
   font-size:1em;
   color:rgb(76,86,108);
   text-shadow:white 0px 1px 0px;
@@ -172,7 +178,10 @@ form {
       color:black;
       background-color:white;
     }
-  }
+/*    &:not(:empty):after {
+      text-align:center;
+    }
+*/  }
   input:focus {
     background-color:white;
   }
