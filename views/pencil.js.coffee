@@ -75,8 +75,17 @@ class Pencil
         p.attr 'id', 'salt-hud'
         p.css 'height', canvas.height + 'px'
         p.css 'width', canvas.width + 'px'
-        p.css 'lineHeight', canvas.height + 'px'
-        p.appendChild document.createTextNode prn
+        # p.css 'lineHeight', canvas.height + 'px'
+        span = document.createElement 'span'
+        span.css 'paddingTop', "2em"
+        span.css 'paddingBottom', "2em"
+        span.css 'display', 'block'
+        span.appendChild document.createTextNode prn
+        p.appendChild span
+        #append instructions
+        span = document.createElement 'span'
+        span.appendChild document.createTextNode('It is important that you remember this!')
+        p.appendChild span
         p.css 'backgroundImage', "url(#{canvas.toDataURL('image/png')})"
         query('.hud').replaceChild p, canvas
         
