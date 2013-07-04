@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'zip/zip'
+require 'uri'
 
 class App < Sinatra::Base
 
@@ -83,7 +84,7 @@ class App < Sinatra::Base
     content_type 'text/plain', charset: 'utf-8'
     response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.io'
     bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: salt, widget: false}
-    URI.encode('javascript:' + Uglifier.compile(bookmarklet, beautify: false))
+    URI.escape('javascript:' + Uglifier.compile(bookmarklet, beautify: false))
   end
 
   get '/shibboleth.html' do

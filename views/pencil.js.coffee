@@ -103,7 +103,6 @@ disabler = (e) ->
 window.disabler = disabler
 
 initializeCanvas = ->
-  disabler
   #disable scrolling on touch devices
   if `'ontouchstart' in document.documentElement`
     query('body').addEventListener('touchstart', window.disabler, false)
