@@ -110,7 +110,6 @@ input:focus {
   background-color:#eee;
 }
 a {
-  display:block;
   margin-top:2em;
   font-size:1em;
   color:rgb(76,86,108);
@@ -195,6 +194,10 @@ form {
 <% else %>
     border-radius:0;
     margin:-10px -10px 10px -10px;
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    top: 0;
 <% end %>
     -webkit-user-select: none;
     -khtml-user-select: none;
