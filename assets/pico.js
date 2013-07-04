@@ -12,15 +12,6 @@
       fn.call(item, index);
     }
   };
-  Array.prototype.map = function(fn) {
-    var item, _i, _len, _results;
-    _results = [];
-    for (_i = 0, _len = this.length; _i < _len; _i++) {
-      item = this[_i];
-      _results.push(fn.call(item));
-    }
-    return _results;
-  };
   Array.prototype.all = function(fn) {
     var all, item, _i, _len;
     all = true;
