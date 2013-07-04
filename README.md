@@ -10,25 +10,26 @@ There are three ways to use Shibboleth.
 ####1. Bookmarklet
 This is a little snippet of javascript that is saved as a bookmark in your browser. When you need to log into a website you fill in your username and master password, then click on the Shibboleth bookmarklet and it will replace your master password with your unique password for that particular website.
 ####2. Web App
-Sometimes, specifically on mobile devices, you will be logging into sites through native applications and the bookmarklet method is not an option. So the standalone web page allows you to manually set the domain, generate your unique password, copy to the clipboard, & paste it in the native application.
+Sometimes, specifically on mobile devices, you will be logging into sites through native applications and the bookmarklet method is not an option. So the standalone web app allows you to manually set the domain, generate your unique password, copy to the clipboard, and paste it in the native application.
 
-The standalone web page is encoded into a data uri, so no internet access is required to use it.
+The standalone web app is encoded into a data uri, so internet access is NOT required to use it.
 ####3. OS X Widget
-The widget is very similar to the web app, but allows easier access for OS X applications. If you want to log into <strike>iChat</strike> Messages simply pop up the Dashboard and fill out the Shibboleth widget. Due to the special access widgets have to OS X resources the password is copied directly to the clipboard. Pop back to <strike>iChat</strike> Messages and paste the password.
+The widget is very similar to the web app, but allows easier access for OS X applications. If you want to log into <strike>iChat</strike> Messages, simply pop up the Dashboard and fill out the Shibboleth widget. Due to the special access widgets have to OS X resources the password is copied directly to the clipboard. Pop back to <strike>iChat</strike> Messages and paste the password.
 ###Is my password stored anywhere?
-Nope. The bookmarklet and standalone web page are both stored on your computer and do not communicate with any server. Check out the source code at [github](https://github.com/firien/shibboleth).
+Nope. The bookmarklet and standalone web app are both stored on your device and do not communicate with any server. Check out the source code at [github](https://github.com/firien/shibboleth).
 ###Site \*\*\*.com limits my password to 10 characters
 No problem, append ':xxx' to your master password to truncate it. For example `master:16` will create a password only 16 characters long.
 
 ###Salting
-You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (& complexity). It makes the javascript unique to you.
+You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29)in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.
 
 ####Why is it named Shibboleth?
 Judges 12:6
 
 ##Developers
-The website is not finished and a complete mess. I hope to finish it soon and have it running on Heroku.
 
 Run with sinatra `bundle exec rackup config.ru` => localhost:9292
+
+This is running on [Heroku](https://stormy-night-7144.herokuapp.com)
 
 ###*Requires Ruby >=1.9*
