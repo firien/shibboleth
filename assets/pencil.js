@@ -52,7 +52,7 @@
       }
     };
     Pencil.prototype.mouseup = Pencil.prototype.touchend = Pencil.prototype.touchcancel = function(ev) {
-      var canvas, p, prn, that;
+      var canvas, p, prn, span, that;
       if (this.started) {
         this.context.closePath();
         this.started = false;
@@ -70,8 +70,8 @@
           });
           this.context.fillStyle = 'rgba(123,163,200,0.8)';
           this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-          prn = window.prng.slice(0, 9).map(function() {
-            return this.toString();
+          prn = window.prng.slice(0, 9).map(function(i) {
+            return i.toString();
           }).join('');
           salt_shaker(prn);
           canvas = query('.hud canvas');
@@ -79,8 +79,15 @@
           p.attr('id', 'salt-hud');
           p.css('height', canvas.height + 'px');
           p.css('width', canvas.width + 'px');
-          p.css('lineHeight', canvas.height + 'px');
-          p.appendChild(document.createTextNode(prn));
+          span = document.createElement('span');
+          span.css('paddingTop', "2em");
+          span.css('paddingBottom', "2em");
+          span.css('display', 'block');
+          span.appendChild(document.createTextNode(prn));
+          p.appendChild(span);
+          span = document.createElement('span');
+          span.appendChild(document.createTextNode('It is important that you remember this!'));
+          p.appendChild(span);
           p.css('backgroundImage', "url(" + (canvas.toDataURL('image/png')) + ")");
           query('.hud').replaceChild(p, canvas);
           if ('ontouchstart' in document.documentElement) {
@@ -101,7 +108,8 @@
   };
   window.disabler = disabler;
   initializeCanvas = function() {
-    disabler;  var canvas, context, ev_canvas, tool;
+    disabler;
+    var canvas, context, ev_canvas, tool;
     if ('ontouchstart' in document.documentElement) {
       query('body').addEventListener('touchstart', window.disabler, false);
     }
