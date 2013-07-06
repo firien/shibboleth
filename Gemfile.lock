@@ -47,4 +47,4 @@ DEPENDENCIES
   sass
   sinatra
   thin
-  uglifier
+  uglifier (~> 2.0)

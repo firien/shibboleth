@@ -270,7 +270,7 @@
         You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.
     .bar
       -bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: '', widget: false}
-      -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet, output: {beautify: false}))
+      -bookmarklet = URI.encode('javascript:' + Uglifier.compile(bookmarklet))
       %a.internal#salt-js{title: 'shibboleth.js', href: bookmarklet, style: 'position:relative;'}
         =haml 'loading.svg'.to_sym, locals: {angle: 0}
         %span Bookmarklet

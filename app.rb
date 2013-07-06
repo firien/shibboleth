@@ -83,7 +83,7 @@ class App < Sinatra::Base
     content_type 'text/plain', charset: 'utf-8'
     response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.io'
     bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: salt, widget: false}
-    URI.escape('javascript:' + Uglifier.compile(bookmarklet, output: {beautify: false}))
+    URI.escape('javascript:' + Uglifier.compile(bookmarklet))
   end
 
   get '/shibboleth.html' do
