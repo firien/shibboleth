@@ -25,7 +25,7 @@
       -#just wrap coffeescripts anonymous executed function
       :javascript
         function shibboleth() {
-          #{Uglifier.compile(js, beautify: false)}
+          #{Uglifier.compile(js, output: {beautify: false})}
         }
         #{coffee erb 'dom.js.coffee'.to_sym, locals: {widget: widget}}
   %body

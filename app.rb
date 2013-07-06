@@ -1,4 +1,8 @@
 require 'sinatra/base'
+require 'uglifier'
+require 'sass'
+require 'haml'
+require 'coffee-script'
 require 'zip/zip'
 require 'uri'
 
@@ -14,12 +18,7 @@ class App < Sinatra::Base
 
   configure(:development) do
     set :static, true
-
-    FileUtils.mkdir_p 'log' unless File.exists?('log')
-    log = File.new('log/sinatra.log', 'a')
-    $stdout.reopen(log)
-    $stderr.reopen(log)
-    log.close
+    enable :logging
   end
 
   # ROUTES
@@ -84,7 +83,7 @@ class App < Sinatra::Base
     content_type 'text/plain', charset: 'utf-8'
     response.headers['Access-Control-Allow-Origin'] = 'http://firien.github.io'
     bookmarklet = coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: true, salt: salt, widget: false}
-    URI.escape('javascript:' + Uglifier.compile(bookmarklet, beautify: false))
+    URI.escape('javascript:' + Uglifier.compile(bookmarklet, output: {beautify: false}))
   end
 
   get '/shibboleth.html' do
@@ -149,6 +148,7 @@ class App < Sinatra::Base
     content_type 'text/css', charset: 'utf-8'
     scss 'modal.css'.to_sym
   end
+
 end
 
 class Numeric
