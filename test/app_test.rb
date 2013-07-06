@@ -25,8 +25,13 @@ class HelloWorldTest < Minitest::Test
     assert last_response.body.include?('telkramkoob')
   end
 
-  def test_it_says_hello_to_a_person
+  def test_data_uri_app
     get '/app'
+    assert last_response.ok?
+  end
+
+  def test_widget
+    get '/widget.zip'
     assert last_response.ok?
   end
 end
