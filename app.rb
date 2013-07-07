@@ -44,7 +44,12 @@ class App < Sinatra::Base
 
   get '/test.js' do
     content_type 'text/javascript', charset: 'utf-8'
-    coffee erb 'shibboleth.js.coffee'.to_sym, locals: {bookmarklet: false, salt: salt, widget: false}
+    coffee 'test.js'.to_sym
+  end
+
+  get '/test.html' do
+    content_type 'text/html', charset: 'utf-8'
+    haml 'test.html'.to_sym
   end
 
   get '/assets/shibboleth.css' do
@@ -121,9 +126,7 @@ class App < Sinatra::Base
       zip.put_next_entry('Shibboleth.wdgt/main.html')
       zip.print haml('shibboleth.html'.to_sym, locals: {salt: salt, widget: true})
       zip.put_next_entry('Shibboleth.wdgt/main.js')
-      zip.print 'function shibboleth() {'
       zip.print coffee(erb('shibboleth.js.coffee'.to_sym, locals: {bookmarklet: false, salt: salt, widget: true}))
-      zip.print '}'
       zip.print coffee(erb('dom.js.coffee'.to_sym, locals: {widget: true}))
     end
     send_file zip_file.path, filename: 'Shibboleth.zip', type: 'application/octet-stream'
