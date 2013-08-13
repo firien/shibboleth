@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <style>
+      div {
+        position: absolute;
+        background-color: lightblue;
+        border: 0.125em solid #fff;
+        padding: 0.125em;
+        box-sizing: border-box;
+      }
+    </style>
+    <script>
+      (function() {
+        var magnification, tiles, x;
+      
+        tiles = [[3 / 8, 3 / 8], [3 / 8, 4 / 8], [3 / 8, 9 / 16], [3 / 8, 5 / 8]];
+      
+        Array.prototype.sample = function() {
+          return this[~~(Math.random() * this.length)];
+        };
+      
+        Number.prototype.times = function(callback) {
+          var i;
+          i = 0;
+          while (i < this) {
+            callback.call(i);
+            i++;
+          }
+        };
+      
+        6..times(function() {
+          return console.log("here");
+        });
+      
+        magnification = 6;
+      
+        x = 0;
+      
+        document.addEventListener('DOMContentLoaded', function() {
+          return 15..times(function() {
+            var div, rotate, tile;
+            div = document.createElement('div');
+            div.style.top = 0;
+            div.style.left = x + 'em';
+            tile = tiles.sample();
+            rotate = ~~(Math.random() * 2) === 1;
+            console.log(rotate);
+            x += tile[rotate ? 1 : 0] * magnification;
+            div.style.width = tile[rotate ? 1 : 0] * magnification + 'em';
+            div.style.height = tile[rotate ? 0 : 1] * magnification + 'em';
+            return document.body.appendChild(div);
+          });
+        });
+      
+      }).call(this);
+    </script>
+  </head>
+  <body></body>
+</html>
