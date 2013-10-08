@@ -16,6 +16,9 @@ class App < Sinatra::Base
     set :haml, { ugly: true }
   end
 
+  # http://stackoverflow.com/questions/15685528/cannot-access-local-sinatra-server-from-another-computer-on-same-network
+  set :bind, '0.0.0.0'
+
   configure(:development) do
     set :static, true
     enable :logging
@@ -159,3 +162,5 @@ class Numeric
     self.to_f * Math::PI / 180.0
   end
 end
+
+App.run! if __FILE__ == $0
