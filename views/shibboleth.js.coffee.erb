@@ -1,4 +1,8 @@
+<% if bookmarklet %>
+Shibboleth = {
+<% else %>
 window.Shibboleth = {
+<% end %>
   sha256: (string) ->
     #  Secure Hash Algorithm (SHA256)
     #  http://www.webtoolkit.info/javascript-sha256.html
