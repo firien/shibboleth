@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg height='72' viewBox='0 0 114 114' width='72' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height='512' viewBox='0 0 114 114' width='512' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <script type="text/javascript">
     <![CDATA[
       //initial scale determined by height and width of svg element
@@ -86,7 +86,7 @@
       <stop offset="100%" style="stop-color:rgb(180,180,180);stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect class="bg" x="0" y="0" width="114" height="114"/>
+  <rect class="bg" x="0" y="0" rx="14" ry= "14" width="114" height="114"/>
   <g transform="rotate(-45, 57, 57)">
     <use xlink:href="#key-path" fill-rule="evenodd" style="filter:url(#shadow);fill:#000;stroke:#000;stroke-width:1px;"/>
     <use xlink:href="#key-path" fill-rule="evenodd" style="fill:url(#key-radial);stroke:black;stroke-width:1px;"/>
