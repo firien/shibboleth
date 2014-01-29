@@ -21,7 +21,7 @@ Nope. The bookmarklet and standalone web app are both stored on your device and 
 No problem, append ':xxx' to your master password to truncate it. For example `master:16` will create a password only 16 characters long.
 
 ###Salting
-You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29)in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.
+You can choose to include a [Salt](http://en.wikipedia.org/wiki/Salt_%28cryptography%29) in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.
 
 ####Why is it named Shibboleth?
 Judges 12:6
