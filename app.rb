@@ -107,6 +107,7 @@ class App < Sinatra::Base
 
   get '/' do
     content_type 'text/html', charset: 'utf-8'
+    @salter_url = settings.development? ? '/' : 'https://stormy-night-7144.herokuapp.com/'
     haml 'new.html'.to_sym
   end
 

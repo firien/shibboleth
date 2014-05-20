@@ -168,13 +168,13 @@
       }
     :javascript
       var salt_shaker = function(salt) {
-        var actions = [{url: '/bookmarklet.js', eid: 'salt-js'}, {url: '/app', eid: 'salt-app'}];
+        var actions = [{url: 'bookmarklet.js', eid: 'salt-js'}, {url: 'app', eid: 'salt-app'}];
         for (var i=0;i<actions.length;i++) {
           (function(){
             var x = i;//scope it
             queryAll('#' + actions[x].eid + ' svg').css('display', '');
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", 'https://stormy-night-7144.herokuapp.com' + actions[x].url + "?salt=" + salt);
+            xhr.open("GET", "#{@salter_url}" + actions[x].url + "?salt=" + salt);
             xhr.onreadystatechange = function(){
               if (xhr.readyState == 4 && xhr.status == 200) {
                 queryAll('#' + actions[x].eid + ' svg').css('display', 'none');
@@ -186,7 +186,7 @@
           }).call(this);
         }
         //switch widget url
-        queryAll('#widget').attr('href', 'https://stormy-night-7144.herokuapp.com/widget.zip?salt=' + salt);
+        queryAll('#widget').attr('href', '#{@salter_url}widget.zip?salt=' + salt);
         queryAll('#widget span').attr('class', 'salted');
       }
       window.salt_shaker = salt_shaker;
@@ -281,7 +281,7 @@
         =haml 'loading.svg'.to_sym, locals: {angle: 0}
         %span Web App
       %p Click on this link and then bookmark
-      %a.internal#widget{title: 'widget', href: 'https://stormy-night-7144.herokuapp.com/widget.zip'}
+      %a.internal#widget{title: 'widget', href: "#{@salter_url}widget.zip"}
         %span OS X Widget
       %p Download & Install
       %hr
