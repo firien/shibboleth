@@ -3,7 +3,7 @@ require 'uglifier'
 require 'sass'
 require 'haml'
 require 'coffee-script'
-require 'zip/zip'
+require 'zip'
 require 'uri'
 
 class App < Sinatra::Base
@@ -114,7 +114,7 @@ class App < Sinatra::Base
   #a zipped MAC OSX Widget
   get '/widget.zip' do
     zip_file = Tempfile.new('zip')
-    Zip::ZipOutputStream.open(zip_file.path) do |zip|
+    Zip::OutputStream.open(zip_file.path) do |zip|
       #include static files
       Dir['widget/**/*'].each do |file|
         unless File.directory? file

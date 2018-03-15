@@ -8,7 +8,7 @@ gem 'sass'
 gem 'haml'
 gem 'rdiscount'
 gem 'thin'
-gem 'rubyzip', :require => 'zip/zip'
+gem 'rubyzip'
 
 group :test do
   gem 'minitest'
