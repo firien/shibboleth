@@ -4,3 +4,4 @@
 .sass-cache/
 #logging
 log/
+node_modules/
