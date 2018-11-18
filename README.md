@@ -33,3 +33,5 @@ Run with sinatra `bundle exec rackup config.ru` => localhost:9292
 This is running on [Heroku](https://stormy-night-7144.herokuapp.com)
 
 ###*Requires Ruby >=1.9*
+
+    iconutil -c icns shibboleth.iconset/

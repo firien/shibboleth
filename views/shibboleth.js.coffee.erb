@@ -141,7 +141,7 @@ window.Shibboleth = {
     str = str.substring 0, limit
     #ensure number
     unless (/\d/).test str
-      #convert last character to string
+      #convert last character to digit
       str = str.replace /\w$/, (r) -> r.charCodeAt() % 10
     return str
   execute: ->
