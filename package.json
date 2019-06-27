@@ -1,9 +1,12 @@
 {
   "dependencies": {
-    "coffeescript": "^2.3.2",
-    "jstransformer-markdown-it": "^2.1.0",
-    "pug": "^2.0.3",
-    "watch": "^1.0.2",
-    "webpack": "^4.25.1"
+    "clean-webpack-plugin": "^1.0.1",
+    "nanoid": "^2.0.3",
+    "webpack": "^4.35.0"
+  },
+  "devDependencies": {
+    "gh-pwa": "github:firien/gh-pwa#worker",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
   }
 }

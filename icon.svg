@@ -86,7 +86,7 @@
       <stop offset="100%" style="stop-color:rgb(180,180,180);stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect class="bg" x="0" y="0" rx="14" ry= "14" width="114" height="114"/>
+  <rect class="bg" x="0" y="0" width="114" height="114"/>
   <g transform="rotate(-45, 57, 57)">
     <use xlink:href="#key-path" fill-rule="evenodd" style="filter:url(#shadow);fill:#000;stroke:#000;stroke-width:1px;"/>
     <use xlink:href="#key-path" fill-rule="evenodd" style="fill:url(#key-radial);stroke:black;stroke-width:1px;"/>
