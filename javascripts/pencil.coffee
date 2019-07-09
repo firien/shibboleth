@@ -1,72 +1,72 @@
 class CPoint
   constructor: (@x,@y) ->
   distance: (point) ->
-    Math.sqrt Math.pow(@x-point.x,2) + Math.pow(@y-point.y,2)
+    Math.sqrt Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2)
   toString: ->
-    @x.toString(16) + @y.toString(16)
+    this.x.toString(16) + this.y.toString(16)
 window.CPoint = CPoint
 
 # The drawing pencil.
 class Pencil
   constructor: (@context) ->
-    @started = false
+    this.started = false
 
   # This is called when you start holding down the mouse button.
   # This starts the pencil drawing.
   Pencil::mousedown = Pencil::touchstart = (ev) ->
     if window.prng.length == 0
       window.prng.push new CPoint(ev._x, ev._y)
-    @context.strokeStyle = "#eee"
-    @context.beginPath()
-    @context.moveTo(ev._x, ev._y)
-    @started = true
+    this.context.strokeStyle = "#eee"
+    this.context.beginPath()
+    this.context.moveTo(ev._x, ev._y)
+    this.started = true
 
   # This function is called every time you move the mouse. Obviously, it only 
   # draws if the tool.started state is set to true (when you are holding down 
   # the mouse button).
   Pencil::mousemove = Pencil::touchmove = (ev) ->
-    if @started
+    if this.started
       current_point = new CPoint(ev._x, ev._y)
       random_spread = 20 + Math.random() * 60
-      if window.prng.all(-> this.distance(current_point) > random_spread)
+      if window.prng.every((p)-> p.distance(current_point) > random_spread)
         window.prng.push current_point
-        @context.save()
-        @context.beginPath()
-        @context.fillStyle = '#000'
-        @context.arc(current_point.x,current_point.y,3,0,Math.PI*2,true)
-        @context.closePath()
-        @context.fill()
-        @context.restore()
-        @context.beginPath()
-        @context.moveTo(ev._x, ev._y)
-      @context.lineTo(ev._x, ev._y)
-      @context.stroke()
+        this.context.save()
+        this.context.beginPath()
+        this.context.fillStyle = '#000'
+        this.context.arc(current_point.x,current_point.y,3,0,Math.PI*2,true)
+        this.context.closePath()
+        this.context.fill()
+        this.context.restore()
+        this.context.beginPath()
+        this.context.moveTo(ev._x, ev._y)
+      this.context.lineTo(ev._x, ev._y)
+      this.context.stroke()
 
   # This is called when you release the mouse button.
   Pencil::mouseup = Pencil::touchend = Pencil::touchcancel = (ev) ->
-    if @started
+    if this.started
       # @mousemove ev
-      @context.closePath()
-      @started = false
-      @context.clearRect(0,0,@context.canvas.width,@context.canvas.height)
+      this.context.closePath()
+      this.started = false
+      this.context.clearRect(0,0,this.context.canvas.width,this.context.canvas.height)
       #are there enough points?
       if window.prng.length > 10
         #clear rect and redraw all points
-        @context.fillStyle = '#eee'#'#444'
-        @context.fillRect(0,0,@context.canvas.width,@context.canvas.height)
-        @context.fillStyle = '#000'
-        that = this
-        window.prng.each ->
-          that.context.beginPath()
-          that.context.arc(this.x,this.y,3,0,Math.PI*2,true)
-          that.context.closePath()
-          that.context.fill()
+        this.context.fillStyle = '#eee'#'#444'
+        this.context.fillRect(0,0,this.context.canvas.width,this.context.canvas.height)
+        this.context.fillStyle = '#000'
+        window.prng.forEach((p) ->
+          this.context.beginPath()
+          this.context.arc(p.x,p.y,3,0,Math.PI*2,true)
+          this.context.closePath()
+          this.context.fill()
+        , this)
         #fill in with opacity
-        @context.fillStyle = 'rgba(123,163,200,0.8)'
-        @context.fillRect(0,0,@context.canvas.width,@context.canvas.height)
+        this.context.fillStyle = 'rgba(123,163,200,0.8)'
+        this.context.fillRect(0,0,this.context.canvas.width,this.context.canvas.height)
         #calc PRN from points
         prn = window.prng.slice(0,9).map((i)-> i.toString()).join('')
-        #console.log prn
+        console.log prn
         salt_shaker prn
         #window.modal.current.dismissModalView()
         
@@ -88,8 +88,8 @@ class Pencil
         p.appendChild span
         p.css 'backgroundImage', "url(#{canvas.toDataURL('image/png')})"
         query('.hud').replaceChild p, canvas
-        
-        if `'ontouchstart' in document.documentElement`
+
+        if 'ontouchstart' of document.documentElement
           query('body').removeEventListener('touchstart', window.disabler, false)
       else
         window.prng = []
@@ -104,11 +104,11 @@ window.disabler = disabler
 
 initializeCanvas = ->
   #disable scrolling on touch devices
-  if `'ontouchstart' in document.documentElement`
+  if 'ontouchstart' of document.documentElement
     query('body').addEventListener('touchstart', window.disabler, false)
   window.prng = []
 
-  canvas = document.querySelector '#imageView'
+  canvas = document.querySelector 'canvas#imageView'
   context = canvas.getContext '2d'
   #readjust dimensions
   # context.canvas.width  = window.innerWidth - 20
@@ -150,4 +150,5 @@ initializeCanvas = ->
     canvas.addEventListener('mousedown', ev_canvas, false)
     canvas.addEventListener('mousemove', ev_canvas, false)
     canvas.addEventListener('mouseup',   ev_canvas, false)
+
 window.initializeCanvas = initializeCanvas
