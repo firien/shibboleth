@@ -10,6 +10,10 @@ open = (data) ->
       store = database.createObjectStore('domains', keyPath: 'id', autoIncrement: true)
     if not store.indexNames.contains('name')
       store.createIndex('name', 'name', unique: true)
+  request.onblocked = (e) ->
+    console.error e
+  request.onerror = (e) ->
+    console.error e
   request.onsuccess = (e) ->
     $database = request.result
     self.postMessage(promiseId: data.promiseId, status: 201)
