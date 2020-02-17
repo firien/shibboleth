@@ -1,4 +1,4 @@
-$worker = new Worker('__worker__', name: 'wallpaper')
+$worker = new Worker('__worker__', name: 'shibboleth')
 
 sendMessage = (opts, buffers) ->
   opts.promiseId = nanoid(16)
@@ -62,10 +62,12 @@ execute = ->
   return if password == ''
   input = query "output"
   query('form').reset()
-  str = await hasher password, domain
+  str = await hasher(password, domain)
   # save domain
   sendMessage({cmd: 'saveDomain', domain})
   input.textContent = str
+  query('button').disabled = false
+  query('input[type=checkbox]').disabled = false
 
 
 saltShaker = (salt) ->
@@ -138,7 +140,7 @@ document.addEventListener('DOMContentLoaded', ->
   query('#known-salt')?.addEventListener('click', (e) ->
     s = prompt('Salt')
     if (s != "" && s != null)
-      window.salt_shaker(s)
+      window.saltShaker(s)
     e.stopPropagation()
     e.preventDefault()
     return false
@@ -162,4 +164,30 @@ document.addEventListener('DOMContentLoaded', ->
     e.preventDefault()
     return false
   , true)
+  initializeCanvas()
+  query('#copy').addEventListener('click', (e) ->
+    output = query('output')
+    if navigator.clipboard
+      navigator.clipboard.writeText(output.value)
+    else
+      input = document.createElement('input')
+      # input.style.display = 'none'
+      input.style.opacity = '0'
+      input.value = output.value
+      document.body.appendChild(input)
+      input.select()
+      # window.getSelection().removeAllRanges()
+      # range = document.createRange()
+      # range.selectNodeContents(output)
+      # range.collapse(true)
+      # range.setStart(output, 0)
+      # range.setEnd(output, 0)
+      # window.getSelection().addRange(range)
+      # window.getSelection().collapse(output)
+      # window.getSelection().extend(output, 4)
+      # window.getSelection().selectAllChildren(output)
+      document.execCommand('copy')
+      # window.getSelection().removeAllRanges()
+      document.body.removeChild(input)
+  )
 , true)
