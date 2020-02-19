@@ -1,7 +1,3 @@
 #Mac OSX
 .DS_Store
-#Sass
-.sass-cache/
-#logging
-log/
 node_modules/
