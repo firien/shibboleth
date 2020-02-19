@@ -1,33 +1,30 @@
 doctype html
 html(lang="en")
   head
-    title=name()
+    title Shibboleth
     meta(charset="UTF-8")
-    meta(name="Description" content=desc())
-    meta(name="theme-color" content=theme())
+    //- meta(name="Description" content=desc())
+    //- meta(name="theme-color" content=theme())
     meta(name="apple-mobile-web-app-capable" content="yes")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     // scripts
-    script&attributes(scriptAttributes('bundle.js'))
-    //script&attributes(scriptAttributes('pwa.js'))
-    script&attributes(scriptAttributes('index.js'))
+    script(src='/javascripts/index.js' type="module")
     // css
-    link(rel='stylesheet' href=assetPath('index.css'))
+    link(rel='stylesheet' href="/stylesheets/index.css")
     // icons
     link(rel="icon" href="favicon.ico" type="image/x-icon")
-    each icon in iconLinks()
-      link(rel=icon.rel sizes=icon.sizes href=icon.href)
-    // pwa
-    //link(rel="manifest", href="manifest.webmanifest")
   body
-    #wrapper
+    #settings
       .title Shibboleth
-      .bg
-        form
-          input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, list='domains')
-          label(for='domain') Domain
-          input#password(type='password' placeholder='password')
-          label(for='password') Password
-          output
-          datalist#domains
-        a(href='https://github.com/firien/shibboleth') https://github.com/firien/shibboleth
+    form
+      label(for='domain') Domain
+      input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, list='domains')
+      label(for='password') Password
+      input#password(type='password' placeholder='password')
+      input#see(type='checkbox' disabled)
+      output
+      label(for='see')
+      button#copy(disabled)
+    datalist#domains
+    a(href='https://github.com/firien/shibboleth') https://github.com/firien/shibboleth
+    //- canvas#imageView

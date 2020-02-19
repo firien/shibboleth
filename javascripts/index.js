@@ -1,7 +1,10 @@
-const $worker = new Worker('__worker__', {name: 'shibboleth'})
+import initializeCanvas from './pencil.js'
 
+const worker = new Worker('/javascripts/worker.js', {name: 'shibboleth'})
+
+let messageCount = 0
 const sendMessage = (opts, buffers) => {
-  opts.promiseId = nanoid(16)
+  opts.promiseId = messageCount++
   return new Promise((resolve, reject) => {
     const listener = (e) => {
       if (e.data.promiseId === opts.promiseId) {
@@ -10,16 +13,16 @@ const sendMessage = (opts, buffers) => {
         } else {
           reject(e.data)
         }
-        $worker.removeEventListener('message', listener)
+        worker.removeEventListener('message', listener)
       }
     }
-    $worker.addEventListener('message', listener)
-    $worker.postMessage(opts, buffers)
+    worker.addEventListener('message', listener)
+    worker.postMessage(opts, buffers)
   })
 }
 
 
-const hasher = (password, url) => {
+const hasher = async (password, url) => {
   let salt = ''
   //limiter?
   let limit = 22
@@ -37,15 +40,12 @@ const hasher = (password, url) => {
   //use first letter to determine how many times to pass through SHA256 (cap at 60 times)
   let iterations = Math.min(Math.floor(str.charCodeAt(0) / 3), 60)
   //unique password
-  encoder = new TextEncoder()
-  data = encoder.encode(str)
-  buf2hex = (buffer) => {
-    Array.prototype.map.call(new Uint8Array(buffer), (x) => ('00' + x.toString(16)).slice(-2)).join('')
-  }
-  for (x in [1..iterations]) {
+  let encoder = new TextEncoder()
+  let data = encoder.encode(str)
+  for (let i=0 ; i < iterations; i++) {
     data = await crypto.subtle.digest('SHA-256', data)
     // hex and back again to support old implementation
-    data = encoder.encode(buf2hex(data))
+    data = encoder.encode(data)
   }
   //convert to base64 and then remove repeating characters
   //remove `+` and `/` and `=`
@@ -74,13 +74,13 @@ const execute = async () => {
     return
   }
   let output = document.querySelector("output")
-  query('form').reset()
-  str = await hasher(password, domain)
+  document.querySelector('form').reset()
+  let str = await hasher(password, domain)
   // save domain
   sendMessage({cmd: 'saveDomain', domain})
   output.textContent = str
-  query('button').disabled = false
-  query('input[type=checkbox]').disabled = false
+  document.querySelector('button').disabled = false
+  document.querySelector('input[type=checkbox]').disabled = false
 }
 
 const loadDataList = async () => {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector("input[type=password]").blur()
     return false
   }, true)
-  let password = query("input[type=password]")
+  let password = document.querySelector("input[type=password]")
   password.addEventListener('blur', (e) => {
     console.time('sha')
     execute()
@@ -113,13 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 100)
     }
   })
-  initializeCanvas()
+  // initializeCanvas()
   document.querySelector('#copy').addEventListener('click', (e) => {
     let output = document.querySelector('output')
     if (navigator.clipboard) {
       navigator.clipboard.writeText(output.value)
     } else {
-      input = document.createElement('input')
+      let input = document.createElement('input')
       // input.style.display = 'none'
       input.style.opacity = '0'
       input.value = output.value
@@ -138,6 +138,33 @@ document.addEventListener('DOMContentLoaded', () => {
       document.execCommand('copy')
       // window.getSelection().removeAllRanges()
       document.body.removeChild(input)
+    }
+  })
+  document.querySelector('#settings .title').addEventListener('click', async function(e) {
+    let visible = this.parentElement.classList.toggle('expand')
+    if (visible) {
+      let table = document.createElement('table')
+      let thead = document.createElement('thead')
+      let row = document.createElement('tr')
+      let cell = document.createElement('th')
+      cell.textContent = 'Domains'
+      row.appendChild(cell)
+      thead.appendChild(row)
+      table.appendChild(thead)
+      let response = await sendMessage({cmd: 'allDomains'})
+      for (let domain of response.result) {
+        let row = document.createElement('tr')
+        let cell = document.createElement('td')
+        cell.textContent = domain
+        row.appendChild(cell)
+        table.appendChild(row)
+      }
+      this.parentElement.appendChild(table)
+    } else {
+      let table = this.parentElement.querySelector('table')
+      if (table) {
+        this.parentElement.removeChild(table)
+      }
     }
   })
 }, true)

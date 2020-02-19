@@ -14,7 +14,7 @@ class Point {
     return this.x.toString(16) + this.y.toString(16)
   }
 }
-
+let points = []
 // The drawing pencil.
 class Pencil {
   constructor(context) {
@@ -25,8 +25,8 @@ class Pencil {
   // This is called when you start holding down the mouse button.
   // This starts the pencil drawing.
   pointerdown(ev) {
-    if (window.prng.length === 0) {
-      window.prng.push(new Point(ev._x, ev._y))
+    if (points.length === 0) {
+      points.push(new Point(ev._x, ev._y))
     }
     this.context.strokeStyle = "#eee"
     this.context.beginPath()
@@ -40,8 +40,8 @@ class Pencil {
     if (this.started) {
       let currentPoint = new Point(ev._x, ev._y)
       let randomSpread = 20 + Math.random() * 60
-      if (window.prng.every(p => p.distance(currentPoint) > randomSpread)) {
-        window.prng.push(currentPoint)
+      if (points.every(p => p.distance(currentPoint) > randomSpread)) {
+        points.push(currentPoint)
         this.context.save()
         this.context.beginPath()
         this.context.fillStyle = '#000'
@@ -63,12 +63,12 @@ class Pencil {
       this.started = false
       this.context.clearRect(0,0,this.context.canvas.width,this.context.canvas.height)
       //are there enough points?
-      if (window.prng.length > 10) {
+      if (points.length > 10) {
         //clear rect and redraw all points
         this.context.fillStyle = '#eee'//'#444'
         this.context.fillRect(0,0,this.context.canvas.width,this.context.canvas.height)
         this.context.fillStyle = '#000'
-        window.prng.forEach((p) => {
+        points.forEach((p) => {
           this.context.beginPath()
           this.context.arc(p.x,p.y,3,0,Math.PI*2,true)
           this.context.closePath()
@@ -78,7 +78,7 @@ class Pencil {
         this.context.fillStyle = 'rgba(123,163,200,0.8)'
         this.context.fillRect(0,0,this.context.canvas.width,this.context.canvas.height)
         //calc PRN from points
-        let prn = window.prng.slice(0,9).map(i => i.toString()).join('')
+        let prn = points.slice(0,9).map(i => i.toString()).join('')
         saltShaker(prn)
         //window.modal.current.dismissModalView()
         
@@ -105,7 +105,7 @@ class Pencil {
           document.querySelector('body').removeEventListener('touchstart', disabler, false)
         }
       } else {
-        window.prng = []
+        points = []
         alert("Not enough points retry")
       }
     }
@@ -117,7 +117,6 @@ const initializeCanvas = () => {
   if ('ontouchstart' in document.documentElement) {
     document.querySelector('body').addEventListener('touchstart', disabler, false)
   }
-  window.prng = []
 
   let canvas = document.querySelector('canvas#imageView')
   let context = canvas.getContext('2d')
@@ -151,4 +150,4 @@ const initializeCanvas = () => {
   canvas.addEventListener('pointerup',   ev_canvas)
 }
 
-window.initializeCanvas = initializeCanvas
+export default initializeCanvas

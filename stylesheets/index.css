@@ -1,0 +1,265 @@
+body {
+  text-align:center;
+  font-family: -apple-system, Helvetica;
+  margin:0 1rem;
+  background-color:rgb(220,223,229);
+}
+
+#settings {
+  box-sizing: border-box;
+  transition: height 0.4s ease-in-out, border-radius 0.4s ease-in-out;
+  position: absolute;
+  top: 0;
+  width: calc(100vw - 2rem);
+}
+
+#settings.expand {
+  height: 100vh;
+  border-radius: 0;
+  border-bottom: none;
+  overflow-y: auto;
+}
+#settings.expand table {
+  margin: auto;
+  border-collapse: collapse;
+  border-color: grey;
+}
+input, output {
+  -webkit-appearance: none;
+  font-size: 1.2em;
+}
+input {
+  grid-area: input;
+  grid-row: 1;
+  border-radius:0 10px 0 0;
+  background-color:white;
+  border:1px solid rgb(171,171,171);
+  border-left: none;
+  padding: 0 0 0 0.5em;
+  margin:0 0 0 0;
+  box-sizing: content-box;
+}
+
+output {
+  grid-area: output;
+  display: block-inline;
+  grid-row: 3;
+  border-radius: 0 0 0 10px;
+  line-height: 3rem;
+  text-align:right;
+  background-color:#ddd;
+  color:#ddd;
+  border: 1px solid rgb(171,171,171);
+  border-top: none;
+  border-right: none;
+  padding: 0 0.5em 0 0.5em;
+  font-family: Menlo, Tahoma;
+}
+
+button {
+  display: block;
+  max-width: 3rem;
+  width: 3rem;
+  line-height: 3rem;
+  margin: 0;
+  border: 1px solid rgb(171,171,171);
+  border-top: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #ddd;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+}
+button:not(:disabled) {
+  cursor: pointer;
+}
+button:not(:disabled):hover {
+  background-color: white;
+}
+label[for=see] {
+  grid-area: see;
+  grid-row: 3;
+  display: block;
+  max-width: 3rem;
+  width: 3rem;
+  line-height: 3rem;
+  border-right: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16px' height='16px'><path fill='black' d='M 0 8 a 12 22 1 0 1 16 0 a 12 22 1 0 1 -16 0 z M 8,4 a 4 4 0 0 0 0 8 a 4 4 0 0 0 0 -8 z M 8,6 a 2 2 0 0 0 0 4 a 2 2 0 0 0 0 -4 z'/></svg>");
+  background-color: #ddd;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border-radius: 0;
+  border-top: none;
+  text-indent: 0;
+}
+input#see:not(:disabled) ~ label[for=see] {
+  cursor: pointer;
+}
+input#see:not(:disabled) ~ label[for=see]:hover {
+  background-color: white;
+}
+
+input#see:checked ~ output {
+  background-color: #fff;
+  color: black;
+}
+button#copy {
+  grid-area: copy;
+  grid-row: 3;
+  border-radius: 0 0 10px 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16px' height='16px'><path fill='black' d='M 3,7 h 5 v 1 h -5 z M 3,9 h 2.5 v 1 h -2.5 z M 3,11 h 2.5 v 1 h -2.5 z M 3,13 h 4 v 1 h -4 z M 8,11 l 3,-3 v 2 h 5 v 2 h -5 v 2 z M 2,3 h 3 a 2 2 1 0 1 4 0 h 3 a 1 1 1 0 1 1 1 v 5 h -1 v -3 h -10 v 9 h 10 v -2 h 1 v 2 a 1 1 1 0 1 -1 1 h -10 a 1 1 1 0 1 -1 -1 v -11 a 1 1 1 0 1 1 -1 z M 3 5 h 8 a 1 1 0 0 0 -1 -1 h -1 a 1 1 1 0 1 -1 -1 a 1 1 0 0 0 -2 0 a 1 1 1 0 1 -1 1 h -1 a 1 1 0 0 0 -1 1z'/></svg>");
+}
+input[type=checkbox] {
+  display: none;
+}
+label {
+  grid-area: label;
+  grid-row: 1;
+  font-size:1.2em;
+  display:block;
+  border-radius:10px 0 0 0;
+  background-color:white;
+  border:1px solid rgb(171,171,171);
+  line-height: 3rem;
+  text-align:left;
+  font-weight:bold;
+  text-indent:1em;
+}
+
+label[for=password],input[type=password] {
+  border-radius:0;
+  border-top:none;
+  grid-row: 2;
+}
+#settings {
+  /* margin-bottom: 1em; */
+  border-radius:0 0 10px 10px;
+  height: 3rem;
+  font-size:1.2em;
+  background-color:rgb(244,245,247);
+  border-left: thin solid #888;
+  border-right: thin solid #888;
+  border-bottom: thin solid #888;
+  /* box-shadow:black 0 1px 4px; */
+}
+#settings .title {
+  letter-spacing: 0.2rem;
+  height: 3rem;
+  /* text-shadow:#eed 0px 1px 0px; */
+  line-height: 3rem;
+  color: #555;
+  font-weight: bold;
+  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+
+}
+#settings.expand .title {
+  /* text-shadow:#000 0px 1px 0px; */
+  color: white;
+  background-color: grey;
+}
+
+input:focus {
+  outline: none;
+  background-color:#eee;
+}
+a {
+  margin-top:2em;
+  font-size:1em;
+  color:rgb(76,86,108);
+  text-shadow:white 0px 1px 0px;
+  text-decoration:none;
+}
+form {
+  margin: 4rem 0 1rem 0;
+  display: grid;
+  grid-template-columns: .4fr .6fr;
+  grid-template-rows: 3rem 3rem 3rem;
+  grid-template-areas:
+    "label input input input"
+    "label input input input"
+    "output output see copy";
+}
+
+@media screen and (max-width: 500px) {
+  input {
+    display:block;
+    -webkit-appearance: none;
+    width: 100%;
+    font-size: 1.2em;
+    border:1px solid rgb(171,171,171);
+    border-radius: 0;
+    /* border-color: rgb(171,171,171); */
+    height:45px;
+    line-height:normal;
+    margin:0;
+    box-sizing: border-box;
+  }
+  input#domain {
+    border-radius: 10px 10px 0px 0px;
+  }
+  input[type=password] {
+    position:relative;
+    top:-1px;
+    border-top:1px solid rgb(171,171,171);
+  }
+  output {
+    padding-right:10px;
+    padding-left:10px;
+    margin:0;
+    font-size: 1.2em;
+    display:block;
+    height:45px;
+    /* width: auto; */
+    -webkit-appearance: none;
+    border-radius: 0px 0px 10px 10px;
+    border:1px solid rgb(171,171,171);
+    background-color:#CBD2D8;
+    color:#CBD2D8;
+    position:relative;
+    top:-2px;
+    line-height:45px;
+    text-align:left;
+  }
+  output:not(:hover) {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  output:not(:hover)::selection {
+    background-color:#CBD2D8;
+    color:#CBD2D8;
+  }
+  output:empty {
+    color:black;
+    background-color:white;
+  }
+/*    &:not(:empty):after {
+      text-align:center;
+    }
+*/
+  input:focus {
+    background-color:white;
+  }
+  div#settings {
+    background-color:rgb(109,132,162);
+    background-image: linear-gradient(rgb(176,188,205), rgb(136,155,179) 50%, rgb(129,149,175) 50%, rgb(109,132,162));
+    border-radius:0;
+    margin:-10px -10px 10px -10px;
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: sticky;
+    top: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    color:white;
+    border-bottom: 1px solid rgb(45,54,66);
+    border-top: 1px solid rgb(203,213,223);
+    text-shadow:#444 0px -1px 0px;
+    box-shadow:none;
+  }
+  label {
+    display:none;
+  }
+}
