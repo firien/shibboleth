@@ -1,4 +1,4 @@
-let $database;
+let database;
 
 const open = (data) => {
   let request = indexedDB.open('shibboleth', 1)
@@ -21,24 +21,34 @@ const open = (data) => {
     console.error(e)
   }
   request.onsuccess = (e) => {
-    $database = request.result
+    database = request.result
     self.postMessage({promiseId: data.promiseId, status: 201})
   }
 }
 
 const saveDomain = (data) => {
-  let trxn = $database.transaction(['domains'], 'readwrite')
+  let trxn = database.transaction(['domains'], 'readwrite')
   let store = trxn.objectStore('domains')
   store.add({name: data.domain})
 }
 const allDomains = (data) => {
-  let trxn = $database.transaction(['domains'])
+  let trxn = database.transaction(['domains'])
   let store = trxn.objectStore('domains')
   store.getAll().onsuccess = (e) => {
-    names = e.target.result.map(d => d.name)
-    self.postMessage({promiseId: data.promiseId, result: names, status: 200})
+    let records = e.target.result
+    self.postMessage({promiseId: data.promiseId, result: records, status: 200})
   }
 }
+
+const removeDomain = (data) => {
+  let trxn = database.transaction(['domains'], 'readwrite')
+  let store = trxn.objectStore('domains')
+  let request = store.delete(data.id)
+  request.onsuccess = (e) => {
+    self.postMessage({promiseId: data.promiseId, status: 204})
+  }
+}
+
 self.addEventListener('message', (e) => {
   switch (e.data.cmd) {
     case 'open':
@@ -46,6 +56,9 @@ self.addEventListener('message', (e) => {
       break;
     case 'saveDomain':
       saveDomain(e.data)
+      break
+    case 'removeDomain':
+      removeDomain(e.data)
       break
     case 'allDomains':
       allDomains(e.data)

@@ -5,7 +5,35 @@ body {
   background-color:rgb(220,223,229);
 }
 
+#settings .title {
+  /* letter-spacing: 0.2rem; */
+  height: 3rem;
+  /* text-shadow:#eed 0px 1px 0px; */
+  line-height: 3rem;
+  color: #555;
+  font-weight: bold;
+  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out, letter-spacing 0.4s ease-in-out;
+}
+#settings.expand .title {
+  letter-spacing: 0.2rem;
+  /* text-shadow:#000 0px 1px 0px; */
+  color: white;
+  background-color: grey;
+}
+
 #settings {
+  /* margin-bottom: 1em; */
+  border-radius:0 0 10px 10px;
+  height: 3rem;
+  font-size:1.2em;
+  /* background-color:rgb(244,245,247); */
+  -webkit-backdrop-filter: blur(0.5rem);
+  backdrop-filter: blur(0.5rem);
+  background-color:rgba(255,255,255, 0.4);
+  border-left: thin solid #888;
+  border-right: thin solid #888;
+  border-bottom: thin solid #888;
+  /* box-shadow:black 0 1px 4px; */
   box-sizing: border-box;
   transition: height 0.4s ease-in-out, border-radius 0.4s ease-in-out;
   position: absolute;
@@ -20,10 +48,28 @@ body {
   overflow-y: auto;
 }
 #settings.expand table {
-  margin: auto;
+  /* margin: auto; */
   border-collapse: collapse;
   border-color: grey;
 }
+span {
+  font-weight: bold;
+  color: red;
+  border-radius: 50%;
+  border: medium solid red;
+  height: 1rem;
+  width: 1rem;
+  display: block;
+  line-height: 1rem;
+  text-align: center;
+  cursor: pointer;
+}
+#settings.expand table td {
+  text-align: right;
+  border: thin solid black;
+  padding: 0.2em;
+}
+
 input, output {
   -webkit-appearance: none;
   font-size: 1.2em;
@@ -133,32 +179,6 @@ label[for=password],input[type=password] {
   border-top:none;
   grid-row: 2;
 }
-#settings {
-  /* margin-bottom: 1em; */
-  border-radius:0 0 10px 10px;
-  height: 3rem;
-  font-size:1.2em;
-  background-color:rgb(244,245,247);
-  border-left: thin solid #888;
-  border-right: thin solid #888;
-  border-bottom: thin solid #888;
-  /* box-shadow:black 0 1px 4px; */
-}
-#settings .title {
-  letter-spacing: 0.2rem;
-  height: 3rem;
-  /* text-shadow:#eed 0px 1px 0px; */
-  line-height: 3rem;
-  color: #555;
-  font-weight: bold;
-  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
-
-}
-#settings.expand .title {
-  /* text-shadow:#000 0px 1px 0px; */
-  color: white;
-  background-color: grey;
-}
 
 input:focus {
   outline: none;
@@ -183,83 +203,24 @@ form {
 }
 
 @media screen and (max-width: 500px) {
-  input {
-    display:block;
-    -webkit-appearance: none;
-    width: 100%;
-    font-size: 1.2em;
-    border:1px solid rgb(171,171,171);
-    border-radius: 0;
-    /* border-color: rgb(171,171,171); */
-    height:45px;
-    line-height:normal;
-    margin:0;
-    box-sizing: border-box;
-  }
-  input#domain {
-    border-radius: 10px 10px 0px 0px;
-  }
-  input[type=password] {
-    position:relative;
-    top:-1px;
-    border-top:1px solid rgb(171,171,171);
-  }
-  output {
-    padding-right:10px;
-    padding-left:10px;
-    margin:0;
-    font-size: 1.2em;
-    display:block;
-    height:45px;
-    /* width: auto; */
-    -webkit-appearance: none;
-    border-radius: 0px 0px 10px 10px;
-    border:1px solid rgb(171,171,171);
-    background-color:#CBD2D8;
-    color:#CBD2D8;
-    position:relative;
-    top:-2px;
-    line-height:45px;
-    text-align:left;
-  }
-  output:not(:hover) {
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  output:not(:hover)::selection {
-    background-color:#CBD2D8;
-    color:#CBD2D8;
-  }
-  output:empty {
-    color:black;
-    background-color:white;
-  }
-/*    &:not(:empty):after {
-      text-align:center;
-    }
-*/
-  input:focus {
-    background-color:white;
-  }
-  div#settings {
-    background-color:rgb(109,132,162);
-    background-image: linear-gradient(rgb(176,188,205), rgb(136,155,179) 50%, rgb(129,149,175) 50%, rgb(109,132,162));
-    border-radius:0;
-    margin:-10px -10px 10px -10px;
-    position: -webkit-sticky;
-    position: -moz-sticky;
-    position: sticky;
-    top: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    color:white;
-    border-bottom: 1px solid rgb(45,54,66);
-    border-top: 1px solid rgb(203,213,223);
-    text-shadow:#444 0px -1px 0px;
-    box-shadow:none;
+  form {
+    margin: 4rem 0 1rem 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3rem 3rem 3rem;
+    grid-template-areas:
+      "input input input"
+      "input input input"
+      "output see copy";
   }
   label {
-    display:none;
+    display: none;
+  }
+  input {
+    border-radius: 10px 10px 0 0;
+    border-left: 1px solid rgb(171,171,171);
+  }
+  output {
+    font-size: 4vw;
   }
 }

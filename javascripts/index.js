@@ -1,4 +1,6 @@
 import initializeCanvas from './pencil.js'
+import hasher from './hasher.js'
+import bookmarklet from './bookmarklet.js'
 
 const worker = new Worker('/javascripts/worker.js', {name: 'shibboleth'})
 
@@ -48,13 +50,22 @@ const execute = async () => {
 const loadDataList = async () => {
   let response = await sendMessage({cmd: 'allDomains'})
   let datalist = document.querySelector('#domains')
-  for (let name of response.result) {
+  for (let record of response.result) {
     let opt = document.createElement('option')
-    opt.setAttribute('value', name)
+    opt.setAttribute('value', record.name)
     datalist.appendChild(opt)
   }
 }
+const removeDomain = async function(e) {
+  let id = Number(this.getAttribute('data-id'))
+  let response = await sendMessage({cmd: 'removeDomain', id})
+  if (Number(response.status) === 204) {
+    let tr = e.target.parentElement.parentElement
+    tr.parentElement.removeChild(tr)
+  }
+}
 document.addEventListener('DOMContentLoaded', () => {
+  console.log(bookmarklet)
   sendMessage({cmd: 'open'}).then(loadDataList)
   let form = document.querySelector("form")
   form.addEventListener('submit', (e) => {
@@ -87,18 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       input.value = output.value
       document.body.appendChild(input)
       input.select()
-      // window.getSelection().removeAllRanges()
-      // range = document.createRange()
-      // range.selectNodeContents(output)
-      // range.collapse(true)
-      // range.setStart(output, 0)
-      // range.setEnd(output, 0)
-      // window.getSelection().addRange(range)
-      // window.getSelection().collapse(output)
-      // window.getSelection().extend(output, 4)
-      // window.getSelection().selectAllChildren(output)
       document.execCommand('copy')
-      // window.getSelection().removeAllRanges()
       document.body.removeChild(input)
     }
   })
@@ -114,14 +114,19 @@ document.addEventListener('DOMContentLoaded', () => {
       thead.appendChild(row)
       table.appendChild(thead)
       let response = await sendMessage({cmd: 'allDomains'})
-      for (let domain of response.result) {
-        let row = document.createElement('tr')
-        let cell = document.createElement('td')
-        cell.textContent = domain
-        row.appendChild(cell)
+      let template = document.querySelector('template')
+      for (let record of response.result) {
+        let row = template.content.cloneNode(true)
+        let cell = row.querySelector('td:first-child')
+        cell.textContent = record.name
+        let span = row.querySelector('td span')
+        span.setAttribute('data-id', record.id)
         table.appendChild(row)
       }
       this.parentElement.appendChild(table)
+      for (let span of document.querySelectorAll('span')) {
+        span.addEventListener('click', removeDomain)
+      }
     } else {
       let table = this.parentElement.querySelector('table')
       if (table) {
