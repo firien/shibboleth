@@ -1,8 +1,22 @@
+:root {
+  --text-color: black;
+  --background-color: white;
+  --secondary-background-color: #ddd;
+  --tertiary-background-color: rgb(220,223,229);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: white;
+    --background-color: black;
+    --secondary-background-color: #555;
+    --tertiary-background-color: rgb(35,32,26);
+  }
+}
 body {
   text-align:center;
   font-family: -apple-system, Helvetica;
-  margin:0 1rem;
-  background-color:rgb(220,223,229);
+  margin: 0 1rem;
+  background-color: var(--tertiary-background-color);
 }
 body.modal {
   overflow: hidden;
@@ -42,6 +56,9 @@ header {
 }
 #settings ul {
   opacity: 0;
+}
+#settings table {
+  color: var(--text-color);
 }
 #settings.expand ul {
   opacity: 1;
@@ -89,7 +106,7 @@ input {
   grid-area: input;
   grid-row: 1;
   border-radius:0 10px 0 0;
-  background-color:white;
+  background-color: var(--background-color);
   border:1px solid rgb(171,171,171);
   border-left: none;
   padding: 0 0 0 0.5em;
@@ -104,8 +121,8 @@ output {
   border-radius: 0 0 0 10px;
   line-height: 3rem;
   text-align:right;
-  background-color:#ddd;
-  color:#ddd;
+  background-color: var(--secondary-background-color);
+  color:var(--secondary-background-color);
   border: 1px solid rgb(171,171,171);
   border-top: none;
   border-right: none;
@@ -123,7 +140,7 @@ form button {
   border-top: none;
   appearance: none;
   -webkit-appearance: none;
-  background-color: #ddd;
+  background-color: var(--secondary-background-color);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 24px;
@@ -143,7 +160,7 @@ label[for=see] {
   line-height: 3rem;
   border-right: none;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16px' height='16px'><path fill='black' d='M 0 8 a 12 22 1 0 1 16 0 a 12 22 1 0 1 -16 0 z M 8,4 a 4 4 0 0 0 0 8 a 4 4 0 0 0 0 -8 z M 8,6 a 2 2 0 0 0 0 4 a 2 2 0 0 0 0 -4 z'/></svg>");
-  background-color: #ddd;
+  background-color: var(--secondary-background-color);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 24px;
@@ -177,12 +194,13 @@ label {
   font-size:1.2em;
   display:block;
   border-radius:10px 0 0 0;
-  background-color:white;
+  background-color: var(--background-color);
   border:1px solid rgb(171,171,171);
   line-height: 3rem;
   text-align:left;
   font-weight:bold;
-  text-indent:1em;
+  text-indent: 1em;
+  color: var(--text-color);
 }
 
 label[for=password],input[type=password] {
@@ -231,12 +249,12 @@ ul li button, ul li a {
   border-radius: 0.2rem;
   border: thin solid grey;
   box-sizing: border-box;
-  color: black;
+  color: var(--text-color);
   font-size: 1rem;
   padding: 0.2rem;
   text-decoration: none;
   text-align: center;
-  background-color: #ddd;
+  background-color: var(--secondary-background-color);
   cursor: pointer;
 }
 
