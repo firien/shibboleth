@@ -1,6 +1,8 @@
 import initializeCanvas from './pencil.js'
 import hasher from './hasher.js'
-import bookmarklet from './bookmarklet.js'
+import {bookmarklet, shortcut} from './bookmarklet.js'
+import modal from './modal.js'
+import copy from './copy.js'
 
 const worker = new Worker('/javascripts/worker.js', {name: 'shibboleth'})
 
@@ -43,7 +45,7 @@ const execute = async () => {
   // save domain
   sendMessage({cmd: 'saveDomain', domain})
   output.textContent = str
-  document.querySelector('button').disabled = false
+  document.querySelector('button#copy').disabled = false
   document.querySelector('input[type=checkbox]').disabled = false
 }
 
@@ -65,10 +67,10 @@ const removeDomain = async function(e) {
   }
 }
 document.addEventListener('DOMContentLoaded', () => {
-  console.log(bookmarklet)
   sendMessage({cmd: 'open'}).then(loadDataList)
   let form = document.querySelector("form")
   form.addEventListener('submit', (e) => {
+    console.log("submitted")
     e.preventDefault()
     document.querySelector("input[type=password]").blur()
     return false
@@ -89,30 +91,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // initializeCanvas()
   document.querySelector('#copy').addEventListener('click', (e) => {
     let output = document.querySelector('output')
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(output.value)
-    } else {
-      let input = document.createElement('input')
-      // input.style.display = 'none'
-      input.style.opacity = '0'
-      input.value = output.value
-      document.body.appendChild(input)
-      input.select()
-      document.execCommand('copy')
-      document.body.removeChild(input)
-    }
+    copy(output.value)
   })
-  document.querySelector('#settings .title').addEventListener('click', async function(e) {
-    let visible = this.parentElement.classList.toggle('expand')
+  document.querySelector('a#bookmarklet').href = `javascript:${bookmarklet}`
+  document.querySelector('button#shortcuts').addEventListener('click', (e) => {
+    copy(shortcut)
+  })
+  document.querySelector('#salt').addEventListener('click', (e) => {
+    initializeCanvas()
+    let hud = modal.presentModalView(null)
+    hud.appendChild(document.querySelector('canvas'))
+  })
+
+  document.querySelector('header').addEventListener('click', async (e) => {
+    let settings = document.querySelector('#settings')
+    let visible = settings.classList.toggle('expand')
+    let tbody = settings.querySelector('tbody')
     if (visible) {
-      let table = document.createElement('table')
-      let thead = document.createElement('thead')
-      let row = document.createElement('tr')
-      let cell = document.createElement('th')
-      cell.textContent = 'Domains'
-      row.appendChild(cell)
-      thead.appendChild(row)
-      table.appendChild(thead)
+      document.body.classList.add('modal')
       let response = await sendMessage({cmd: 'allDomains'})
       let template = document.querySelector('template')
       for (let record of response.result) {
@@ -121,16 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
         cell.textContent = record.name
         let span = row.querySelector('td span')
         span.setAttribute('data-id', record.id)
-        table.appendChild(row)
+        tbody.appendChild(row)
       }
-      this.parentElement.appendChild(table)
       for (let span of document.querySelectorAll('span')) {
         span.addEventListener('click', removeDomain)
       }
     } else {
-      let table = this.parentElement.querySelector('table')
-      if (table) {
-        this.parentElement.removeChild(table)
+      document.body.classList.remove('modal')
+      while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild)
       }
     }
   })

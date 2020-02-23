@@ -22,7 +22,8 @@ const hasher = async (password, url, salt='') => {
   }
   //convert to base64 and then remove repeating characters
   //remove `+` and `/` and `=`
-  str = btoa(String.fromCharCode.apply(null, new Uint8Array(data))).replace(/[\/\+=]/g, "").replace(/([a-zA-Z0-9])\1+/g, "$1");
+  str = new Uint8Array(data)
+  str = btoa(String.fromCharCode(...str)).replace(/[\/\+=]/g, "").replace(/([a-zA-Z0-9])\1+/g, "$1");
   str = str.substring(0, limit);
   //ensure number
   if (!(/\d/).test(str)) {

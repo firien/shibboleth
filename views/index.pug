@@ -15,16 +15,34 @@ html(lang="en")
     link(rel="icon" href="favicon.ico" type="image/x-icon")
   body
     #settings
-      .title Shibboleth
+      table
+        thead
+          tr
+            th(colspan='2') Domains
+        tbody
+      ul
+        li
+          a#bookmarklet Bookmarklet
+        li
+          button#shortcuts Shortcuts JS
+        li
+          button#salt Salt
+    header Shibboleth
     form
       label(for='domain') Domain
       input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, list='domains')
       label(for='password') Password
-      input#password(type='password' placeholder='password')
+      input#password(type='password' placeholder='password' autocomplete="off")
       input#see(type='checkbox' disabled)
       output
       label(for='see')
       button#copy(disabled)
     datalist#domains
-    a(href='https://github.com/firien/shibboleth') https://github.com/firien/shibboleth
-    //- canvas#imageView
+    a#repo(href='https://github.com/firien/shibboleth') https://github.com/firien/shibboleth
+    .hidden
+      canvas
+    template
+      tr
+        td
+        td
+          span -

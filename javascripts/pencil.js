@@ -118,7 +118,7 @@ const initializeCanvas = () => {
     document.querySelector('body').addEventListener('touchstart', disabler, false)
   }
 
-  let canvas = document.querySelector('canvas#imageView')
+  let canvas = document.querySelector('canvas')
   let context = canvas.getContext('2d')
   //readjust dimensions
   // context.canvas.width  = window.innerWidth - 20
