@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Shibboleth";
+  src: url('/fonts/font.ttf') format('truetype'),
+       url(/fonts/font.svg#shibboleth) format('svg');
+}
+
 :root {
   --text-color: black;
   --background-color: white;
@@ -86,14 +92,8 @@ header {
   border-color: grey;
 }
 span {
-  font-weight: bold;
+  font-family: Shibboleth;
   color: red;
-  border-radius: 50%;
-  border: medium solid red;
-  height: 1rem;
-  width: 1rem;
-  display: block;
-  line-height: 1rem;
   text-align: center;
   cursor: pointer;
 }
@@ -102,6 +102,7 @@ input, output {
   -webkit-appearance: none;
   font-size: 1.2em;
 }
+
 input {
   grid-area: input;
   grid-row: 1;
@@ -115,14 +116,16 @@ input {
 }
 
 output {
+  -webkit-text-security: disc;
+  text-security: disc;
   grid-area: output;
   display: block-inline;
   grid-row: 3;
   border-radius: 0 0 0 10px;
   line-height: 3rem;
-  text-align:right;
-  background-color: var(--secondary-background-color);
-  color:var(--secondary-background-color);
+  text-align: right;
+  background-color: var(--background-color);
+  color: var(--text-color);
   border: 1px solid rgb(171,171,171);
   border-top: none;
   border-right: none;
@@ -141,9 +144,6 @@ form button {
   appearance: none;
   -webkit-appearance: none;
   background-color: var(--secondary-background-color);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 24px;
 }
 form button:not(:disabled) {
   cursor: pointer;
@@ -159,14 +159,14 @@ label[for=see] {
   width: 3rem;
   line-height: 3rem;
   border-right: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16px' height='16px'><path fill='black' d='M 0 8 a 12 22 1 0 1 16 0 a 12 22 1 0 1 -16 0 z M 8,4 a 4 4 0 0 0 0 8 a 4 4 0 0 0 0 -8 z M 8,6 a 2 2 0 0 0 0 4 a 2 2 0 0 0 0 -4 z'/></svg>");
+  font-family: "Shibboleth";
+  font-size: 1.5rem;
+  color: var(--text-color);
   background-color: var(--secondary-background-color);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 24px;
   border-radius: 0;
   border-top: none;
   text-indent: 0;
+  text-align: center;
 }
 input#see:not(:disabled) ~ label[for=see] {
   cursor: pointer;
@@ -175,15 +175,21 @@ input#see:not(:disabled) ~ label[for=see]:hover {
   background-color: white;
 }
 
+input#see:checked ~ label[for=see] {
+  background-color: var(--background-color);
+}
 input#see:checked ~ output {
-  background-color: #fff;
-  color: black;
+  -webkit-text-security: none;
+  text-security: none;
 }
 button#copy {
   grid-area: copy;
   grid-row: 3;
   border-radius: 0 0 10px 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16px' height='16px'><path fill='black' d='M 3,7 h 5 v 1 h -5 z M 3,9 h 2.5 v 1 h -2.5 z M 3,11 h 2.5 v 1 h -2.5 z M 3,13 h 4 v 1 h -4 z M 8,11 l 3,-3 v 2 h 5 v 2 h -5 v 2 z M 2,3 h 3 a 2 2 1 0 1 4 0 h 3 a 1 1 1 0 1 1 1 v 5 h -1 v -3 h -10 v 9 h 10 v -2 h 1 v 2 a 1 1 1 0 1 -1 1 h -10 a 1 1 1 0 1 -1 -1 v -11 a 1 1 1 0 1 1 -1 z M 3 5 h 8 a 1 1 0 0 0 -1 -1 h -1 a 1 1 1 0 1 -1 -1 a 1 1 0 0 0 -2 0 a 1 1 1 0 1 -1 1 h -1 a 1 1 0 0 0 -1 1z'/></svg>");
+  font-family: "Shibboleth";
+  color: var(--text-color);
+  font-size: 1.5rem;
+  text-align: center;
 }
 input[type=checkbox] {
   display: none;
@@ -254,7 +260,7 @@ ul li button, ul li a {
   padding: 0.2rem;
   text-decoration: none;
   text-align: center;
-  background-color: var(--secondary-background-color);
+  background-color: var(--tertiary-background-color);
   cursor: pointer;
 }
 

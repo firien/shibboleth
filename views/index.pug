@@ -35,8 +35,8 @@ html(lang="en")
       input#password(type='password' placeholder='password' autocomplete="off")
       input#see(type='checkbox' disabled)
       output
-      label(for='see')
-      button#copy(disabled)
+      label(for='see' title="View Password") &#xe000;
+      button#copy(disabled title="Copy Password") &#xe001;
     datalist#domains
     a#repo(href='https://github.com/firien/shibboleth') https://github.com/firien/shibboleth
     .hidden
@@ -45,4 +45,4 @@ html(lang="en")
       tr
         td
         td
-          span -
+          span &#xe002;

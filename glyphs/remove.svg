@@ -1,0 +1,5 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16px' height='16px'>
+  <path d='M 8,1 A 7 7 1 0 1 8 15 A 7 7 1 0 1 8 1
+           M 8,3 A 5 5 1 0 0 8 13 A 5 5 1 0 0 8 3
+           M 5,7 h 6 v 2 h -6 z'/>
+</svg>

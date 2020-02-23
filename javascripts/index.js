@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   // initializeCanvas()
   document.querySelector('#copy').addEventListener('click', (e) => {
+    e.preventDefault()
     let output = document.querySelector('output')
     copy(output.value)
   })
