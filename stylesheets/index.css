@@ -17,6 +17,9 @@
     --secondary-background-color: #555;
     --tertiary-background-color: rgb(35,32,26);
   }
+  #settings {
+    background-color:rgba(155,155,155, 0.4) !important;
+  }
 }
 body {
   text-align:center;
@@ -34,7 +37,7 @@ header {
   line-height: 3rem;
   position: absolute;
   top: 0;
-  color: #555;
+  color: var(--text-color);
   font-weight: bold;
   width: calc(100vw - 2rem);
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
@@ -50,9 +53,9 @@ header {
   -webkit-backdrop-filter: blur(0.7rem);
   backdrop-filter: blur(0.7rem);
   background-color:rgba(255,255,255, 0.4);
-  border-left: thin solid #888;
-  border-right: thin solid #888;
-  border-bottom: thin solid #888;
+  border-left: thin solid rgb(171, 171, 171);
+  border-right: thin solid rgb(171, 171, 171);
+  border-bottom: thin solid rgb(171, 171, 171);
   box-sizing: border-box;
   transition: transform 0.4s ease-in-out, border-radius 0.4s ease-in-out;
   position: absolute;
@@ -77,8 +80,8 @@ header {
 }
 #settings.expand + header {
   /* text-shadow:#000 0px 1px 0px; */
-  color: white;
-  background-color: grey;
+  /* color: var(--secondary-background-color); */
+  background-color: var(--secondary-background-color);
 }
 #settings.expand table td {
   text-align: right;
@@ -113,6 +116,7 @@ input {
   padding: 0 0 0 0.5em;
   margin:0 0 0 0;
   box-sizing: content-box;
+  color: var(--text-color);
 }
 
 output {
@@ -149,7 +153,7 @@ form button:not(:disabled) {
   cursor: pointer;
 }
 form button:not(:disabled):hover {
-  background-color: white;
+  background-color: var(--background-color);
 }
 label[for=see] {
   grid-area: see;
@@ -172,7 +176,7 @@ input#see:not(:disabled) ~ label[for=see] {
   cursor: pointer;
 }
 input#see:not(:disabled) ~ label[for=see]:hover {
-  background-color: white;
+  background-color: var(--background-color);
 }
 
 input#see:checked ~ label[for=see] {
@@ -217,14 +221,14 @@ label[for=password],input[type=password] {
 
 input:focus {
   outline: none;
-  background-color:#eee;
+  background-color: var(--secondary-background-color);
 }
 a#repo {
-  margin-top:2em;
-  font-size:1em;
-  color:rgb(76,86,108);
-  text-shadow:white 0px 1px 0px;
-  text-decoration:none;
+  margin-top: 2em;
+  font-size: 1em;
+  color: var(--text-color);
+  text-shadow: var(--secondary-background-color) 0px 1px 0px;
+  text-decoration: none;
 }
 form {
   margin: 4rem 0 1rem 0;
@@ -263,7 +267,9 @@ ul li button, ul li a {
   background-color: var(--tertiary-background-color);
   cursor: pointer;
 }
-
+li button:hover, li a:hover {
+  background-color: var(--secondary-background-color);
+}
 @media screen and (max-width: 500px) {
   #settings {
     flex-direction: column;

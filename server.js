@@ -21,11 +21,15 @@ http.createServer((request, response) => {
       response.end()
     } else {
       let stat = fs.statSync(filePath)
-      let mime;
+      let mime = 'text/plain';
       if ((/js$/).test(filePath)) {
         mime = "text/javascript"
       } else if  ((/css$/).test(filePath)) {
         mime = "text/css"
+      } else if  ((/svg$/).test(filePath)) {
+        mime = "image/svg+xml"
+      } else if  ((/ttf$/).test(filePath)) {
+        mime = "application/x-font-ttf"
       }
       response.writeHead(200, {
         'Content-Type': mime,

@@ -1,7 +1,3 @@
-const disabler = (e) => {
-  e.preventDefault()
-  return false
-}
 class Point {
   constructor(x,y) {
     this.x = x;
@@ -79,11 +75,10 @@ class Pencil {
         this.context.fillRect(0,0,this.context.canvas.width,this.context.canvas.height)
         //calc PRN from points
         let prn = points.slice(0,9).map(i => i.toString()).join('')
-        saltShaker(prn)
-        //window.modal.current.dismissModalView()
+        //modal.current.dismissModalView()
         
         let canvas = document.querySelector('.hud canvas')
-        p = document.createElement('div')
+        let p = document.createElement('div')
         p.setAttribute('id', 'salt-hud')
         p.style.height = `${canvas.height}px`
         p.style.width = `${canvas.width}px`
@@ -100,10 +95,6 @@ class Pencil {
         p.appendChild(span)
         p.style.backgroundImage = `url(${canvas.toDataURL('image/png')})`
         document.querySelector('.hud').replaceChild(p, canvas)
-
-        if ('ontouchstart' in document.documentElement) {
-          document.querySelector('body').removeEventListener('touchstart', disabler, false)
-        }
       } else {
         points = []
         alert("Not enough points retry")
@@ -113,11 +104,7 @@ class Pencil {
 }
 
 const initializeCanvas = () => {
-  //disable scrolling on touch devices
-  if ('ontouchstart' in document.documentElement) {
-    document.querySelector('body').addEventListener('touchstart', disabler, false)
-  }
-
+  document.body.classList.add('modal')
   let canvas = document.querySelector('canvas')
   let context = canvas.getContext('2d')
   //readjust dimensions
