@@ -3,16 +3,22 @@ html(lang="en")
   head
     title Shibboleth
     meta(charset="UTF-8")
-    //- meta(name="Description" content=desc())
-    //- meta(name="theme-color" content=theme())
+    meta(name="Description" content="Password Generator")
+    meta(name="theme-color" content="#fffff0")
     meta(name="apple-mobile-web-app-capable" content="yes")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     // scripts
-    script(src='/javascripts/index.js' type="module")
+    script(src='javascripts/index.js' type="module")
+    script(src='pwa.js')
     // css
-    link(rel='stylesheet' href="/stylesheets/index.css")
+    link(rel='stylesheet' href="stylesheets/index.css")
     // icons
     link(rel="icon" href="favicon.ico" type="image/x-icon")
+    link(rel="apple-touch-icon" sizes="152x152" href="images/icon-152.png")
+    link(rel="apple-touch-icon" sizes="167x167" href="images/icon-167.png")
+    link(rel="apple-touch-icon" sizes="180x180" href="images/icon-180.png")
+    link(rel="apple-touch-icon" sizes="192x192" href="images/icon-192.png")
+    link(rel="apple-touch-icon" sizes="512x512" href="images/icon-512.png")
   body
     #settings
       table

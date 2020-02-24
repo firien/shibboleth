@@ -2,6 +2,7 @@
   "private": true,
   "type": "module",
   "devDependencies": {
+    "pug": "^2.0.4",
     "svg2ttf": "^4.3.0"
   }
 }

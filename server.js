@@ -3,22 +3,19 @@ import * as path from 'path';
 import * as http from 'http';
 import * as url from 'url';
 
-import pug from 'pug';
-
 http.createServer((request, response) => {
   let uri = url.parse(request.url).pathname
-  let filePath = path.join(process.cwd(), uri)
-
+  let filePath = path.join(process.cwd(), 'docs', uri.replace('/shibboleth', ''))
   if (fs.existsSync(filePath)) {
     if (fs.statSync(filePath).isDirectory()) {
-      filePath = path.join(filePath, "views", "index.pug")
-      let html = pug.renderFile(filePath);
+      filePath = path.join(filePath, "index.html")
+      let stat = fs.statSync(filePath)
       response.writeHead(200, {
         'Content-Type': "text/html",
-        'Content-Length': Buffer.byteLength(html, 'utf8')
+        'Content-Length': stat.size
       })
-      response.write(html)
-      response.end()
+      let readStream = fs.createReadStream(filePath);
+      readStream.pipe(response);
     } else {
       let stat = fs.statSync(filePath)
       let mime = 'text/plain';
