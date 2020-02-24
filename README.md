@@ -7,14 +7,15 @@ Suppose you are logging into Gmail; the URL would look something like this:
 Shibboleth will mash your master password with the current domain (stripped of subdomains), in this case `google.com`, and create a password unique to `google.com`. To do this it runs your master password and current domain through a [cryptographic hash function](http://en.wikipedia.org/wiki/Cryptographic_hash_function), specifically the SHA-256 function.
 ### How do I use it?
 There are two ways to use Shibboleth.
+
 #### 1. Bookmarklet
 This is a little snippet of javascript that is saved as a bookmark in your browser. When you need to log into a website you fill in your username and master password, then click on the Shibboleth bookmarklet and it will replace your master password with your unique password for that particular website.
-#### 2. Web App
+#### 2. Progressive Web Application
 Sometimes, specifically on mobile devices, you will be logging into sites through native applications and the bookmarklet method is not an option. So the standalone web app allows you to manually set the domain, generate your unique password, copy to the clipboard, and paste it in the native application.
 
-The standalone web app is encoded into a data uri, so internet access is NOT required to use it.
+[Shibboleth](https://firien.github.io/shibboleth/) 
 ### Is my password stored anywhere?
-Nope. The bookmarklet and standalone web app are both stored on your device and do not communicate with any server. Check out the source code at [github](https://github.com/firien/shibboleth).
+Nope. The bookmarklet and PWA are both stored on your device and do not communicate with any server. Check out the source code at [github](https://github.com/firien/shibboleth).
 ### Site \*\*\*.com limits my password to 16 characters
 No problem, append ':xxx' to your master password to truncate it. For example `master:16` will create a password only 16 characters long.
 
