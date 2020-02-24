@@ -4,7 +4,7 @@ import {bookmarklet, shortcut} from './bookmarklet.js'
 import modal from './modal.js'
 import copy from './copy.js'
 
-const worker = new Worker('/javascripts/worker.js', {name: 'shibboleth'})
+const worker = new Worker('/shibboleth/javascripts/worker.js', {name: 'shibboleth'})
 
 let messageCount = 0
 const sendMessage = (opts, buffers) => {
