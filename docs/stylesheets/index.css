@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Shibboleth";
-  src: url('/fonts/font.ttf') format('truetype'),
-       url(/fonts/font.svg#shibboleth) format('svg');
+  src: url('/shibboleth/fonts/font.ttf') format('truetype'),
+       url(/shibboleth/fonts/font.svg#shibboleth) format('svg');
 }
 
 :root {
