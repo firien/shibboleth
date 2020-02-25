@@ -54,6 +54,7 @@ header > button {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  color: var(--text-color);
 }
 header > button:focus, header > button:active {
   outline: none;
