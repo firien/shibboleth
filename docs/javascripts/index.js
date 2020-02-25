@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hud.appendChild(document.querySelector('canvas'))
   })
 
-  document.querySelector('header').addEventListener('click', async (e) => {
+  document.querySelector('header button').addEventListener('click', async (e) => {
     let settings = document.querySelector('#settings')
     let visible = settings.classList.toggle('expand')
     let tbody = settings.querySelector('tbody')

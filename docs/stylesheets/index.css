@@ -1,6 +1,7 @@
 @font-face {
   font-family: "Shibboleth";
   src: url('/shibboleth/fonts/font.ttf') format('truetype'),
+       url('/shibboleth/fonts/font.woff2') format('woff2'),
        url(/shibboleth/fonts/font.svg#shibboleth) format('svg');
 }
 
@@ -41,8 +42,26 @@ header {
   font-weight: bold;
   width: calc(100vw - 2rem);
   transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+  display: flex;
 }
 
+header > button {
+  font-family: Shibboleth;
+  font-size: 1.4rem;
+  width: 3rem;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+header > button:focus, header > button:active {
+  outline: none;
+}
+header > div {
+  flex: 1 1 90%;
+  padding-left: 3rem
+}
 #settings {
   display: flex;
   justify-content: space-evenly;
@@ -103,6 +122,7 @@ span {
 
 input, output {
   -webkit-appearance: none;
+  appearance: none;
   font-size: 1.2em;
 }
 
