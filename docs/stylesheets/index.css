@@ -292,9 +292,19 @@ li button:hover, li a:hover {
   background-color: var(--secondary-background-color);
 }
 @media screen and (max-width: 500px) {
+  body {
+    margin: 0;
+  }
+  header {
+    width: 100vw;
+  }
   #settings {
     flex-direction: column;
     justify-content: flex-start;
+    border-radius: 0;
+    width: 100vw;
+    border-left: none;
+    border-right: none;
   }
   #settings ul {
     order: 1;
@@ -318,10 +328,18 @@ li button:hover, li a:hover {
     display: none;
   }
   input {
-    border-radius: 10px 10px 0 0;
-    border-left: 1px solid rgb(171,171,171);
+    padding: 0 0 0 0.75em;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
   output {
-    font-size: 4vw;
+    border-radius: 0;
+    border-left: none;
+    font-size: 4.5vw;
+  }
+  button#copy {
+    border-radius: 0;
+    border-right: none;
   }
 }
