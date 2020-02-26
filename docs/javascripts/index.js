@@ -102,6 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
   // initializeCanvas()
+  document.querySelector('#copy').addEventListener('dragstart', (e) => {
+    e.dataTransfer.effectAllowed = "copy";
+    let password = document.querySelector('output').value
+    e.dataTransfer.setData('text', password)
+  })
   document.querySelector('#copy').addEventListener('click', (e) => {
     e.preventDefault()
     let output = document.querySelector('output')
