@@ -21,7 +21,10 @@ html(lang="en")
     link(rel="apple-touch-icon" sizes="512x512" href="images/icon-512.png")
     link(rel="manifest" href="manifest.webmanifest")
   body
-    noscript Requires Javascript
+    noscript
+      label(for='noscript') &#xf104;
+      input#noscript(type='checkbox')
+      div Requires Javascript
     #settings
       table
         thead

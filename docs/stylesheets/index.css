@@ -4,6 +4,38 @@
        url('/shibboleth/fonts/font.woff2') format('woff2'),
        url(/shibboleth/fonts/font.svg#shibboleth) format('svg');
 }
+noscript {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  max-width: 3rem;
+}
+noscript label {
+  font-family: Shibboleth;
+  font-size: 1.5rem;
+  display: inline;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  color: darkred;
+  cursor: pointer;
+}
+noscript div {
+  display: none;
+}
+noscript input[type=checkbox]:checked ~ div {
+  display: block;
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  width: 100vw;
+  box-sizing: border-box;
+  color: darkred;
+  background-color: darksalmon;
+  padding: 1rem;
+}
 
 :root {
   --text-color: black;

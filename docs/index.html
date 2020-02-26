@@ -22,7 +22,11 @@
     <link rel="manifest" href="manifest.webmanifest">
   </head>
   <body>
-    <noscript>Requires Javascript</noscript>
+    <noscript>
+      <label for="noscript">&#xf104;</label>
+      <input id="noscript" type="checkbox">
+      <div>Requires Javascript</div>
+    </noscript>
     <div id="settings">
       <table>
         <thead>
@@ -33,10 +37,6 @@
         <tbody></tbody>
       </table>
       <ul>
-        <li><a id="bookmarklet">Bookmarklet</a></li>
-        <li>
-          <button id="shortcuts">Shortcuts JS</button>
-        </li>
         <li>
           <button id="salt">Salt</button>
         </li>
