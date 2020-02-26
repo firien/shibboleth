@@ -47,6 +47,7 @@ const execute = async () => {
   output.textContent = str
   document.querySelector('button#copy').disabled = false
   document.querySelector('input[type=checkbox]').disabled = false
+  loadDataList()
 }
 
 document.querySelector('#domain').addEventListener('drop', (e) => {
@@ -65,6 +66,9 @@ document.querySelector('#domain').addEventListener('drop', (e) => {
 const loadDataList = async () => {
   let response = await sendMessage({cmd: 'allDomains'})
   let datalist = document.querySelector('#domains')
+  while (datalist.firstChild) {
+    datalist.removeChild(datalist.firstChild)
+  }
   for (let record of response.result) {
     let opt = document.createElement('option')
     opt.setAttribute('value', record.name)
@@ -78,6 +82,7 @@ const removeDomain = async function(e) {
     let tr = e.target.parentElement.parentElement
     tr.parentElement.removeChild(tr)
   }
+  loadDataList()
 }
 document.addEventListener('DOMContentLoaded', () => {
   sendMessage({cmd: 'open'}).then(loadDataList)
