@@ -1,5 +1,5 @@
-const tag = 3
-const prefix = 'SHIBBOLETH'
+const tag = 4;
+const prefix = 'SHIBBOLETH';
 const cacheName = `${prefix}-${tag}`
 
 const urls = [

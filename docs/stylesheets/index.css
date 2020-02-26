@@ -31,6 +31,9 @@ body {
 body.modal {
   overflow: hidden;
 }
+button {
+  padding: 0;
+}
 header {
   letter-spacing: 0.1rem;
   height: 3rem;
@@ -47,7 +50,7 @@ header {
 
 header > button {
   font-family: Shibboleth;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   width: 3rem;
   -webkit-appearance: none;
   appearance: none;
@@ -56,8 +59,11 @@ header > button {
   cursor: pointer;
   color: var(--text-color);
 }
-header > button:focus, header > button:active {
+button:focus, button:active {
   outline: none;
+}
+#copy:disabled {
+  color: grey;
 }
 header > div {
   flex: 1 1 90%;
@@ -200,6 +206,9 @@ input#see:not(:disabled) ~ label[for=see]:hover {
   background-color: var(--background-color);
 }
 
+input#see:disabled ~ label[for=see] {
+  color: grey;
+}
 input#see:checked ~ label[for=see] {
   background-color: var(--background-color);
 }

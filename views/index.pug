@@ -4,7 +4,7 @@ html(lang="en")
     title Shibboleth
     meta(charset="UTF-8")
     meta(name="Description" content="Password Generator")
-    meta(name="theme-color" content="#fffff0")
+    meta(name="theme-color" content="#901011")
     meta(name="apple-mobile-web-app-capable" content="yes")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     // scripts
@@ -21,6 +21,7 @@ html(lang="en")
     link(rel="apple-touch-icon" sizes="512x512" href="images/icon-512.png")
     link(rel="manifest" href="manifest.webmanifest")
   body
+    noscript Requires Javascript
     #settings
       table
         thead
@@ -36,16 +37,16 @@ html(lang="en")
           button#salt Salt
     header
       div Shibboleth
-      button &#xe003;
+      button(title="Settings") &#xf103;
     form
       label(for='domain') Domain
-      input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, list='domains')
+      input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, spellcheck='false', list='domains')
       label(for='password') Password
       input#password(type='password' placeholder='password' autocomplete="off")
       input#see(type='checkbox' disabled)
       output
-      label(for='see' title="View Password") &#xe000;
-      button#copy(disabled title="Copy Password") &#xe001;
+      label(for='see' title="View Password") &#xf100;
+      button#copy(disabled title="Copy Password" draggable='true') &#xf101;
     datalist#domains
     a#repo(href='https://github.com/firien/shibboleth') https://github.com/firien/shibboleth
     .hidden
@@ -54,4 +55,4 @@ html(lang="en")
       tr
         td
         td
-          span &#xe002;
+          span &#xf102;

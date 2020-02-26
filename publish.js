@@ -9,11 +9,11 @@ const html = pug.renderFile(filePath, {pretty: true});
 const newFileName = path.resolve('./docs/index.html');
 fs.writeFileSync(newFileName, html);
 
-const svgFontPath = path.resolve('./docs/fonts/svg.ttf');
+const svgFontPath = path.resolve('./docs/fonts/font.svg');
 const ttfFontPath = path.resolve('./docs/fonts/font.ttf');
 
 const ttf = svg2ttf(fs.readFileSync(svgFontPath, 'utf8'), {});
-fs.writeFileSync(ttfFontPath, new Buffer(ttf.buffer));
+fs.writeFileSync(ttfFontPath, Buffer.from(ttf.buffer));
 
-const ttf = fs.readFileSync(fontPath);
-fs.writeFileSync('./docs/fonts/font.woff2', ttf2woff2(ttf));
+const ttfData = fs.readFileSync(ttfFontPath);
+fs.writeFileSync('./docs/fonts/font.woff2', ttf2woff2(ttfData));

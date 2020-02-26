@@ -4,7 +4,7 @@
     <title>Shibboleth</title>
     <meta charset="UTF-8">
     <meta name="Description" content="Password Generator">
-    <meta name="theme-color" content="#fffff0">
+    <meta name="theme-color" content="#901011">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- scripts-->
@@ -22,6 +22,7 @@
     <link rel="manifest" href="manifest.webmanifest">
   </head>
   <body>
+    <noscript>Requires Javascript</noscript>
     <div id="settings">
       <table>
         <thead>
@@ -43,7 +44,7 @@
     </div>
     <header>
       <div>Shibboleth</div>
-      <button>&#xe003;</button>
+      <button title="Settings">&#xf103;</button>
     </header>
     <form>
       <label for="domain">Domain</label>
@@ -52,8 +53,8 @@
       <input id="password" type="password" placeholder="password" autocomplete="off">
       <input id="see" type="checkbox" disabled>
       <output></output>
-      <label for="see" title="View Password">&#xe000;</label>
-      <button id="copy" disabled title="Copy Password">&#xe001;</button>
+      <label for="see" title="View Password">&#xf100;</label>
+      <button id="copy" disabled title="Copy Password" draggable="true">&#xf101;</button>
     </form>
     <datalist id="domains"></datalist><a id="repo" href="https://github.com/firien/shibboleth">https://github.com/firien/shibboleth</a>
     <div class="hidden">
@@ -62,7 +63,7 @@
     <template>
       <tr>
         <td></td>
-        <td><span>&#xe002;</span></td>
+        <td><span>&#xf102;</span></td>
       </tr>
     </template>
   </body>

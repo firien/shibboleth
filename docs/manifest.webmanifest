@@ -3,7 +3,7 @@
   "short_name": "Shibboleth",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fffff0",
+  "background_color": "#901011",
   "description": "Password Generator",
   "icons": [
       {

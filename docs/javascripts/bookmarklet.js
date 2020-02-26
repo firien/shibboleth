@@ -1,4 +1,4 @@
-import hasher from './hasher.js'
+import {hasher} from './hasher.js'
 
 export const bookmarklet = encodeURIComponent(`(async () => {
   const localHasher = ${hasher.toString()};
