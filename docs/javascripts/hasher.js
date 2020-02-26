@@ -22,9 +22,7 @@ export const hasher = async (password, url, salt='') => {
     limit = Number(match[2]);
   }
   let str = password + tld(url) + salt;
-  //use first letter to determine how many times to pass through SHA256 (cap at 60 times)
-  let iterations = Math.min(Math.floor(str.charCodeAt(0) / 3), 60);
-  //unique password
+  let iterations = str.charCodeAt(0) * 20
   let encoder = new TextEncoder();
   let data = encoder.encode(str);
   for (let i=0 ; i < iterations; i++) {
