@@ -35,6 +35,8 @@ button {
   padding: 0;
 }
 header {
+  user-select: none;
+  -webkit-user-select: none;
   letter-spacing: 0.1rem;
   height: 3rem;
   /* text-shadow:#eed 0px 1px 0px; */
