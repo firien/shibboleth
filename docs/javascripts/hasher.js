@@ -28,7 +28,7 @@ export const hasher = async (password, url, salt='') => {
   let encoder = new TextEncoder();
   let data = encoder.encode(str);
   for (let i=0 ; i < iterations; i++) {
-    data = await crypto.subtle.digest('SHA-256', data);
+    data = await crypto.subtle.digest('SHA-512', data);
   }
   //convert to base64 and then remove repeating characters
   //remove `+` and `/` and `=`
