@@ -43,19 +43,21 @@
       </ul>
     </div>
     <header>
-      <div>Shibboleth</div>
+      <h1>Shibboleth</h1>
       <button title="Settings">&#xf103;</button>
     </header>
-    <form>
-      <label for="domain">Domain</label>
-      <input id="domain" placeholder="www.host.com" autocapitalize="off" autofocus spellcheck="false" list="domains">
-      <label for="password">Password</label>
-      <input id="password" type="password" placeholder="password" autocomplete="off">
-      <input id="see" type="checkbox" disabled>
-      <output></output>
-      <label for="see" title="View Password">&#xf100;</label>
-      <button id="copy" disabled title="Copy Password" draggable="true">&#xf101;</button>
-    </form>
+    <main>
+      <form>
+        <label for="domain">Domain</label>
+        <input id="domain" placeholder="www.host.com" autocapitalize="off" autofocus spellcheck="false" list="domains">
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="password" autocomplete="off">
+        <input id="see" type="checkbox" disabled>
+        <output></output>
+        <label for="see" title="View Password">&#xf100;</label>
+        <button id="copy" disabled title="Copy Password" draggable="true">&#xf101;</button>
+      </form>
+    </main>
     <datalist id="domains"></datalist><a id="repo" href="https://github.com/firien/shibboleth">https://github.com/firien/shibboleth</a>
     <div class="hidden">
       <canvas></canvas>

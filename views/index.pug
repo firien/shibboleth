@@ -35,17 +35,18 @@ html(lang="en")
         li
           button#salt Salt
     header
-      div Shibboleth
+      h1 Shibboleth
       button(title="Settings") &#xf103;
-    form
-      label(for='domain') Domain
-      input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, spellcheck='false', list='domains')
-      label(for='password') Password
-      input#password(type='password' placeholder='password' autocomplete="off")
-      input#see(type='checkbox' disabled)
-      output
-      label(for='see' title="View Password") &#xf100;
-      button#copy(disabled title="Copy Password" draggable='true') &#xf101;
+    main
+      form
+        label(for='domain') Domain
+        input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, spellcheck='false', list='domains')
+        label(for='password') Password
+        input#password(type='password' placeholder='password' autocomplete="off")
+        input#see(type='checkbox' disabled)
+        output
+        label(for='see' title="View Password") &#xf100;
+        button#copy(disabled title="Copy Password" draggable='true') &#xf101;
     datalist#domains
     a#repo(href='https://github.com/firien/shibboleth') https://github.com/firien/shibboleth
     .hidden

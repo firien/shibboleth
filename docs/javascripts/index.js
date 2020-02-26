@@ -43,7 +43,7 @@ const execute = async () => {
   let str = await hasher(password, domain)
   // save domain
   sendMessage({cmd: 'saveDomain', domain})
-  output.textContent = str
+  output.value = str
   document.querySelector('button#copy').disabled = false
   document.querySelector('input[type=checkbox]').disabled = false
   loadDataList()
@@ -93,23 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
     return false
   }, true)
   let password = document.querySelector("input[type=password]")
-  password.addEventListener('blur', (e) => {
-    console.time('sha')
-    execute()
-    console.timeEnd('sha')
-  })
+  password.addEventListener('blur', execute)
   password.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
-      setTimeout( () => {
-        document.querySelector("input[type=password]").blur()
-      }, 100)
+      setTimeout(execute, 100)
     }
   })
   // initializeCanvas()
   document.querySelector('#copy').addEventListener('dragstart', (e) => {
     e.dataTransfer.effectAllowed = "copy";
-    let password = document.querySelector('output').value
-    e.dataTransfer.setData('text', password)
+    let password = String(document.querySelector('output').value)
+    e.dataTransfer.setData('text/plain', password)
   })
   document.querySelector('#copy').addEventListener('click', (e) => {
     e.preventDefault()
