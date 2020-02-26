@@ -1,6 +1,5 @@
 import initializeCanvas from './pencil.js'
 import {hasher, tld} from './hasher.js'
-import {bookmarklet, shortcut} from './bookmarklet.js'
 import modal from './modal.js'
 import copy from './copy.js'
 
@@ -116,10 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault()
     let output = document.querySelector('output')
     copy(output.value)
-  })
-  document.querySelector('a#bookmarklet').href = `javascript:${bookmarklet}`
-  document.querySelector('button#shortcuts').addEventListener('click', (e) => {
-    copy(shortcut)
   })
   document.querySelector('#salt').addEventListener('click', (e) => {
     initializeCanvas()

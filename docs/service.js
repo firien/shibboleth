@@ -1,9 +1,8 @@
-const tag = 5;
+const tag = 6;
 const prefix = 'SHIBBOLETH';
 const cacheName = `${prefix}-${tag}`
 
 const urls = [
-  '/shibboleth/javascripts/bookmarklet.js',
   '/shibboleth/javascripts/index.js',
   '/shibboleth/javascripts/copy.js',
   '/shibboleth/javascripts/hasher.js',
