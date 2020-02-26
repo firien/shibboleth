@@ -1,5 +1,5 @@
 import initializeCanvas from './pencil.js'
-import hasher from './hasher.js'
+import {hasher, tld} from './hasher.js'
 import {bookmarklet, shortcut} from './bookmarklet.js'
 import modal from './modal.js'
 import copy from './copy.js'
@@ -49,6 +49,19 @@ const execute = async () => {
   document.querySelector('input[type=checkbox]').disabled = false
 }
 
+document.querySelector('#domain').addEventListener('drop', (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  try {
+    let uri = e.dataTransfer.getData("text/uri-list");
+    let url = new URL(uri);
+    e.target.value = tld(url);
+  } catch (e) {
+    e
+    debugger
+    //ignore
+  }
+})
 const loadDataList = async () => {
   let response = await sendMessage({cmd: 'allDomains'})
   let datalist = document.querySelector('#domains')

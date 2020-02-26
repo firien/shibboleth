@@ -1,4 +1,19 @@
-const hasher = async (password, url, salt='') => {
+//strip sub domains (improve this)
+export const tld = (url) => {
+  if (url.constructor === URL) {
+    let hostname = url.hostname
+    let match = hostname.match(/(?:\w+\.)*?(\w+\.(?:com|gov|org|net|co\.uk|co|us|io|mil)$)/);
+    if (match) {
+      return match[1];
+    } else {
+      return hostname
+    }
+  } else {
+    return url
+  }
+}
+
+export const hasher = async (password, url, salt='') => {
   let limit = 22;
   //limiter?
   let match = password.match(/(.*?):(\d+)$/);
@@ -6,12 +21,7 @@ const hasher = async (password, url, salt='') => {
     password = match[1];
     limit = Number(match[2]);
   }
-  //strip sub domains (improve this)
-  match = url.match(/(?:\w+\.)*?(\w+\.(?:com|gov|org|net|co\.uk|co|us|io|mil)$)/);
-  if (match) {
-    url = match[1];
-  }
-  let str = password + url + salt;
+  let str = password + tld(url) + salt;
   //use first letter to determine how many times to pass through SHA256 (cap at 60 times)
   let iterations = Math.min(Math.floor(str.charCodeAt(0) / 3), 60);
   //unique password
@@ -33,4 +43,3 @@ const hasher = async (password, url, salt='') => {
   return str;
 }
 
-export default hasher
