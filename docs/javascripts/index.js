@@ -153,4 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   })
+  document.addEventListener('visibilitychange', (e) => {
+    if (document.hidden) {
+      let output = document.querySelector('output');
+      output.value = '';
+      document.querySelector('button#copy').disabled = true
+      document.querySelector('input[type=checkbox]').disabled = true
+        }
+  })
 }, true)
