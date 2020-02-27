@@ -83,16 +83,20 @@ const removeDomain = async function(e) {
   }
   loadDataList()
 }
+const clearPassword = () => {
+  document.querySelector("output").value = '';
+}
 document.addEventListener('DOMContentLoaded', () => {
   sendMessage({cmd: 'open'}).then(loadDataList)
+  document.querySelector('input#domain').addEventListener("input", clearPassword)
   let form = document.querySelector("form")
   form.addEventListener('submit', (e) => {
-    console.log("submitted")
     e.preventDefault()
     document.querySelector("input[type=password]").blur()
     return false
   }, true)
   let password = document.querySelector("input[type=password]")
+  password.addEventListener('input', clearPassword)
   password.addEventListener('blur', execute)
   password.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {

@@ -53,6 +53,16 @@ noscript input[type=checkbox]:checked ~ div {
   #settings {
     background-color:rgba(155,155,155, 0.4) !important;
   }
+  @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    #settings {
+      background-color:rgba(155,155,155, 0.4) !important;
+    }
+  }
+  @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    #settings {
+      background-color:rgba(155,155,155) !important;
+    }
+  }
 }
 body {
   text-align:center;
@@ -67,6 +77,7 @@ button {
   padding: 0;
 }
 header {
+  z-index: 9;
   user-select: none;
   -webkit-user-select: none;
   height: 3rem;
@@ -77,8 +88,15 @@ header {
   color: var(--text-color);
   font-weight: bold;
   width: calc(100vw - 2rem);
-  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+  transition: border-radius 0.4s ease-in-out, background-color 0.4s ease-in-out;
   display: flex;
+  box-sizing: border-box;
+
+  border-radius:0 0 10px 10px;
+  background-color: var(--background-color);
+  border-left: thin solid rgb(171, 171, 171);
+  border-right: thin solid rgb(171, 171, 171);
+  border-bottom: thin solid rgb(171, 171, 171);
 }
 
 header > button {
@@ -112,30 +130,48 @@ header > h1 {
   height: 100vh;
   border-radius:0 0 10px 10px;
   font-size:1.2em;
-  -webkit-backdrop-filter: blur(0.7rem);
-  backdrop-filter: blur(0.7rem);
-  background-color:rgba(255,255,255, 0.4);
   border-left: thin solid rgb(171, 171, 171);
   border-right: thin solid rgb(171, 171, 171);
   border-bottom: thin solid rgb(171, 171, 171);
   box-sizing: border-box;
   transition: transform 0.4s ease-in-out, border-radius 0.4s ease-in-out;
   position: absolute;
-  top: 0;
+  top: -100vh;
   width: calc(100vw - 2rem);
-  transform: translateY(calc(-100vh + 3rem))
+  /* transform: translateY(-100vh) */
 }
-#settings ul {
-  opacity: 0;
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  #settings {
+    -webkit-backdrop-filter: blur(0.7rem);
+    backdrop-filter: blur(0.7rem);
+    background-color:rgba(255,255,255, 0.4);
+  }
+}
+
+@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  #settings {
+    background-color:rgba(255,255,255);
+  }
+}
+
+#settings details {
+  flex: 1 0 100%;
+  text-align: left;
+}
+details > summary {
+  outline: none;
 }
 #settings table {
   color: var(--text-color);
+  /* flex: 1 0 50%; */
 }
 #settings.expand ul {
   opacity: 1;
 }
 #settings.expand {
-  transform: translateY(0);
+  display: flex;
+  flex-wrap: wrap;
+  transform: translateY(100vh);
   border-radius: 0;
   border-bottom: none;
   overflow-y: auto;
@@ -147,6 +183,7 @@ header > h1 {
   /* text-shadow:#000 0px 1px 0px; */
   /* color: var(--secondary-background-color); */
   background-color: var(--secondary-background-color);
+  border-radius: 0;
 }
 #settings.expand table td {
   text-align: right;
@@ -346,6 +383,10 @@ li button:hover, li a:hover {
   }
   header {
     width: 100vw;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: thin solid rgb(171, 171, 171);
   }
   #settings {
     flex-direction: column;
@@ -362,6 +403,11 @@ li button:hover, li a:hover {
   #settings table {
     order: 2;
     align-self: center;
+  }
+  #settings details {
+    order: 3;
+    align-self: left;
+    flex: unset;
   }
   form {
     margin: 4rem 0 1rem 0;
