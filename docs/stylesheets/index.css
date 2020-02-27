@@ -140,6 +140,9 @@ header > h1 {
   border-bottom: none;
   overflow-y: auto;
 }
+#settings.expand.moving {
+  transition: none;
+}
 #settings.expand + header {
   /* text-shadow:#000 0px 1px 0px; */
   /* color: var(--secondary-background-color); */

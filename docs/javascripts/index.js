@@ -151,3 +151,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
   })
 }, true)
+
+let timer;
+const removeMovingClass = () => {
+  document.querySelector('#settings').classList.remove('moving')
+}
+window.addEventListener('resize', (e) => {
+  document.querySelector('#settings').classList.add('moving')
+  clearTimeout(timer)
+  timer = setTimeout(removeMovingClass, 100)
+})
