@@ -10,7 +10,7 @@ html(lang="en")
     // scripts
     script(src='javascripts/index.js' type="module")
     script(src='javascripts/obscure.js' defer)
-    //- script(src='pwa.js')
+    script(src='pwa.js')
     // css
     link(rel='stylesheet' href="stylesheets/index.css")
     // icons
@@ -27,25 +27,24 @@ html(lang="en")
       input#noscript(type='checkbox')
       div Requires Javascript
     #settings
-      table
-        thead
-          tr
-            th(colspan='2') Domains
-        tbody
+      div
+        h4 Domains
+        table
+          tbody
       div.salted.hidden
-        h3 Salt
+        h4 Salt
         div
           input#see-salt.peek(type='checkbox' disabled)
-          output
+          output.obscura
           label(for='see-salt' title="View Salt") &#xf100;
           button.copy(disabled title="Copy Salt" draggable='true') &#xf101;
         button#delete-salt.banner.destructive Delete
       div.unsalted.hidden
-        h3 Salt
+        h4 Salt
         button#new-salt.banner Salt
         <p>You can choose to include a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a> in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.</p>
-      details(open)
-        summary FAQ
+      div
+        h4 FAQ
         ul
           li
             h5 Want to bypass the clipboard?
@@ -63,7 +62,7 @@ html(lang="en")
         label(for='password') Password
         input#password(type='password' placeholder='password' autocomplete="off")
         input#see.peek(type='checkbox' disabled)
-        output
+        output.obscura
         label(for='see' title="View Password") &#xf100;
         button#copy(disabled title="Copy Password" draggable='true') &#xf101;
     datalist#domains

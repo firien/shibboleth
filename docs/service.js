@@ -1,4 +1,4 @@
-const tag = 7;
+const tag = 8;
 const prefix = 'SHIBBOLETH';
 const cacheName = `${prefix}-${tag}`
 

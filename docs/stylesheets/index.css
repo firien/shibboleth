@@ -20,7 +20,9 @@ noscript {
 noscript label {
   font-family: Shibboleth;
   font-size: 1.5rem;
-  display: inline;
+  display: block;
+  height: 3rem;
+  line-height: 3rem;
   border: none;
   border-radius: 0;
   background-color: transparent;
@@ -28,6 +30,9 @@ noscript label {
   cursor: pointer;
 }
 noscript div {
+  display: none;
+}
+noscript input[type=checkbox] {
   display: none;
 }
 noscript input[type=checkbox]:checked ~ div {
@@ -58,6 +63,9 @@ noscript input[type=checkbox]:checked ~ div {
   #settings {
     background-color:rgba(155,155,155, 0.4) !important;
   }
+  noscript label {
+    color: darksalmon;
+  }
   @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
     #settings {
       background-color:rgba(155,155,155, 0.4) !important;
@@ -72,7 +80,7 @@ noscript input[type=checkbox]:checked ~ div {
 .hidden {
   display: none;
 }
-h3 {
+h4 {
   text-align: left;
 }
 button {
@@ -251,11 +259,10 @@ input, output {
   border-top: none;
   border-right: none;
   padding: 0 0.5em 0 0.5em;
-  /* font-family: Menlo, Tahoma; */
-  font-family: Shibboleth;
-  /* font-size: 0.8rem; */
 }
-
+output.obscura {
+  font-family: Shibboleth;
+}
 form button {
   display: block;
   max-width: 3rem;
@@ -293,20 +300,20 @@ label[for=see] {
   border-left: thin solid rgb(171, 171, 171);
   border-bottom: thin solid rgb(171, 171, 171);
 }
-input#see:not(:disabled) ~ label[for=see] {
+input.peek:not(:disabled) + output.obscura + label {
   cursor: pointer;
 }
-input#see:not(:disabled) ~ label[for=see]:hover {
+input.peek:not(:disabled) + output.obscura + label:hover {
   background-color: var(--background-color);
 }
 
-input#see:disabled ~ label[for=see] {
+input.peek:disabled + output.obscura + label {
   color: grey;
 }
-input#see:checked ~ label[for=see] {
+input.peek:checked + output.obscura + label {
   background-color: var(--background-color);
 }
-input#see:checked ~ output {
+input.peek:checked + output.obscura {
   font-family: Menlo, Tahoma;
 }
 button#copy {
@@ -353,7 +360,7 @@ a#repo {
   text-shadow: var(--secondary-background-color) 0px 1px 0px;
   text-decoration: none;
 }
-form#shibboleth {
+#shibboleth {
   margin: 4rem 0 1rem 0;
   display: grid;
   grid-template-columns: .4fr .6fr;
@@ -414,20 +421,7 @@ div.hud div.dialog {
   #settings.expand {
     flex-wrap: nowrap;
   }
-  #settings > div {
-    order: 2;
-    align-self: center;
-  }
-  #settings > table {
-    order: 1;
-    align-self: center;
-  }
-  #settings > details {
-    order: 3;
-    align-self: left;
-    flex: unset;
-  }
-  form#shibboleth {
+  #shibboleth {
     margin: 4rem 0 1rem 0;
     display: grid;
     grid-template-columns: 1fr;
@@ -437,16 +431,16 @@ div.hud div.dialog {
       "input input input"
       "output see copy";
   }
-  form#shibboleth label[for=password], form#shibboleth label[for=domain] {
+  #shibboleth label[for=password], #shibboleth label[for=domain] {
     display: none;
   }
-  form#shibboleth input {
+  #shibboleth input {
     padding: 0 0 0 0.75em;
     border-radius: 0;
     border-left: none;
     border-right: none;
   }
-  form#shibboleth output {
+  #shibboleth output {
     border-radius: 0;
     border-left: none;
     font-size: 4.5vw;

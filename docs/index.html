@@ -10,6 +10,7 @@
     <!-- scripts-->
     <script src="javascripts/index.js" type="module"></script>
     <script src="javascripts/obscure.js" defer></script>
+    <script src="pwa.js"></script>
     <!-- css-->
     <link rel="stylesheet" href="stylesheets/index.css">
     <!-- icons-->
@@ -28,30 +29,28 @@
       <div>Requires Javascript</div>
     </noscript>
     <div id="settings">
-      <table>
-        <thead>
-          <tr>
-            <th colspan="2">Domains</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div>
+        <h4>Domains</h4>
+        <table>
+          <tbody></tbody>
+        </table>
+      </div>
       <div class="salted hidden">
-        <h3>Salt</h3>
+        <h4>Salt</h4>
         <div>
           <input class="peek" id="see-salt" type="checkbox" disabled>
-          <output></output>
+          <output class="obscura"></output>
           <label for="see-salt" title="View Salt">&#xf100;</label>
           <button class="copy" disabled title="Copy Salt" draggable="true">&#xf101;</button>
         </div>
         <button class="banner destructive" id="delete-salt">Delete</button>
       </div>
       <div class="unsalted hidden">
-        <h3>Salt</h3>
+        <h4>Salt</h4>
         <button class="banner" id="new-salt">Salt</button><p>You can choose to include a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a> in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.</p>
       </div>
-      <details open>
-        <summary>FAQ</summary>
+      <div>
+        <h4>FAQ</h4>
         <ul>
           <li>
             <h5>Want to bypass the clipboard?</h5>
@@ -62,7 +61,7 @@
             <p>Site ***.com limits my password to 16 characters</p>
           </li>
         </ul>
-      </details>
+      </div>
     </div>
     <header>
       <h1>Shibboleth</h1>
@@ -75,7 +74,7 @@
         <label for="password">Password</label>
         <input id="password" type="password" placeholder="password" autocomplete="off">
         <input class="peek" id="see" type="checkbox" disabled>
-        <output></output>
+        <output class="obscura"></output>
         <label for="see" title="View Password">&#xf100;</label>
         <button id="copy" disabled title="Copy Password" draggable="true">&#xf101;</button>
       </form>
