@@ -9,7 +9,8 @@ html(lang="en")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     // scripts
     script(src='javascripts/index.js' type="module")
-    script(src='pwa.js')
+    script(src='javascripts/obscure.js' defer)
+    //- script(src='pwa.js')
     // css
     link(rel='stylesheet' href="stylesheets/index.css")
     // icons
@@ -31,15 +32,24 @@ html(lang="en")
           tr
             th(colspan='2') Domains
         tbody
-      ul
-        li
-          button#salt Salt
+      div.salted.hidden
+        h3 Salt
+        div
+          input#see-salt.peek(type='checkbox' disabled)
+          output
+          label(for='see-salt' title="View Salt") &#xf100;
+          button.copy(disabled title="Copy Salt" draggable='true') &#xf101;
+        button#delete-salt.banner.destructive Delete
+      div.unsalted.hidden
+        h3 Salt
+        button#new-salt.banner Salt
+        <p>You can choose to include a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a> in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.</p>
       details(open)
         summary FAQ
         ul
           li
             h5 Want to bypass the clipboard?
-            p Drag clipboard button into password field
+            p If you dont feel comfortable using the clipboard, you can drag the clipboard button out and into any password field.
           li
             h5 Need to limit password length?
             p Site ***.com limits my password to 16 characters
@@ -47,21 +57,26 @@ html(lang="en")
       h1 Shibboleth
       button(title="Settings") &#xf103;
     main
-      form
+      form#shibboleth
         label(for='domain') Domain
         input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, spellcheck='false', list='domains')
         label(for='password') Password
         input#password(type='password' placeholder='password' autocomplete="off")
-        input#see(type='checkbox' disabled)
+        input#see.peek(type='checkbox' disabled)
         output
         label(for='see' title="View Password") &#xf100;
         button#copy(disabled title="Copy Password" draggable='true') &#xf101;
     datalist#domains
     a#repo(href='https://github.com/firien/shibboleth') https://github.com/firien/shibboleth
-    .hidden
-      canvas
     template
       tr
         td
         td
           span &#xf102;
+    div.dialog
+      canvas
+      p scribble above with pointing device
+      p or paste/drop an existing salt into input below
+      form#salt
+        input#view-salt(type='text' name='salt' required)
+        button(type=submit) Save

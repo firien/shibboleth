@@ -25,8 +25,8 @@ div.hud {
 */
 let stack = [];
 
-class modal {
-  constructor(fn, dismissCallback=null) {
+class Modal {
+  constructor(element, dismissCallback=null) {
     this.dismissCallback = dismissCallback
     //TODO: check if #modal already present
     let container = document.createElement('div')
@@ -43,13 +43,14 @@ class modal {
     container.appendChild(hud)
     stack.push(this)
     container.addEventListener('click', this.dismiss)
+    hud.appendChild(element)
     return hud
   }
   dismiss(e) {
     if ((e.currentTarget === e.srcElement) || (e.currentTarget === e.target)) {
       e.stopPropagation()
       e.preventDefault()
-      modal.current.dismissModalView()
+      Modal.current.dismissModalView()
     }
     return
   }
@@ -78,9 +79,9 @@ class modal {
   static current() {
     return stack[stack.length - 1]
   }
-  static presentModalView(fn, dismissCallback) {
-    return new modal(fn, dismissCallback)
+  static presentModalView(element, dismissCallback) {
+    return new Modal(element, dismissCallback)
   }
 }
 
-export default modal
+export default Modal;

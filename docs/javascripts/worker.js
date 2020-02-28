@@ -1,7 +1,7 @@
 let database;
 
 const open = (data) => {
-  let request = indexedDB.open('shibboleth', 1)
+  let request = indexedDB.open('shibboleth', 3)
   request.onupgradeneeded = (e) => {
     let database = request.result
     let store;
@@ -11,6 +11,14 @@ const open = (data) => {
       store = database.createObjectStore('domains', {keyPath: 'id', autoIncrement: true})
     }
     if (!store.indexNames.contains('name')) {
+      store.createIndex('name', 'name', {unique: true})
+    }
+    if (database.objectStoreNames.contains('settings')) {
+      store = e.currentTarget.transaction.objectStore('settings')
+    } else {
+      store = database.createObjectStore('settings', {keyPath: 'id', autoIncrement: true})
+    }
+    if (!store.indexNames.contains('settings')) {
       store.createIndex('name', 'name', {unique: true})
     }
   }
@@ -31,7 +39,7 @@ const saveDomain = (data) => {
   let store = trxn.objectStore('domains')
   store.add({name: data.domain})
 }
-const allDomains = (data) => {
+const getDomains = (data) => {
   let trxn = database.transaction(['domains'])
   let store = trxn.objectStore('domains')
   store.getAll().onsuccess = (e) => {
@@ -49,20 +57,65 @@ const removeDomain = (data) => {
   }
 }
 
+const existingSalt = (trxn) => {
+  let source = trxn.objectStore('settings').index('name')
+  let findRequest = source.get('salt')
+  return new Promise((resolve, reject) => {
+    findRequest.onsuccess = (e) => {
+      resolve(e.target.result)
+    }
+    findRequest.onerror = reject
+  })
+}
+const saveSalt = async (data) => {
+  let trxn = database.transaction(['settings'], 'readwrite')
+  let source = trxn.objectStore('settings')
+  let salt = await existingSalt(trxn)
+  if (salt == null) {
+    let request = source.add({name: 'salt', value: data.value})
+    request.onsuccess = (e) => {
+      self.postMessage({promiseId: data.promiseId, status: 201})
+    }
+  }
+}
+const deleteSalt = async (data) => {
+  let trxn = database.transaction(['settings'], 'readwrite')
+  let source = trxn.objectStore('settings')
+  let salt = await existingSalt(trxn)
+  if (salt) {
+    console.log(salt)
+    let request = source.delete(salt.id)
+    request.onsuccess = (e) => {
+      self.postMessage({promiseId: data.promiseId, status: 204})
+    }
+  }
+}
+
+const getSalt = async (data) => {
+  let trxn = database.transaction(['settings'])
+  let salt = await existingSalt(trxn)
+  let result = salt ? salt.value : null
+  self.postMessage({promiseId: data.promiseId, result, status: 200})
+}
+
 self.addEventListener('message', (e) => {
   switch (e.data.cmd) {
     case 'open':
       open(e.data)
       break;
-    case 'saveDomain':
-      saveDomain(e.data)
-      break
     case 'removeDomain':
       removeDomain(e.data)
       break
-    case 'allDomains':
-      allDomains(e.data)
-      break;
+  }
+  switch (e.data.url) {
+    case '/domains':
+      if (e.data.method === 'get')     { getDomains(e.data) }
+      if (e.data.method === 'post')    { saveDomain(e.data) }
+    case '/salt':
+      if (e.data.method === 'post')    { saveSalt(e.data) }
+      if (e.data.method === 'get')     { getSalt(e.data) }
+      if (e.data.method === 'delete')  { deleteSalt(e.data) }
+      break
   }
 })
 

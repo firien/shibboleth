@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 @font-face {
   font-family: "Shibboleth";
   src: url('/shibboleth/fonts/font.ttf') format('truetype'),
@@ -64,6 +69,18 @@ noscript input[type=checkbox]:checked ~ div {
     }
   }
 }
+.hidden {
+  display: none;
+}
+h3 {
+  text-align: left;
+}
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+}
 body {
   text-align:center;
   font-family: -apple-system, Helvetica;
@@ -103,10 +120,6 @@ header > button {
   font-family: Shibboleth;
   font-size: 1.5rem;
   width: 3rem;
-  -webkit-appearance: none;
-  appearance: none;
-  border: none;
-  background-color: transparent;
   cursor: pointer;
   color: var(--text-color);
 }
@@ -138,6 +151,7 @@ header > h1 {
   position: absolute;
   top: -100vh;
   width: calc(100vw - 2rem);
+  overflow-y: auto;
   /* transform: translateY(-100vh) */
 }
 @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
@@ -174,7 +188,6 @@ details > summary {
   transform: translateY(100vh);
   border-radius: 0;
   border-bottom: none;
-  overflow-y: auto;
 }
 #settings.expand.moving {
   transition: none;
@@ -202,19 +215,22 @@ span {
   text-align: center;
   cursor: pointer;
 }
-
+.destructive {
+  background-color: red;
+  color: white;
+}
 input, output {
   -webkit-appearance: none;
   appearance: none;
   font-size: 1.2em;
 }
 
-input {
+#shibboleth input {
   grid-area: input;
   grid-row: 1;
   border-radius:0 10px 0 0;
   background-color: var(--background-color);
-  border:1px solid rgb(171,171,171);
+  border: thin solid rgb(171,171,171);
   border-left: none;
   padding: 0 0 0 0.5em;
   margin:0 0 0 0;
@@ -222,7 +238,7 @@ input {
   color: var(--text-color);
 }
 
-output {
+#shibboleth output {
   grid-area: output;
   display: inline-block;
   grid-row: 3;
@@ -231,7 +247,7 @@ output {
   text-align: right;
   background-color: var(--background-color);
   color: var(--text-color);
-  border: 1px solid rgb(171,171,171);
+  border: thin solid rgb(171,171,171);
   border-top: none;
   border-right: none;
   padding: 0 0.5em 0 0.5em;
@@ -246,10 +262,8 @@ form button {
   width: 3rem;
   line-height: 3rem;
   margin: 0;
-  border: 1px solid rgb(171,171,171);
+  border: thin solid rgb(171,171,171);
   border-top: none;
-  appearance: none;
-  -webkit-appearance: none;
   background-color: var(--secondary-background-color);
 }
 form button:not(:disabled) {
@@ -267,15 +281,17 @@ label[for=see] {
   max-width: 3rem;
   width: 3rem;
   line-height: 3rem;
-  border-right: none;
   font-family: "Shibboleth";
   font-size: 1.5rem;
   color: var(--text-color);
   background-color: var(--secondary-background-color);
+  border-right: none;
   border-radius: 0;
   border-top: none;
   text-indent: 0;
   text-align: center;
+  border-left: thin solid rgb(171, 171, 171);
+  border-bottom: thin solid rgb(171, 171, 171);
 }
 input#see:not(:disabled) ~ label[for=see] {
   cursor: pointer;
@@ -302,17 +318,17 @@ button#copy {
   font-size: 1.5rem;
   text-align: center;
 }
-input[type=checkbox] {
+input.peek[type=checkbox] {
   display: none;
 }
-label {
+#shibboleth label[for=password], #shibboleth label[for=domain] {
   grid-area: label;
   grid-row: 1;
-  font-size:1.2em;
-  display:block;
-  border-radius:10px 0 0 0;
+  font-size: 1.2em;
+  display: block;
+  border-radius: 10px 0 0 0;
   background-color: var(--background-color);
-  border:1px solid rgb(171,171,171);
+  border: thin solid rgb(171,171,171);
   line-height: 3rem;
   text-align:left;
   font-weight:bold;
@@ -320,7 +336,7 @@ label {
   color: var(--text-color);
 }
 
-label[for=password],input[type=password] {
+#shibboleth label[for=password], #shibboleth input[type=password] {
   border-radius:0;
   border-top:none;
   grid-row: 2;
@@ -337,7 +353,7 @@ a#repo {
   text-shadow: var(--secondary-background-color) 0px 1px 0px;
   text-decoration: none;
 }
-form {
+form#shibboleth {
   margin: 4rem 0 1rem 0;
   display: grid;
   grid-template-columns: .4fr .6fr;
@@ -348,34 +364,33 @@ form {
     "output output see copy";
 }
 
-ul {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0rem;
-  list-style-type: none;
-  text-align: left;
-  padding: 0;
-  margin: 0;
-}
-ul li button, ul li a {
-  width: 25vw;
+/* modal */
+div#modal {
   width: 100%;
-  display: block;
-  appearance: none;
-  -webkit-appearance: none;
-  border-radius: 0.2rem;
-  border: thin solid grey;
-  box-sizing: border-box;
-  color: var(--text-color);
-  font-size: 1rem;
-  padding: 0.2rem;
-  text-decoration: none;
-  text-align: center;
-  background-color: var(--tertiary-background-color);
-  cursor: pointer;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 20;
 }
-li button:hover, li a:hover {
-  background-color: var(--secondary-background-color);
+
+div.hud {
+  font-size: 0.8em;
+  background-color: white;
+  margin: 10% auto 0px auto;
+  border: 10px solid rgba(255, 255, 255, 0.6);
+  height: auto;
+  width: 410px;
+  background-clip: padding-box;
+  border-radius: 10px;
+}
+div.dialog {
+  display: none;
+}
+div.hud div.dialog {
+  display: block;
 }
 @media screen and (max-width: 500px) {
   body {
@@ -396,20 +411,23 @@ li button:hover, li a:hover {
     border-left: none;
     border-right: none;
   }
-  #settings ul {
-    order: 1;
-    align-self: center;
+  #settings.expand {
+    flex-wrap: nowrap;
   }
-  #settings table {
+  #settings > div {
     order: 2;
     align-self: center;
   }
-  #settings details {
+  #settings > table {
+    order: 1;
+    align-self: center;
+  }
+  #settings > details {
     order: 3;
     align-self: left;
     flex: unset;
   }
-  form {
+  form#shibboleth {
     margin: 4rem 0 1rem 0;
     display: grid;
     grid-template-columns: 1fr;
@@ -419,16 +437,16 @@ li button:hover, li a:hover {
       "input input input"
       "output see copy";
   }
-  label {
+  form#shibboleth label[for=password], form#shibboleth label[for=domain] {
     display: none;
   }
-  input {
+  form#shibboleth input {
     padding: 0 0 0 0.75em;
     border-radius: 0;
     border-left: none;
     border-right: none;
   }
-  output {
+  form#shibboleth output {
     border-radius: 0;
     border-left: none;
     font-size: 4.5vw;
@@ -437,4 +455,51 @@ li button:hover, li a:hover {
     border-radius: 0;
     border-right: none;
   }
+  p {
+    width: 100vw;
+  }
+  button.banner {
+    width: 100vw;
+    margin: 1rem 0;
+    height: 2rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+  }
+  /* modal */
+  div.hud {
+    width: 100vw;
+    box-sizing: border-box;
+  }
+  .dialog {
+    display: flex;
+    flex-direction: column;
+  }
+  .salted > div {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100vw;
+    width: 100vw;
+  }
+  .salted > div input {
+    flex: 0 0 100%;
+  }
+  .salted > div label, .salted > div button {
+    flex: 0 0 50%;
+    font-family: Shibboleth;
+    font-size: 1.5rem;
+    text-align: center;
+    height: 2rem;
+    line-height: 2rem;
+    align-content: center;
+  }
 }
+/* un-used
+obscure-output {
+  border-radius: 0 0 10px 10px;
+  background-color: var(--background-color);
+  border-left: thin solid rgb(171, 171, 171);
+  border-right: thin solid rgb(171, 171, 171);
+  border-bottom: thin solid rgb(171, 171, 171);
+}
+*/

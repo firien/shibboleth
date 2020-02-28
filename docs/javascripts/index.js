@@ -1,6 +1,6 @@
 import initializeCanvas from './pencil.js'
 import {hasher, tld} from './hasher.js'
-import modal from './modal.js'
+import Modal from './modal.js'
 import copy from './copy.js'
 
 const worker = new Worker('/shibboleth/javascripts/worker.js', {name: 'shibboleth'})
@@ -24,12 +24,14 @@ const sendMessage = (opts, buffers) => {
   })
 }
 
-const execute = async () => {
+let salt;
+
+const generatePassword = async () => {
   let domain = document.querySelector("input#domain").value
   if (domain === '') {
     return
   }
-  let input = document.querySelector("input[type=password]")
+  let input = document.querySelector("#shibboleth input[type=password]")
   if (!input) {
     alert("could not find password input")
     return
@@ -38,14 +40,14 @@ const execute = async () => {
   if (password === '') {
     return
   }
-  let output = document.querySelector("output")
-  document.querySelector('form').reset()
-  let str = await hasher(password, domain)
+  let output = document.querySelector("#shibboleth output")
+  document.querySelector('form#shibboleth').reset()
+  let str = await hasher(password, domain, salt)
   // save domain
-  sendMessage({cmd: 'saveDomain', domain})
+  sendMessage({url: '/domains', method: 'post', domain})
   output.value = str
-  document.querySelector('button#copy').disabled = false
-  document.querySelector('input[type=checkbox]').disabled = false
+  document.querySelector('#shibboleth button#copy').disabled = false
+  document.querySelector('#shibboleth input[type=checkbox]').disabled = false
   loadDataList()
 }
 
@@ -63,7 +65,7 @@ document.querySelector('#domain').addEventListener('drop', (e) => {
   }
 })
 const loadDataList = async () => {
-  let response = await sendMessage({cmd: 'allDomains'})
+  let response = await sendMessage({url: '/domains', method: 'get'})
   let datalist = document.querySelector('#domains')
   while (datalist.firstChild) {
     datalist.removeChild(datalist.firstChild)
@@ -84,49 +86,63 @@ const removeDomain = async function(e) {
   loadDataList()
 }
 const clearPassword = () => {
-  document.querySelector("output").value = '';
+  document.querySelector("#shibboleth output").value = '';
+}
+const getSalt = async () => {
+  let response = await sendMessage({url: '/salt', method: 'get'})
+  salt = response.result
 }
 document.addEventListener('DOMContentLoaded', () => {
-  sendMessage({cmd: 'open'}).then(loadDataList)
+  sendMessage({cmd: 'open'}).then(loadDataList).then(getSalt)
   document.querySelector('input#domain').addEventListener("input", clearPassword)
-  let form = document.querySelector("form")
+  let form = document.querySelector("form#shibboleth")
   form.addEventListener('submit', (e) => {
     e.preventDefault()
-    document.querySelector("input[type=password]").blur()
+    document.querySelector("#shibboleth input[type=password]").blur()
     return false
   }, true)
-  let password = document.querySelector("input[type=password]")
+  let password = document.querySelector("#shibboleth input[type=password]")
   password.addEventListener('input', clearPassword)
-  password.addEventListener('blur', execute)
+  password.addEventListener('blur', generatePassword)
   password.addEventListener('keyup', (e) => {
     if (e.keyCode === 13) {
-      setTimeout(execute, 100)
+      setTimeout(generatePassword, 100)
     }
   })
-  // initializeCanvas()
   document.querySelector('#copy').addEventListener('dragstart', (e) => {
     e.dataTransfer.effectAllowed = "copy";
-    let password = String(document.querySelector('output').value)
+    let password = String(document.querySelector('#shibboleth output').value)
     e.dataTransfer.setData('text/plain', password)
   })
-  document.querySelector('#copy').addEventListener('click', (e) => {
+  document.querySelector('#shibboleth #copy').addEventListener('click', (e) => {
     e.preventDefault()
-    let output = document.querySelector('output')
+    let output = document.querySelector('#shibboleth output')
     copy(output.value)
   })
-  document.querySelector('#salt').addEventListener('click', (e) => {
+  document.querySelector('#new-salt').addEventListener('click', (e) => {
     initializeCanvas()
-    let hud = modal.presentModalView(null)
-    hud.appendChild(document.querySelector('canvas'))
+    let view = document.querySelector('div.dialog')
+    Modal.presentModalView(view);
   })
-
+  document.querySelector('form#salt').addEventListener('submit', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    sendMessage({url: '/salt', method: 'post', value: this.salt.value})
+    salt = this.salt.value
+  })
   document.querySelector('header button').addEventListener('click', async (e) => {
     let settings = document.querySelector('#settings')
     let visible = settings.classList.toggle('expand')
     let tbody = settings.querySelector('tbody')
     if (visible) {
       document.body.classList.add('modal')
-      let response = await sendMessage({cmd: 'allDomains'})
+      if (salt) {
+        document.querySelector('.salted').classList.remove('hidden')
+        document.querySelector('.salted output').value = salt
+      } else {
+        document.querySelector('.unsalted').classList.remove('hidden')
+      }
+      let response = await sendMessage({url: '/domains', method: 'get'})
       let template = document.querySelector('template')
       for (let record of response.result) {
         let row = template.content.cloneNode(true)
@@ -136,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         span.setAttribute('data-id', record.id)
         tbody.appendChild(row)
       }
-      for (let span of document.querySelectorAll('span')) {
+      for (let span of document.querySelectorAll('td span')) {
         span.addEventListener('click', removeDomain)
       }
     } else {
@@ -148,12 +164,20 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   document.addEventListener('visibilitychange', (e) => {
     if (document.hidden) {
-      let output = document.querySelector('output');
+      let output = document.querySelector('#shibboleth output');
       output.value = '';
-      document.querySelector('button#copy').disabled = true
-      document.querySelector('input[type=checkbox]').disabled = true
-        }
+      document.querySelector('#shibboleth button#copy').disabled = true
+      document.querySelector('#shibboleth input[type=checkbox]').disabled = true
+    }
   })
+  document.querySelector('button#delete-salt').addEventListener("click", async () => {
+    // need confirmation
+    await sendMessage({url: '/salt', method: 'delete'})
+    document.querySelector('.salted').classList.add('hidden')
+    document.querySelector('.unsalted').classList.remove('hidden')
+    salt = null;
+  })
+
 }, true)
 
 let timer;

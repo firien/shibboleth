@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- scripts-->
     <script src="javascripts/index.js" type="module"></script>
-    <script src="pwa.js"></script>
+    <script src="javascripts/obscure.js" defer></script>
     <!-- css-->
     <link rel="stylesheet" href="stylesheets/index.css">
     <!-- icons-->
@@ -36,17 +36,26 @@
         </thead>
         <tbody></tbody>
       </table>
-      <ul>
-        <li>
-          <button id="salt">Salt</button>
-        </li>
-      </ul>
+      <div class="salted hidden">
+        <h3>Salt</h3>
+        <div>
+          <input class="peek" id="see-salt" type="checkbox" disabled>
+          <output></output>
+          <label for="see-salt" title="View Salt">&#xf100;</label>
+          <button class="copy" disabled title="Copy Salt" draggable="true">&#xf101;</button>
+        </div>
+        <button class="banner destructive" id="delete-salt">Delete</button>
+      </div>
+      <div class="unsalted hidden">
+        <h3>Salt</h3>
+        <button class="banner" id="new-salt">Salt</button><p>You can choose to include a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a> in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.</p>
+      </div>
       <details open>
         <summary>FAQ</summary>
         <ul>
           <li>
             <h5>Want to bypass the clipboard?</h5>
-            <p>Drag clipboard button into password field</p>
+            <p>If you dont feel comfortable using the clipboard, you can drag the clipboard button out and into any password field.</p>
           </li>
           <li>
             <h5>Need to limit password length?</h5>
@@ -60,26 +69,32 @@
       <button title="Settings">&#xf103;</button>
     </header>
     <main>
-      <form>
+      <form id="shibboleth">
         <label for="domain">Domain</label>
         <input id="domain" placeholder="www.host.com" autocapitalize="off" autofocus spellcheck="false" list="domains">
         <label for="password">Password</label>
         <input id="password" type="password" placeholder="password" autocomplete="off">
-        <input id="see" type="checkbox" disabled>
+        <input class="peek" id="see" type="checkbox" disabled>
         <output></output>
         <label for="see" title="View Password">&#xf100;</label>
         <button id="copy" disabled title="Copy Password" draggable="true">&#xf101;</button>
       </form>
     </main>
     <datalist id="domains"></datalist><a id="repo" href="https://github.com/firien/shibboleth">https://github.com/firien/shibboleth</a>
-    <div class="hidden">
-      <canvas></canvas>
-    </div>
     <template>
       <tr>
         <td></td>
         <td><span>&#xf102;</span></td>
       </tr>
     </template>
+    <div class="dialog">
+      <canvas></canvas>
+      <p>scribble above with pointing device</p>
+      <p>or paste/drop an existing salt into input below</p>
+      <form id="salt">
+        <input id="view-salt" type="text" name="salt" required>
+        <button>Save</button>
+      </form>
+    </div>
   </body>
 </html>

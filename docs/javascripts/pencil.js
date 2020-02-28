@@ -76,27 +76,9 @@ class Pencil {
         //calc PRN from points
         let prn = points.slice(0,9).map(i => i.toString()).join('')
         //modal.current.dismissModalView()
-        
-        let canvas = document.querySelector('.hud canvas')
-        let p = document.createElement('div')
-        p.setAttribute('id', 'salt-hud')
-        p.style.height = `${canvas.height}px`
-        p.style.width = `${canvas.width}px`
-        // p.css 'lineHeight', canvas.height + 'px'
-        let span = document.createElement('span')
-        span.style.paddingTop = "2em"
-        span.style.paddingBottom = "2em"
-        span.style.display = 'block'
-        span.appendChild(document.createTextNode(prn))
-        p.appendChild(span)
-        //append instructions
-        span = document.createElement('span')
-        span.appendChild(document.createTextNode('It is important that you remember this!'))
-        p.appendChild(span)
-        p.style.backgroundImage = `url(${canvas.toDataURL('image/png')})`
-        document.querySelector('.hud').replaceChild(p, canvas)
+        document.querySelector('.hud input').value = prn
       } else {
-        points = []
+        points.length = 0
         alert("Not enough points retry")
       }
     }
