@@ -1,4 +1,4 @@
-import initializeCanvas from './pencil.js'
+import initializeCanvas from './salter.js'
 import {hasher, tld} from './hasher.js'
 import Modal from './modal.js'
 import copy from './copy.js'

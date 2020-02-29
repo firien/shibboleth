@@ -1,4 +1,4 @@
-const tag = 9;
+const tag = 10;
 const prefix = 'SHIBBOLETH';
 const cacheName = `${prefix}-${tag}`
 
@@ -7,7 +7,7 @@ const urls = [
   '/shibboleth/javascripts/copy.js',
   '/shibboleth/javascripts/hasher.js',
   '/shibboleth/javascripts/modal.js',
-  '/shibboleth/javascripts/pencil.js',
+  '/shibboleth/javascripts/salter.js',
   '/shibboleth/javascripts/worker.js',
   '/shibboleth/stylesheets/index.css',
   '/shibboleth/images/icon-152.png',
