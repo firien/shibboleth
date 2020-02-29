@@ -7,7 +7,7 @@ class Point {
     return Math.sqrt(Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2))
   }
   toString() {
-    return this.x.toString(16) + this.y.toString(16)
+    return Math.floor(this.x).toString(16) + Math.floor(this.y).toString(16)
   }
 }
 let points = []
