@@ -1,8 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 @font-face {
   font-family: "Shibboleth";
   src: url('/shibboleth/fonts/font.ttf') format('truetype'),
@@ -20,9 +15,7 @@ noscript {
 noscript label {
   font-family: Shibboleth;
   font-size: 1.5rem;
-  display: block;
-  height: 3rem;
-  line-height: 3rem;
+  display: inline;
   border: none;
   border-radius: 0;
   background-color: transparent;
@@ -30,9 +23,6 @@ noscript label {
   cursor: pointer;
 }
 noscript div {
-  display: none;
-}
-noscript input[type=checkbox] {
   display: none;
 }
 noscript input[type=checkbox]:checked ~ div {
@@ -63,9 +53,6 @@ noscript input[type=checkbox]:checked ~ div {
   #settings {
     background-color:rgba(155,155,155, 0.4) !important;
   }
-  noscript label {
-    color: darksalmon;
-  }
   @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
     #settings {
       background-color:rgba(155,155,155, 0.4) !important;
@@ -77,18 +64,26 @@ noscript input[type=checkbox]:checked ~ div {
     }
   }
 }
-.hidden {
-  display: none;
-}
-h4 {
-  text-align: left;
-}
-button {
-  -webkit-appearance: none;
-  appearance: none;
+/* ios standalone */
+button.refresh {
+  font-family: Shibboleth;
+  font-size: 1.5rem;
+  display: block;
+  height: 3rem;
+  line-height: 3rem;
   border: none;
+  border-radius: 0;
   background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  max-width: 3rem;
 }
+
 body {
   text-align:center;
   font-family: -apple-system, Helvetica;
@@ -128,6 +123,10 @@ header > button {
   font-family: Shibboleth;
   font-size: 1.5rem;
   width: 3rem;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
   color: var(--text-color);
 }
@@ -159,7 +158,6 @@ header > h1 {
   position: absolute;
   top: -100vh;
   width: calc(100vw - 2rem);
-  overflow-y: auto;
   /* transform: translateY(-100vh) */
 }
 @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
@@ -196,6 +194,7 @@ details > summary {
   transform: translateY(100vh);
   border-radius: 0;
   border-bottom: none;
+  overflow-y: auto;
 }
 #settings.expand.moving {
   transition: none;
@@ -223,22 +222,19 @@ span {
   text-align: center;
   cursor: pointer;
 }
-.destructive {
-  background-color: red;
-  color: white;
-}
+
 input, output {
   -webkit-appearance: none;
   appearance: none;
   font-size: 1.2em;
 }
 
-#shibboleth input {
+input {
   grid-area: input;
   grid-row: 1;
   border-radius:0 10px 0 0;
   background-color: var(--background-color);
-  border: thin solid rgb(171,171,171);
+  border:1px solid rgb(171,171,171);
   border-left: none;
   padding: 0 0 0 0.5em;
   margin:0 0 0 0;
@@ -246,7 +242,7 @@ input, output {
   color: var(--text-color);
 }
 
-#shibboleth output {
+output {
   grid-area: output;
   display: inline-block;
   grid-row: 3;
@@ -255,22 +251,25 @@ input, output {
   text-align: right;
   background-color: var(--background-color);
   color: var(--text-color);
-  border: thin solid rgb(171,171,171);
+  border: 1px solid rgb(171,171,171);
   border-top: none;
   border-right: none;
   padding: 0 0.5em 0 0.5em;
-}
-output.obscura {
+  /* font-family: Menlo, Tahoma; */
   font-family: Shibboleth;
+  /* font-size: 0.8rem; */
 }
+
 form button {
   display: block;
   max-width: 3rem;
   width: 3rem;
   line-height: 3rem;
   margin: 0;
-  border: thin solid rgb(171,171,171);
+  border: 1px solid rgb(171,171,171);
   border-top: none;
+  appearance: none;
+  -webkit-appearance: none;
   background-color: var(--secondary-background-color);
 }
 form button:not(:disabled) {
@@ -288,32 +287,30 @@ label[for=see] {
   max-width: 3rem;
   width: 3rem;
   line-height: 3rem;
+  border-right: none;
   font-family: "Shibboleth";
   font-size: 1.5rem;
   color: var(--text-color);
   background-color: var(--secondary-background-color);
-  border-right: none;
   border-radius: 0;
   border-top: none;
   text-indent: 0;
   text-align: center;
-  border-left: thin solid rgb(171, 171, 171);
-  border-bottom: thin solid rgb(171, 171, 171);
 }
-input.peek:not(:disabled) + output.obscura + label {
+input#see:not(:disabled) ~ label[for=see] {
   cursor: pointer;
 }
-input.peek:not(:disabled) + output.obscura + label:hover {
+input#see:not(:disabled) ~ label[for=see]:hover {
   background-color: var(--background-color);
 }
 
-input.peek:disabled + output.obscura + label {
+input#see:disabled ~ label[for=see] {
   color: grey;
 }
-input.peek:checked + output.obscura + label {
+input#see:checked ~ label[for=see] {
   background-color: var(--background-color);
 }
-input.peek:checked + output.obscura {
+input#see:checked ~ output {
   font-family: Menlo, Tahoma;
 }
 button#copy {
@@ -325,17 +322,17 @@ button#copy {
   font-size: 1.5rem;
   text-align: center;
 }
-input.peek[type=checkbox] {
+input[type=checkbox] {
   display: none;
 }
-#shibboleth label[for=password], #shibboleth label[for=domain] {
+label {
   grid-area: label;
   grid-row: 1;
-  font-size: 1.2em;
-  display: block;
-  border-radius: 10px 0 0 0;
+  font-size:1.2em;
+  display:block;
+  border-radius:10px 0 0 0;
   background-color: var(--background-color);
-  border: thin solid rgb(171,171,171);
+  border:1px solid rgb(171,171,171);
   line-height: 3rem;
   text-align:left;
   font-weight:bold;
@@ -343,7 +340,7 @@ input.peek[type=checkbox] {
   color: var(--text-color);
 }
 
-#shibboleth label[for=password], #shibboleth input[type=password] {
+label[for=password],input[type=password] {
   border-radius:0;
   border-top:none;
   grid-row: 2;
@@ -360,7 +357,7 @@ a#repo {
   text-shadow: var(--secondary-background-color) 0px 1px 0px;
   text-decoration: none;
 }
-#shibboleth {
+form {
   margin: 4rem 0 1rem 0;
   display: grid;
   grid-template-columns: .4fr .6fr;
@@ -371,33 +368,34 @@ a#repo {
     "output output see copy";
 }
 
-/* modal */
-div#modal {
+ul {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0rem;
+  list-style-type: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+ul li button, ul li a {
+  width: 25vw;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0);
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 20;
-}
-
-div.hud {
-  font-size: 0.8em;
-  background-color: white;
-  margin: 10% auto 0px auto;
-  border: 10px solid rgba(255, 255, 255, 0.6);
-  height: auto;
-  width: 410px;
-  background-clip: padding-box;
-  border-radius: 10px;
-}
-div.dialog {
-  display: none;
-}
-div.hud div.dialog {
   display: block;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0.2rem;
+  border: thin solid grey;
+  box-sizing: border-box;
+  color: var(--text-color);
+  font-size: 1rem;
+  padding: 0.2rem;
+  text-decoration: none;
+  text-align: center;
+  background-color: var(--tertiary-background-color);
+  cursor: pointer;
+}
+li button:hover, li a:hover {
+  background-color: var(--secondary-background-color);
 }
 @media screen and (max-width: 500px) {
   body {
@@ -418,10 +416,20 @@ div.hud div.dialog {
     border-left: none;
     border-right: none;
   }
-  #settings.expand {
-    flex-wrap: nowrap;
+  #settings ul {
+    order: 1;
+    align-self: center;
   }
-  #shibboleth {
+  #settings table {
+    order: 2;
+    align-self: center;
+  }
+  #settings details {
+    order: 3;
+    align-self: left;
+    flex: unset;
+  }
+  form {
     margin: 4rem 0 1rem 0;
     display: grid;
     grid-template-columns: 1fr;
@@ -431,16 +439,16 @@ div.hud div.dialog {
       "input input input"
       "output see copy";
   }
-  #shibboleth label[for=password], #shibboleth label[for=domain] {
+  label {
     display: none;
   }
-  #shibboleth input {
+  input {
     padding: 0 0 0 0.75em;
     border-radius: 0;
     border-left: none;
     border-right: none;
   }
-  #shibboleth output {
+  output {
     border-radius: 0;
     border-left: none;
     font-size: 4.5vw;
@@ -449,51 +457,4 @@ div.hud div.dialog {
     border-radius: 0;
     border-right: none;
   }
-  p {
-    width: 100vw;
-  }
-  button.banner {
-    width: 100vw;
-    margin: 1rem 0;
-    height: 2rem;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-  }
-  /* modal */
-  div.hud {
-    width: 100vw;
-    box-sizing: border-box;
-  }
-  .dialog {
-    display: flex;
-    flex-direction: column;
-  }
-  .salted > div {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 100vw;
-    width: 100vw;
-  }
-  .salted > div input {
-    flex: 0 0 100%;
-  }
-  .salted > div label, .salted > div button {
-    flex: 0 0 50%;
-    font-family: Shibboleth;
-    font-size: 1.5rem;
-    text-align: center;
-    height: 2rem;
-    line-height: 2rem;
-    align-content: center;
-  }
 }
-/* un-used
-obscure-output {
-  border-radius: 0 0 10px 10px;
-  background-color: var(--background-color);
-  border-left: thin solid rgb(171, 171, 171);
-  border-right: thin solid rgb(171, 171, 171);
-  border-bottom: thin solid rgb(171, 171, 171);
-}
-*/

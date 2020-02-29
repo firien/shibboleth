@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height='16' viewBox='0 0 16 16' width='16' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns="http://www.w3.org/2000/svg">
+  <script xlink:href="scaler.js" /> 
+  <style type="text/css">
+    <![CDATA[
+      path {
+        stroke: none;
+        fill: black;
+      }
+    ]]>
+  </style>
+  <path d="M 11.54 4.46 l -1.2 1.2 v -3.81 h 3.81 l -1.2 1.2 A 7,7 1 0 1 8 15
+           v -2 A 5,5 1 0 0 11.54 4.46 z
+           M 4.46 11.54 l 1.2 -1.2 v 3.81 h -3.81 l 1.2 -1.2 A 7,7 1 0 1 8 1
+           v 2 A 5,5 1 0 0 4.46 11.54 z"/>
+  <!--
+  def c(y)
+    a = Math.sqrt(2 * ((y) ** 2))
+    Math.sqrt(2 * ((a + 1) ** 2))
+  end
+
+  puts c 1.2 => 3.81
+  -->
+</svg>

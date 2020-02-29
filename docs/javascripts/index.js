@@ -177,7 +177,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.unsalted').classList.remove('hidden')
     salt = null;
   })
-
+  if (navigator.standalone) {
+    let refresh = document.createElement('button')
+    refresh.classList.add('refresh')
+    refresh.textContent = '\uf105'
+    document.body.appendChild(refresh)
+    refresh.addEventListener('click', (e) => {
+      window.location.reload()
+    })
+  }
 }, true)
 
 let timer;
