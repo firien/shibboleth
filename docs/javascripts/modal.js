@@ -76,7 +76,7 @@ class Modal {
     return
     }
   }
-  static current() {
+  static get current() {
     return stack[stack.length - 1]
   }
   static presentModalView(element, dismissCallback) {

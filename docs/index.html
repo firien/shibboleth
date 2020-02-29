@@ -46,8 +46,8 @@
         <button class="banner destructive" id="delete-salt">Delete</button>
       </div>
       <div class="unsalted hidden">
-        <h4>Salt</h4>
-        <button class="banner" id="new-salt">Salt</button><p>You can choose to include a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a> in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.</p>
+        <h4>Salt</h4><p>You can choose to include a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a> in Shibboleth's javascript. This is just one more layer of security (& complexity). This will include an extra token in the password generator that is unique to this device & browser</p>
+        <button class="banner" id="new-salt">Proceed</button>
       </div>
       <div>
         <h4>FAQ</h4>
@@ -87,13 +87,14 @@
       </tr>
     </template>
     <div class="dialog">
+      <p>generate by scribbling below with pointing device</p>
       <canvas></canvas>
-      <p>scribble above with pointing device</p>
       <p>or paste/drop an existing salt into input below</p>
       <form id="salt">
-        <input id="view-salt" type="text" name="salt" required>
-        <button>Save</button>
+        <input class="banner" id="view-salt" type="text" name="salt" required>
+        <button class="banner">Save</button>
       </form>
+      <p class="warning">&#xf104; Salting will alter password generation. Any previously generated passwords will not match those with this new salt.</p>
     </div>
   </body>
 </html>

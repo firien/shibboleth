@@ -71,7 +71,7 @@ const saveSalt = async (data) => {
   let trxn = database.transaction(['settings'], 'readwrite')
   let source = trxn.objectStore('settings')
   let salt = await existingSalt(trxn)
-  if (salt == null) {
+  if (salt == null && data.value.length > 0) {
     let request = source.add({name: 'salt', value: data.value})
     request.onsuccess = (e) => {
       self.postMessage({promiseId: data.promiseId, status: 201})

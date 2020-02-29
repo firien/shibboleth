@@ -25,7 +25,17 @@ const sendMessage = (opts, buffers) => {
 }
 
 let salt;
-
+const configSalt = () => {
+  if (salt) {
+    document.querySelector('.salted').classList.remove('hidden')
+    document.querySelector('.salted output').value = salt
+    document.querySelector('.unsalted').classList.add('hidden')
+  } else {
+    document.querySelector('.unsalted').classList.remove('hidden')
+    document.querySelector('.salted').classList.add('hidden')
+    document.querySelector('.salted output').value = null
+  }
+}
 const generatePassword = async () => {
   let domain = document.querySelector("input#domain").value
   if (domain === '') {
@@ -51,19 +61,6 @@ const generatePassword = async () => {
   loadDataList()
 }
 
-document.querySelector('#domain').addEventListener('drop', (e) => {
-  e.stopPropagation();
-  e.preventDefault();
-  try {
-    let uri = e.dataTransfer.getData("text/uri-list");
-    let url = new URL(uri);
-    e.target.value = tld(url);
-  } catch (e) {
-    e
-    debugger
-    //ignore
-  }
-})
 const loadDataList = async () => {
   let response = await sendMessage({url: '/domains', method: 'get'})
   let datalist = document.querySelector('#domains')
@@ -109,6 +106,19 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(generatePassword, 100)
     }
   })
+  document.querySelector('#domain').addEventListener('drop', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    try {
+      let uri = e.dataTransfer.getData("text/uri-list");
+      let url = new URL(uri);
+      e.target.value = tld(url);
+    } catch (e) {
+      e
+      debugger
+      //ignore
+    }
+  })  
   document.querySelector('#copy').addEventListener('dragstart', (e) => {
     e.dataTransfer.effectAllowed = "copy";
     let password = String(document.querySelector('#shibboleth output').value)
@@ -124,11 +134,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let view = document.querySelector('div.dialog')
     Modal.presentModalView(view);
   })
-  document.querySelector('form#salt').addEventListener('submit', function(e) {
+  document.querySelector('form#salt').addEventListener('submit', async function(e) {
+    this.querySelector('button').disabled = true
     e.stopPropagation();
     e.preventDefault();
-    sendMessage({url: '/salt', method: 'post', value: this.salt.value})
+    await sendMessage({url: '/salt', method: 'post', value: this.salt.value})
     salt = this.salt.value
+    configSalt()
+    Modal.current.dismissModalView()
   })
   document.querySelector('header button').addEventListener('click', async (e) => {
     let settings = document.querySelector('#settings')
@@ -136,12 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let tbody = settings.querySelector('tbody')
     if (visible) {
       document.body.classList.add('modal')
-      if (salt) {
-        document.querySelector('.salted').classList.remove('hidden')
-        document.querySelector('.salted output').value = salt
-      } else {
-        document.querySelector('.unsalted').classList.remove('hidden')
-      }
+      configSalt()
       let response = await sendMessage({url: '/domains', method: 'get'})
       let template = document.querySelector('template')
       for (let record of response.result) {
@@ -173,9 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('button#delete-salt').addEventListener("click", async () => {
     // need confirmation
     await sendMessage({url: '/salt', method: 'delete'})
-    document.querySelector('.salted').classList.add('hidden')
-    document.querySelector('.unsalted').classList.remove('hidden')
     salt = null;
+    configSalt()
   })
   if (navigator.standalone) {
     let refresh = document.createElement('button')

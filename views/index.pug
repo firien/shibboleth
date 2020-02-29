@@ -10,7 +10,7 @@ html(lang="en")
     // scripts
     script(src='javascripts/index.js' type="module")
     script(src='javascripts/obscure.js' defer)
-    //- script(src='pwa.js')
+    script(src='pwa.js')
     // css
     link(rel='stylesheet' href="stylesheets/index.css")
     // icons
@@ -41,8 +41,8 @@ html(lang="en")
         button#delete-salt.banner.destructive Delete
       div.unsalted.hidden
         h4 Salt
-        button#new-salt.banner Salt
-        <p>You can choose to include a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a> in Shibboleth's javascript. This is just one more layer of security (& complexity). This will regenerate the links with javascript that is unique to you. However, if you wish to regenerate Shibboleth, you will need to enter your original salt. If you do use a salt - remember to store it somewhere safe.</p>
+        <p>You can choose to include a <a href="http://en.wikipedia.org/wiki/Salt_%28cryptography%29">Salt</a> in Shibboleth's javascript. This is just one more layer of security (& complexity). This will include an extra token in the password generator that is unique to this device & browser</p>
+        button#new-salt.banner Proceed
       div
         h4 FAQ
         ul
@@ -73,9 +73,10 @@ html(lang="en")
         td
           span &#xf102;
     div.dialog
+      p generate by scribbling below with pointing device
       canvas
-      p scribble above with pointing device
       p or paste/drop an existing salt into input below
       form#salt
-        input#view-salt(type='text' name='salt' required)
-        button(type=submit) Save
+        input#view-salt.banner(type='text' name='salt' required)
+        button.banner(type=submit) Save
+      p.warning &#xf104; Salting will alter password generation. Any previously generated passwords will not match those with this new salt.
