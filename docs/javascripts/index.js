@@ -38,6 +38,8 @@ const configSalt = () => {
 }
 const generatePassword = async () => {
   let domain = document.querySelector("input#domain").value
+  //ios tends to insert trailing spaces
+  domain = domain.trim()
   if (domain === '') {
     return
   }
