@@ -10,7 +10,7 @@ html(lang="en")
     // scripts
     script(src='javascripts/index.js' type="module")
     script(src='javascripts/obscure.js' defer)
-    script(src='pwa.js')
+    //- script(src='pwa.js')
     // css
     link(rel='stylesheet' href="stylesheets/index.css")
     // icons
@@ -58,7 +58,7 @@ html(lang="en")
     main
       form#shibboleth
         label(for='domain') Domain
-        input#domain(placeholder='www.host.com' autocapitalize='off' autofocus=true, spellcheck='false', list='domains')
+        input#domain(placeholder='host.com' autocapitalize='off' autofocus=true, spellcheck='false', list='domains' inputmode='url')
         label(for='password') Password
         input#password(type='password' placeholder='password' autocomplete="off")
         input#see.peek(type='checkbox' disabled)
