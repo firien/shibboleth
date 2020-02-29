@@ -86,7 +86,6 @@ class Pencil {
 }
 
 const initializeCanvas = () => {
-  document.body.classList.add('modal')
   let canvas = document.querySelector('canvas')
   let context = canvas.getContext('2d')
   //readjust dimensions
@@ -117,6 +116,12 @@ const initializeCanvas = () => {
   canvas.addEventListener('pointerdown', ev_canvas)
   canvas.addEventListener('pointermove', ev_canvas)
   canvas.addEventListener('pointerup',   ev_canvas)
+  return () => {
+    canvas.removeEventListener('pointerdown', ev_canvas)
+    canvas.removeEventListener('pointermove', ev_canvas)
+    canvas.removeEventListener('pointerup',   ev_canvas)
+  
+  }
 }
 
 export default initializeCanvas

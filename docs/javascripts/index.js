@@ -132,9 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
     copy(output.value)
   })
   document.querySelector('#new-salt').addEventListener('click', (e) => {
-    initializeCanvas()
+    let cleanup = initializeCanvas()
     let view = document.querySelector('div.dialog')
-    Modal.presentModalView(view);
+    Modal.presentModalView(view, () => {
+      cleanup()
+      document.body.appendChild(view)
+    });
   })
   document.querySelector('form#salt').addEventListener('submit', async function(e) {
     this.querySelector('button').disabled = true
