@@ -65,6 +65,7 @@ const generatePassword = async () => {
 
 const loadDataList = async () => {
   let response = await sendMessage({url: '/domains', method: 'get'})
+  console.log(response)
   let datalist = document.querySelector('#domains')
   while (datalist.firstChild) {
     datalist.removeChild(datalist.firstChild)
@@ -189,6 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
     salt = null;
     configSalt()
   })
+  // refresh button for ios webapp
   if (navigator.standalone) {
     let refresh = document.createElement('button')
     refresh.classList.add('refresh')
@@ -198,6 +200,16 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.reload()
     })
   }
+  // dismiss modals on escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (Modal.current) {
+        Modal.current.dismissModalView();
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }
+  }, {capture: true})
 }, true)
 
 let timer;

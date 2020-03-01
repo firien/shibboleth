@@ -42,9 +42,14 @@ const saveDomain = (data) => {
 const getDomains = (data) => {
   let trxn = database.transaction(['domains'])
   let store = trxn.objectStore('domains')
-  store.getAll().onsuccess = (e) => {
-    let records = e.target.result
-    self.postMessage({promiseId: data.promiseId, result: records, status: 200})
+  let req = store.getAll()
+  req.onsuccess = (e) => {
+    let result = e.target.result
+    console.log(result)
+    self.postMessage({promiseId: data.promiseId, result, status: 200})
+  }
+  req.onerror = (e) => {
+    console.error(e)
   }
 }
 

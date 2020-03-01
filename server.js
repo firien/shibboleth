@@ -20,7 +20,7 @@ http.createServer((request, response) => {
       readStream.pipe(response);
     } else {
       let stat = fs.statSync(filePath)
-      let mime = 'text/plain';
+      let mime;
       if ((/js$/).test(filePath)) {
         mime = "text/javascript"
       } else if  ((/css$/).test(filePath)) {
@@ -31,6 +31,10 @@ http.createServer((request, response) => {
         mime = "application/x-font-ttf"
       } else if  ((/webmanifest$/).test(filePath)) {
         mime = "application/manifest+json"
+      } else if  ((/json$/).test(filePath)) {
+        mime = "application/json"
+      } else {
+        mime = 'text/plain'
       }
       response.writeHead(200, {
         'Content-Type': mime,

@@ -1,13 +1,26 @@
+let domains;
+
+fetch("/shibboleth/domains.json").then((response) => {
+  response.json().then((data) => {
+    domains = data
+  })
+})
+
 //strip sub domains (improve this)
 export const tld = (url) => {
   if (url.constructor === URL) {
+    console.time('find domain')
     let hostname = url.hostname
-    let match = hostname.match(/(?:\w+\.)*?(\w+\.(?:com|gov|org|net|co\.uk|co|us|io|mil)$)/);
-    if (match) {
-      return match[1];
-    } else {
-      return hostname
+    for (let suffix of domains) {
+      let re = new RegExp(`([^\.]+?\.${suffix}$)`)
+      if (re.test(hostname)) {
+        console.log(suffix)
+        hostname = hostname.match(re)[0];
+        break;
+      }
     }
+    console.timeEnd('find domain')
+    return hostname
   } else {
     return url
   }
