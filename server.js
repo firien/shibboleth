@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as http from 'http';
 import * as url from 'url';
+import { generateHTML } from './publish.js'
 
 http.createServer((request, response) => {
   let uri = url.parse(request.url).pathname
@@ -40,3 +41,11 @@ http.createServer((request, response) => {
     }
   }
 }).listen(3008)
+
+const pugFile = path.resolve('./views/index.pug');
+
+fs.watchFile(pugFile, {interval: 500}, () => {
+  generateHTML(pugFile)
+});
+
+generateHTML(pugFile);

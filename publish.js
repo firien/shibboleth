@@ -4,10 +4,15 @@ import pug from 'pug'
 import ttf2woff2 from 'ttf2woff2'
 import svg2ttf from 'svg2ttf'
 
-const filePath = path.resolve('./views/index.pug');
-const html = pug.renderFile(filePath, {pretty: true});
-const newFileName = path.resolve('./docs/index.html');
-fs.writeFileSync(newFileName, html);
+const pugFile = path.resolve('./views/index.pug');
+
+export const generateHTML = (pugFile) => {
+  const html = pug.renderFile(pugFile, {pretty: true});
+  const newFileName = path.resolve('./docs/index.html');
+  fs.writeFileSync(newFileName, html);
+}
+
+generateHTML(pugFile)
 
 const svgFontPath = path.resolve('./docs/fonts/font.svg');
 const ttfFontPath = path.resolve('./docs/fonts/font.ttf');
