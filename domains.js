@@ -19,6 +19,7 @@ const mostCommon = [
   'com',
   'org',
   'net',
+  'edu',
   'co.uk',
   'gov',
   'mil',
@@ -36,7 +37,15 @@ let req = https.request(options, (res) => {
     }
   });
   lineReader.on('close', () => {
-    let list = mostCommon.concat(domains.sort())
+    let sorted = domains.sort((a,b) => {
+      let lenghtComp = a.length - b.length;
+      if (lenghtComp === 0) {
+        return a.localeCompare(b)
+      } else {
+        return lenghtComp;
+      }
+    })
+    let list = mostCommon.concat(sorted)
     fs.writeFileSync('./docs/domains.json', JSON.stringify(list, null, 2));
   })
 });
