@@ -46,7 +46,7 @@ let req = https.request(options, (res) => {
       }
     })
     let list = mostCommon.concat(sorted)
-    fs.writeFileSync('./docs/domains.js', "export const domains = " + JSON.stringify(sorted, null, 2));
+    fs.writeFileSync('./docs/javascripts/domains.js', "export const domains = " + JSON.stringify(sorted, null, 2));
   })
 });
 

@@ -1,4 +1,4 @@
-import { domains } from '../domains.js'
+import { domains } from './domains.js'
 
 export const tld = (url) => {
   if (url.hostname) {
