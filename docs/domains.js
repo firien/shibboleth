@@ -1,4 +1,4 @@
-[
+export const domains = [
   "com",
   "org",
   "net",

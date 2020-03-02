@@ -1,14 +1,8 @@
-let domains;
-
-fetch("/shibboleth/domains.json").then((response) => {
-  response.json().then((data) => {
-    domains = data
-  })
-})
+import { domains } from '../domains.js'
 
 //strip sub domains (improve this)
 export const tld = (url) => {
-  if (url.constructor === URL) {
+  if (url.hostname) {
     console.time('find domain')
     let hostname = url.hostname
     for (let suffix of domains) {

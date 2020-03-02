@@ -1,4 +1,4 @@
-const tag = 11;
+const tag = 12;
 const prefix = 'SHIBBOLETH';
 const cacheName = `${prefix}-${tag}`
 
@@ -18,7 +18,7 @@ const urls = [
   '/shibboleth/fonts/font.ttf',
   '/shibboleth/fonts/font.woff2',
   '/shibboleth/fonts/font.svg',
-  '/shibboleth/domains.json',
+  '/shibboleth/domains.js',
   '/shibboleth/pwa.js',
   '/shibboleth/manifest.webmanifest',
   '/shibboleth/index.html',
