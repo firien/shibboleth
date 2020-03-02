@@ -31,14 +31,14 @@ let req = https.request(options, (res) => {
   let lineReader = readline.createInterface({input: res});
   lineReader.on('line', (line) => {
     if (!line.startsWith("//") && (line.trim().length != 0)) {
-      if (!mostCommon.includes(line)) {
+      // if (!mostCommon.includes(line)) {
         domains.push(line)
-      }
+      // }
     }
   });
   lineReader.on('close', () => {
     let sorted = domains.sort((a,b) => {
-      let lenghtComp = a.length - b.length;
+      return b.length - a.length;
       if (lenghtComp === 0) {
         return a.localeCompare(b)
       } else {
@@ -46,7 +46,7 @@ let req = https.request(options, (res) => {
       }
     })
     let list = mostCommon.concat(sorted)
-    fs.writeFileSync('./docs/domains.js', "export const domains = " + JSON.stringify(list, null, 2));
+    fs.writeFileSync('./docs/domains.js', "export const domains = " + JSON.stringify(sorted, null, 2));
   })
 });
 

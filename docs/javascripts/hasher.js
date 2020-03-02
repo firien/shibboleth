@@ -1,19 +1,18 @@
 import { domains } from '../domains.js'
 
-//strip sub domains (improve this)
 export const tld = (url) => {
   if (url.hostname) {
-    console.time('find domain')
+    // console.time('find domain')
     let hostname = url.hostname
     for (let suffix of domains) {
       let re = new RegExp(`([^\.]+?\.${suffix}$)`)
       if (re.test(hostname)) {
-        console.log(suffix)
+        // console.log(suffix)
         hostname = hostname.match(re)[0];
         break;
       }
     }
-    console.timeEnd('find domain')
+    // console.timeEnd('find domain')
     return hostname
   } else {
     return url
