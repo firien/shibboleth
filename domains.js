@@ -15,15 +15,16 @@ const options = {
   method: 'GET'
 };
 
-const mostCommon = [
-  'com',
-  'org',
-  'net',
-  'edu',
-  'co.uk',
-  'gov',
-  'mil',
-]
+const base = (domain) => {
+  let arr = domain.split('.')
+  if (arr.length === 1) {
+    return arr[0]
+  } else {
+    arr.shift()
+    return arr.join('.')
+  }
+}
+
 let domains = []
 
 let req = https.request(options, (res) => {
@@ -37,15 +38,15 @@ let req = https.request(options, (res) => {
     }
   });
   lineReader.on('close', () => {
-    let sorted = domains.sort((a,b) => {
-      return b.length - a.length;
-      if (lenghtComp === 0) {
-        return a.localeCompare(b)
+    const compare = (a, b) => {
+      let comp = base(a).localeCompare(base(b))
+      if (comp === 0) {
+        return b.length - a.length
       } else {
-        return lenghtComp;
+        return comp || a.localeCompare(b)
       }
-    })
-    let list = mostCommon.concat(sorted)
+    }
+    let sorted = domains.sort(compare)
     fs.writeFileSync('./docs/javascripts/domains.js', "export const domains = " + JSON.stringify(sorted, null, 2));
   })
 });
