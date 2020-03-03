@@ -40,7 +40,8 @@ noscript input[type=checkbox]:checked ~ div {
   position: absolute;
   top: 3rem;
   left: 0;
-  width: 100vw;
+  width: calc(100vw - 2rem);
+  border-radius: 10px;
   box-sizing: border-box;
   color: darkred;
   background-color: darksalmon;
@@ -163,7 +164,7 @@ header > h1 {
 }
 #settings {
   display: flex;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   padding-top: 4rem;
   height: 100vh;
   border-radius:0 0 10px 10px;
@@ -208,12 +209,10 @@ details > summary {
 #settings tr:hover td {
   background-color: var(--background-color);
 }
-#settings.expand ul {
-  opacity: 1;
-}
 #settings.expand {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   transform: translateY(100vh);
   border-radius: 0;
   border-bottom: none;
@@ -237,6 +236,20 @@ details > summary {
   /* margin: auto; */
   border-collapse: collapse;
   /* border-color: grey; */
+}
+#settings.expand > div:first-child {
+  flex: 1 1 100%;
+}
+#settings.expand > div {
+  width: 50%;
+}
+dt {
+  text-align: left;
+  padding-left: 1rem;
+}
+dd {
+  text-align: left;
+  padding-left: 1.5rem;
 }
 span {
   font-family: Shibboleth;
@@ -462,12 +475,25 @@ p {
 table tbody:empty::after {
   content: "No domains stored";
 }
+.banner {
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+}
+button.banner {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 500px) {
   body {
     margin: 0;
   }
   noscript {
     left: 0;
+  }
+  noscript input[type=checkbox]:checked ~ div {
+    width: 100vw;
+    border-radius: 0;
   }
   header {
     width: 100vw;
@@ -524,9 +550,6 @@ table tbody:empty::after {
     height: 2rem;
     font-size: 1rem;
     border: none;
-  }
-  button.banner {
-    cursor: pointer;
   }
   /* modal */
   div.hud {
