@@ -54,7 +54,7 @@ noscript input[type=checkbox]:checked ~ div {
   --secondary-background-color: #ddd;
   --tertiary-background-color: rgb(220,223,229);
 }
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --text-color: white;
     --background-color: black;
@@ -71,6 +71,9 @@ noscript input[type=checkbox]:checked ~ div {
       background-color:rgba(155,155,155) !important;
     }
   }
+}
+button, label {
+  color: var(--text-color);
 }
 /* ios standalone */
 button.refresh {
@@ -246,10 +249,12 @@ details > summary {
 dt {
   text-align: left;
   padding-left: 1rem;
+  color: var(--text-color);
 }
 dd {
   text-align: left;
   padding-left: 1.5rem;
+  color: var(--text-color);
 }
 span {
   font-family: Shibboleth;
@@ -287,8 +292,6 @@ input, output {
   border-radius: 0 0 0 10px;
   line-height: 3rem;
   text-align: right;
-  background-color: var(--background-color);
-  color: var(--text-color);
   border: thin solid rgb(171,171,171);
   border-top: none;
   border-right: none;
@@ -296,6 +299,8 @@ input, output {
 }
 output.obscura {
   font-family: Shibboleth;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 #shibboteh button {
   display: block;
@@ -334,7 +339,7 @@ label[for=see] {
   border-left: thin solid rgb(171, 171, 171);
   border-bottom: thin solid rgb(171, 171, 171);
 }
-input.peek:not(:disabled) + output.obscura + label, #copy:not(:disabled) {
+input.peek:not(:disabled) + output.obscura + label {
   cursor: pointer;
 }
 input.peek:not(:disabled) + output.obscura + label:hover, #copy:not(:disabled):hover {
@@ -364,6 +369,9 @@ button#copy {
   border-top: none;
   line-height: 3rem;
   background-color: var(--secondary-background-color);
+}
+button.copy:not(:disabled) {
+  cursor: pointer;
 }
 input.peek[type=checkbox] {
   display: none;
@@ -467,6 +475,27 @@ form#salt input {
 form#salt button {
   background-color: mediumseagreen;
 }
+#view-salt {
+  background-color: var(--tertiary-background-color);
+  color: var(--text-color);
+}
+#see-salt + output {
+  height: 1.5rem;
+  line-height: 1.5rem;
+  width: 100%;
+  overflow-x: auto;
+  font-size: 1rem;
+}
+.salted > div label, .salted > div button {
+  flex: 0 0 50%;
+  font-family: Shibboleth;
+  font-size: 1.5rem;
+  text-align: center;
+  height: 2rem;
+  line-height: 2rem;
+  align-content: center;
+}
+
 p {
   text-align: left;
   padding-left: 1rem;
@@ -489,7 +518,11 @@ input.banner {
 button.banner {
   cursor: pointer;
 }
-
+canvas {
+  border-color: var(--text-color);
+  border-style: dashed;
+  border-width: thin;
+}
 @media screen and (max-width: 500px) {
   body {
     margin: 0;
@@ -518,6 +551,9 @@ button.banner {
   }
   #settings.expand {
     flex-wrap: nowrap;
+  }
+  #settings.expand > div {
+    width: 100%;
   }
   #shibboleth {
     margin: 4rem 0 1rem 0;
@@ -554,8 +590,11 @@ button.banner {
     width: 100vw;
     margin-top: 1rem;
     height: 2rem;
+    line-height: 2rem;
     font-size: 1rem;
     border: none;
+    padding: 0;
+    border-radius: 0;
   }
   /* modal */
   div.hud {
@@ -565,6 +604,13 @@ button.banner {
   .dialog {
     display: flex;
     flex-direction: column;
+  }
+  #see-salt + output {
+    height: 1.5rem;
+    line-height: 1.5rem;
+    width: 100vw;
+    overflow-x: auto;
+    font-size: 4vw;
   }
   .salted > div {
     display: flex;
