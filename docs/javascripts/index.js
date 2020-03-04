@@ -140,10 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let password = String(document.querySelector('#shibboleth output').value)
     e.dataTransfer.setData('text/plain', password)
   })
-  document.querySelector('#shibboleth #copy').addEventListener('click', (e) => {
-    e.preventDefault()
-    let output = document.querySelector('#shibboleth output')
-    copy(output.value)
+  document.querySelectorAll('.copy').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault()
+      let output = e.target.parentNode.querySelector('output')
+      copy(output.value)
+    })
   })
   document.querySelector('#new-salt').addEventListener('click', (e) => {
     let cleanup = initializeCanvas()
