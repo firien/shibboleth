@@ -121,7 +121,20 @@ document.addEventListener('DOMContentLoaded', () => {
       debugger
       //ignore
     }
-  })  
+  })
+  document.querySelector('#domain').addEventListener('paste', (e) => {
+    try {
+      let uri = e.clipboardData.getData("text/plain");
+      let url = new URL(uri);
+      e.target.value = tld(url);
+      e.stopPropagation();
+      e.preventDefault();  
+    } catch (e) {
+      e
+      debugger
+      //ignore
+    }
+  })
   document.querySelector('#copy').addEventListener('dragstart', (e) => {
     e.dataTransfer.effectAllowed = "copy";
     let password = String(document.querySelector('#shibboleth output').value)
