@@ -24,7 +24,7 @@ class Pencil {
     if (points.length === 0) {
       points.push(new Point(ev._x, ev._y))
     }
-    this.context.strokeStyle = "#eee"
+    this.context.strokeStyle = "#ddd"
     this.context.beginPath()
     this.context.moveTo(ev._x, ev._y)
     this.started = true
@@ -40,7 +40,8 @@ class Pencil {
         points.push(currentPoint)
         this.context.save()
         this.context.beginPath()
-        this.context.fillStyle = '#000'
+        let fill = window.matchMedia("(prefers-color-scheme: dark)").matches ? '#fff' : '#000'
+        this.context.fillStyle = fill
         this.context.arc(currentPoint.x, currentPoint.y, 3, 0, Math.PI*2, true)
         this.context.closePath()
         this.context.fill()
@@ -61,7 +62,7 @@ class Pencil {
       //are there enough points?
       if (points.length > 10) {
         //clear rect and redraw all points
-        this.context.fillStyle = '#eee'//'#444'
+        this.context.fillStyle = '#ddd'//'#444'
         this.context.fillRect(0,0,this.context.canvas.width,this.context.canvas.height)
         this.context.fillStyle = '#000'
         points.forEach((p) => {
