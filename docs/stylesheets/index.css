@@ -90,7 +90,7 @@ button.refresh {
   z-index: 10;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 1rem;
   width: 3rem;
   max-width: 3rem;
 }
@@ -534,6 +534,11 @@ canvas {
     width: 100vw;
     border-radius: 0;
   }
+  /* ios standalone */
+button.refresh {
+  left: 0;
+}
+
   header {
     width: 100vw;
     border-radius: 0;
