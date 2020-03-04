@@ -41,8 +41,8 @@ const saveDomain = (data) => {
 }
 const getDomains = (data) => {
   let trxn = database.transaction(['domains'])
-  let store = trxn.objectStore('domains')
-  let req = store.getAll()
+  let source = trxn.objectStore('domains').index('name')
+  let req = source.getAll()
   req.onsuccess = (e) => {
     let result = e.target.result
     console.log(result)
