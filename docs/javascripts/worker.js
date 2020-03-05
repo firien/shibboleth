@@ -116,6 +116,7 @@ self.addEventListener('message', (e) => {
     case '/domains':
       if (e.data.method === 'get')     { getDomains(e.data) }
       if (e.data.method === 'post')    { saveDomain(e.data) }
+      break
     case '/salt':
       if (e.data.method === 'post')    { saveSalt(e.data) }
       if (e.data.method === 'get')     { getSalt(e.data) }
