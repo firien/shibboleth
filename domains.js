@@ -32,9 +32,7 @@ let req = https.request(options, (res) => {
   let lineReader = readline.createInterface({input: res});
   lineReader.on('line', (line) => {
     if (!line.startsWith("//") && (line.trim().length != 0)) {
-      // if (!mostCommon.includes(line)) {
-        domains.push(line)
-      // }
+      domains.push(line)
     }
   });
   lineReader.on('close', () => {

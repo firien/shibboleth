@@ -370,7 +370,7 @@ button#copy {
   line-height: 3rem;
   background-color: var(--secondary-background-color);
 }
-button.copy:not(:disabled) {
+button.copy:not(:disabled), button#copy:not(:disabled) {
   cursor: pointer;
 }
 input.peek[type=checkbox] {
@@ -535,10 +535,9 @@ canvas {
     border-radius: 0;
   }
   /* ios standalone */
-button.refresh {
-  left: 0;
-}
-
+  button.refresh {
+    left: 0;
+  }
   header {
     width: 100vw;
     border-radius: 0;
