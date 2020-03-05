@@ -92,6 +92,17 @@ const getSalt = async () => {
   let response = await sendMessage({url: '/salt', method: 'get'})
   salt = response.result
 }
+const getURL = (dataTransfer) => {
+  let type;
+  if (dataTransfer.types.includes('text/plain')) {
+    type = 'text/plain'
+  } else if (dataTransfer.types.includes('text/uri-list')) {
+    type = 'text/uri-list'
+  }
+  if (type) {
+    return dataTransfer.getData(type);
+  }
+}
 document.addEventListener('DOMContentLoaded', () => {
   sendMessage({cmd: 'open'}).then(loadDataList).then(getSalt)
   document.querySelector('input#domain').addEventListener("input", clearPassword)
@@ -113,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.stopPropagation();
     e.preventDefault();
     try {
-      let uri = e.dataTransfer.getData("text/uri-list");
+      let uri = getURL(e.dataTransfer);
       let url = new URL(uri);
       e.target.value = tld(url);
     } catch (e) {
@@ -124,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   document.querySelector('#domain').addEventListener('paste', (e) => {
     try {
-      let uri = e.clipboardData.getData("text/plain");
+      let uri = getURL(e.clipboardData);
       let url = new URL(uri);
       e.target.value = tld(url);
       e.stopPropagation();
