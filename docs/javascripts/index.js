@@ -58,8 +58,7 @@ const generatePassword = async () => {
   // save domain
   sendMessage({url: '/domains', method: 'post', domain})
   output.value = str
-  document.querySelector('#shibboleth button#copy').disabled = false
-  document.querySelector('#shibboleth input[type=checkbox]').disabled = false
+  disablePasswordButtons(false)
   loadDataList()
 }
 
@@ -85,8 +84,13 @@ const removeDomain = async function(e) {
   }
   loadDataList()
 }
+const disablePasswordButtons = (bool) => {
+  document.querySelector('#shibboleth button#copy').disabled = bool
+  document.querySelector('#shibboleth input[type=checkbox]').disabled = bool
+}
 const clearPassword = () => {
   document.querySelector("#shibboleth output").value = '';
+  disablePasswordButtons(true);
 }
 const getSalt = async () => {
   let response = await sendMessage({url: '/salt', method: 'get'})
@@ -206,8 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.hidden) {
       let output = document.querySelector('#shibboleth output');
       output.value = '';
-      document.querySelector('#shibboleth button#copy').disabled = true
-      document.querySelector('#shibboleth input[type=checkbox]').disabled = true
+      disablePasswordButtons(true)
     }
   })
   document.querySelector('button#delete-salt').addEventListener("click", async () => {
