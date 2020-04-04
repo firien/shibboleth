@@ -175,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.stopPropagation();
     e.preventDefault();
     await sendMessage({url: '/salt', method: 'post', value: this.salt.value})
+    this.querySelector('button').disabled = false
     salt = this.salt.value
     configSalt()
     Modal.current.dismissModalView()

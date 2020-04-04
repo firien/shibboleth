@@ -76,7 +76,8 @@ const saveSalt = async (data) => {
   let trxn = database.transaction(['settings'], 'readwrite')
   let source = trxn.objectStore('settings')
   let salt = await existingSalt(trxn)
-  if (salt == null && data.value.length > 0) {
+  let result = salt ? salt.value : null
+  if (result == null && data.value.length > 0) {
     let request = source.add({name: 'salt', value: data.value})
     request.onsuccess = (e) => {
       self.postMessage({promiseId: data.promiseId, status: 201})
@@ -88,7 +89,6 @@ const deleteSalt = async (data) => {
   let source = trxn.objectStore('settings')
   let salt = await existingSalt(trxn)
   if (salt) {
-    console.log(salt)
     let request = source.delete(salt.id)
     request.onsuccess = (e) => {
       self.postMessage({promiseId: data.promiseId, status: 204})
