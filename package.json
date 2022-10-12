@@ -6,7 +6,7 @@
   "devDependencies": {
     "mocha": "^7.1.0",
     "pug": "^2.0.4",
-    "svg2ttf": "^4.3.0",
+    "svg2ttf": "^6.0.3",
     "ttf2woff2": "^3.0.0"
   }
 }
