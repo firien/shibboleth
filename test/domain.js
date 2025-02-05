@@ -1,6 +1,6 @@
-import assert from 'assert';
-import { tld } from '../docs/javascripts/hasher.js'
-import * as url from 'url';
+import assert from 'node:assert'
+import { describe, it } from 'node:test'
+import { tld } from '../javascripts/hasher.js'
 
 // https://en.wikipedia.org/wiki/List_of_most_popular_websites
 const websites = [
@@ -22,10 +22,11 @@ const websites = [
   'google.co.uk',
   'google.com.tr'
 ]
+
 describe('Domain', function() {
   it('should find domain', function(){
     for (let website of websites) {
-      let uri = url.parse(`https://accounts.${website}`)
+      let uri = new URL(`https://accounts.${website}`)
       assert.equal(tld(uri), website)
     }
   });
