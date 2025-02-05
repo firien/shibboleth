@@ -5,9 +5,9 @@
 }
 @font-face {
   font-family: "Shibboleth";
-  src: url('/shibboleth/fonts/font.ttf') format('truetype'),
-       url('/shibboleth/fonts/font.woff2') format('woff2'),
-       url(/shibboleth/fonts/font.svg#shibboleth) format('svg');
+  src: url('../fonts/font.ttf') format('truetype'),
+       url('../fonts/font.woff2') format('woff2'),
+       url('../fonts/font.svg#shibboleth') format('svg');
 }
 noscript {
   z-index: 10;
